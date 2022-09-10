@@ -14,7 +14,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author Khanh
+ * @author Trieu
  */
 public class DBConnect {
 
@@ -25,7 +25,7 @@ public class DBConnect {
             // call drivers
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // connection
-            conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=", "sa", "12345678");
+            conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=MyHotel", "sa", "12345678");
             System.out.println("connected");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
