@@ -44,6 +44,7 @@ CREATE TABLE Room(
 	[View] nvarchar(MAX),
 	Adult int not null,
 	Child int not null,
+	img nvarchar(MAX),
 	foreign key (BedTypeID) references BedType (BedTypeID),
 	foreign key (RoomTypeID) references RoomType (RoomTypeID)
 )
