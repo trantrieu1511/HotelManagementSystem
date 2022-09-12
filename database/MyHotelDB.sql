@@ -12,24 +12,13 @@ CREATE TABLE Customer(
 	DOB varchar(50),
 	[Address] nvarchar(MAX),
 	Email varchar(35) not null,
-	PhoneNumber varchar(35) not null
-)
-
-CREATE TABLE Account(
-	AccID int identity primary key,
-	CusID varchar(8000) not null,
+	PhoneNumber varchar(35) not null,
 	Username varchar(25) not null,
 	[Password] varchar(25) not null
-	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
 )
 
 CREATE TABLE RoomType(
 	RoomTypeID int identity(1,1) primary key,
-	[Name] nvarchar(100) not null
-)
-
-CREATE TABLE BedType(
-	BedTypeID int identity(1,1) primary key,
 	[Name] nvarchar(100) not null
 )
 
@@ -45,20 +34,23 @@ CREATE TABLE Room(
 	RoomID int identity(1,1) primary key,
 	[Name] varchar(20) not null,
 	RoomTypeID int not null,
-	BedTypeID int not null,
-	Bed int not null,
 	Price money not null,
 	[Floor] int not null,
 	[View] nvarchar(MAX),
-	Adult int not null,
-	Child int not null,
 	img nvarchar(MAX),
-	foreign key (BedTypeID) references BedType (BedTypeID),
 	foreign key (RoomTypeID) references RoomType (RoomTypeID)
 )
 
+CREATE TABLE BedType(
+	BedTypeID int identity(1,1) primary key,
+	[Name] nvarchar(100) not null,
+	RoomID int not null,
+	Amount int not null,
+	foreign key (RoomID) references Room (RoomID),
+)
+
 CREATE TABLE BookDetail(
-	DetailID int identity(1,1) primary key,
+	BD_ID int identity(1,1) primary key,
 	BookID int not null,
 	RoomID int not null,
 	CheckIn varchar(50) not null,
