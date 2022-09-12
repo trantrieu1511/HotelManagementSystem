@@ -12,7 +12,15 @@ CREATE TABLE Customer(
 	DOB varchar(50),
 	[Address] nvarchar(MAX),
 	Email varchar(35) not null,
-	[Password] varchar(35) not null
+	PhoneNumber varchar(35) not null
+)
+
+CREATE TABLE Account(
+	AccID int identity primary key,
+	CusID varchar(8000) not null,
+	Username varchar(25) not null,
+	[Password] varchar(25) not null
+	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
 )
 
 CREATE TABLE RoomType(
@@ -27,7 +35,7 @@ CREATE TABLE BedType(
 
 CREATE TABLE Booking(
 	BookID int identity(1,1) primary key,
-	CusID varchar(8000),
+	CusID varchar(8000) not null,
 	BookDate varchar(50) not null,
 	PaymentStatus bit default 0 not null,
 	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
