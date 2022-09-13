@@ -29,8 +29,8 @@
                 <hr>
 
                 <!-- Register Form -->
-                <form action="" method="POST">
-                    <input type="hidden" name="do" value="login">
+                <form action="authentication" method="POST">
+                    <input type="hidden" name="do" value="register">
                     <div style="text-align: left; margin-left: 35px; font-weight: bold;
                          ">Username: <span class="text-danger">*</span></div>
                     <input type="text" id="login" class="" name="Username" required="" placeholder="enter username" pattern="[a-zA-Z0-9]{1,25}"
@@ -43,7 +43,7 @@
                            title="Password must not contain: Unicode characters, 
                            special character e.g: !@#$%^&,. etc.. and whitespaces; 
                            Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
-                    <input type="submit" class="" value="Register">
+                    <input type="submit" class="" value="Register"> 
                 </form>
             </div>
         </div>

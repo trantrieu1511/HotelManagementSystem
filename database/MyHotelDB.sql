@@ -13,8 +13,14 @@ CREATE TABLE Customer(
 	[Address] nvarchar(MAX),
 	Email varchar(35) not null,
 	PhoneNumber varchar(35) not null,
-	Username varchar(25) not null,
-	[Password] varchar(25) not null
+)
+
+CREATE TABLE Account(
+	CusID varchar(8000) not null,
+	Username varchar(25) primary key,
+	[Password] varchar(25) not null,
+	Roll smallint not null default 0, -- 0: Customer, 1: Manager, 2: Receptionist
+	FOREIGN KEY (CusID) REFERENCES Customer (CusID)
 )
 
 CREATE TABLE RoomType(

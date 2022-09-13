@@ -17,33 +17,33 @@
         <!------ Include the above in your HEAD tag ---------->
     </head>
     <body>
-        <div class="wrapper fadeInDown">
+        <div class="wrapper">
             <div id="formContent">
                 <!-- Tabs Titles -->
 
                 <!-- Icon -->
-                <div class="fadeIn first">
+                <div class="">
                     <!--<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />-->
                     <div style="margin-top: 15px;">Login to our Hotel</div>
                 </div>
                 <hr>
 
                 <!-- Login Form -->
-                <form action="" method="POST">
+                <form action="authentication" method="POST">
                     <input type="hidden" name="do" value="login">
-                    <div style="text-align: left; margin-left: 35px; font-weight: bold;
+                    <div style="text-align: left; margin-left: 35px;
                          ">Username: <span class="text-danger">*</span></div>
-                    <input type="text" id="login" class="fadeIn second" name="Username" required="" placeholder="enter username" pattern="[a-zA-Z0-9]{1,25}"
+                    <input type="text" id="login" class="" name="Username"  placeholder="enter username" pattern="[a-zA-Z0-9]{1,25}"
                            title="Username must not contain: Unicode characters, 
                            special character e.g: !@#$%^&,. etc.. and whitespaces; 
                            Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
-                    <div style="text-align: left; margin-left: 35px; font-weight: bold;
+                    <div style="text-align: left; margin-left: 35px;
                          ">Password: <span class="text-danger">*</span></div>
-                    <input type="password" id="password" class="fadeIn third" name="Password" required="" placeholder="enter password" pattern="[a-zA-Z0-9]{1,25}"
+                    <input type="password" id="password" class="" name="Password" required="" placeholder="enter password" pattern="[a-zA-Z0-9]{1,25}"
                            title="Password must not contain: Unicode characters, 
                            special character e.g: !@#$%^&,. etc.. and whitespaces; 
                            Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
-                    <input type="submit" class="fadeIn fourth" value="Log In">
+                    <input type="submit" class="" value="Log In">
                 </form>
 
                 <!-- Remind Password -->
