@@ -65,6 +65,86 @@ public class Account extends Customer {
     }
 
     @Override
+    public int getId() {
+        return Id;
+    }
+
+    @Override
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
+    @Override
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    @Override
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
+    }
+
+    @Override
+    public String getLastName() {
+        return LastName;
+    }
+
+    @Override
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
+    }
+
+    @Override
+    public boolean isGender() {
+        return Gender;
+    }
+
+    @Override
+    public void setGender(boolean Gender) {
+        this.Gender = Gender;
+    }
+
+    @Override
+    public String getDOB() {
+        return DOB;
+    }
+
+    @Override
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
+    }
+
+    @Override
+    public String getAddress() {
+        return Address;
+    }
+
+    @Override
+    public void setAddress(String Address) {
+        this.Address = Address;
+    }
+
+    @Override
+    public String getEmail() {
+        return Email;
+    }
+
+    @Override
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    @Override
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
+    }
+
+    @Override
     public String toString() {
         return super.toString() + " " + "Account{" + "CusID=" + CusID + ", Username=" + Username + ", Password=" + Password + ", Roll=" + Roll + '}';
     }

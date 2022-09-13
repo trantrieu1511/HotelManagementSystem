@@ -24,7 +24,8 @@
                 <!-- Icon -->
                 <div class="">
                     <!--<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />-->
-                    <div style="margin-top: 15px;">Login to our Hotel</div>
+                    <div style="margin-top: 15px; font-size: x-large;
+                         font-weight: 600;">Login to our Hotel</div>
                 </div>
                 <hr>
 
@@ -43,6 +44,8 @@
                            title="Password must not contain: Unicode characters, 
                            special character e.g: !@#$%^&,. etc.. and whitespaces; 
                            Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
+                    <br>
+                    <span class="text-danger">${mess}</span>
                     <input type="submit" class="" value="Log In">
                 </form>
 

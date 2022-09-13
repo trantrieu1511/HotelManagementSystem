@@ -42,13 +42,13 @@ public class ControllerAuthentication extends HttpServlet {
             HttpSession session = request.getSession();
             DAOCustomer daoCus = new DAOCustomer();
             DAOAccount daoAcc = new DAOAccount();
-            
+
             if (service.equals("login")) {
                 String username = request.getParameter("Username");
                 String password = request.getParameter("Password");
                 Account acc = daoAcc.login(username, password);
                 if (acc == null) {
-                    request.setAttribute("mess", "User or Password is incorrect!"
+                    request.setAttribute("mess", "User or Password is incorrect! "
                             + "Please try again!");
                     RequestDispatcher dispatch = request.getRequestDispatcher("login.jsp");
                     dispatch.forward(request, response);
@@ -58,7 +58,7 @@ public class ControllerAuthentication extends HttpServlet {
                 }
             }
             if (service.equals("register")) {
-                
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();
