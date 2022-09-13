@@ -15,6 +15,19 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="../css/loginformcss2.css" rel="stylesheet" id="bootstrap-css">
         <!------ Include the above in your HEAD tag ---------->
+        <script type="text/javascript">
+            function checkEmailOrPhone() {
+                var emailOrPhone = document.getElementById('login');
+                if (emailOrPhone.value.toString().includes("@")) { //email
+                    emailOrPhone.pattern = "[a-zA-Z0-9]{1,18}[@][a-z]{1,8}[.][a-z]{1,8}";
+                    emailOrPhone.title = "Email must not contain: Unicode characters, special character e.g: !@#$%^&,. etc.. and whitespaces; \n\
+        Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25";
+                } else {
+                    emailOrPhone.pattern = "[0-9]{10}";
+                    emailOrPhone.title = "Phone number must be 10-digit number or please enter your email";
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="wrapper">
@@ -31,13 +44,11 @@
 
                 <!-- Login Form -->
                 <form action="authentication" method="POST">
-                    <input type="hidden" name="do" value="login">
+                    <input type="hidden" name="do" value="customerLogin">
                     <div style="text-align: left; margin-left: 35px;
-                         ">Username: <span class="text-danger">*</span></div>
-                    <input type="text" id="login" class="" name="Username"  placeholder="enter username" pattern="[a-zA-Z0-9]{1,25}"
-                           title="Username must not contain: Unicode characters, 
-                           special character e.g: !@#$%^&,. etc.. and whitespaces; 
-                           Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
+                         ">Email: <span class="text-danger">*</span></div>
+                    <input type="text" id="login" class="" name="EmailOrPhone" required="" placeholder="enter email or phone number"
+                           onkeyup="checkEmailOrPhone()">
                     <div style="text-align: left; margin-left: 35px;
                          ">Password: <span class="text-danger">*</span></div>
                     <input type="password" id="password" class="" name="Password" required="" placeholder="enter password" pattern="[a-zA-Z0-9]{1,25}"

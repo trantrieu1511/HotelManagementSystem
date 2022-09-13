@@ -5,8 +5,7 @@
  */
 package Controller;
 
-import Entity.Account;
-import Model.DAOAccount;
+import Entity.Customer;
 import Model.DAOCustomer;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,21 +40,36 @@ public class ControllerAuthentication extends HttpServlet {
             String service = request.getParameter("do");
             HttpSession session = request.getSession();
             DAOCustomer daoCus = new DAOCustomer();
-            DAOAccount daoAcc = new DAOAccount();
 
-            if (service.equals("login")) {
-                String username = request.getParameter("Username");
+            if (service.equals("customerLogin")) {
+                String email = "";
+                String phone = "";
                 String password = request.getParameter("Password");
-                Account acc = daoAcc.login(username, password);
-                if (acc == null) {
-                    request.setAttribute("mess", "User or Password is incorrect! "
-                            + "Please try again!");
+                Customer cus = new Customer();
+                if (request.getParameter("EmailOrPhone").contains("@")) {
+                    email = request.getParameter("EmailOrPhone");
+                    cus = daoCus.loginUsingEmail(email, password);
+                } else {
+                    phone = request.getParameter("EmailOrPhone");
+                    cus = daoCus.loginUsingPhone(phone, password);
+                }
+                if (cus == null) {
+                    if (email == "") {
+                        request.setAttribute("mess", "Phone or Password is incorrect! "
+                                + "Please try again!");
+                    } else {
+                        request.setAttribute("mess", "Email or Password is incorrect! "
+                                + "Please try again!");
+                    }
                     RequestDispatcher dispatch = request.getRequestDispatcher("login.jsp");
                     dispatch.forward(request, response);
                 } else {
-                    session.setAttribute("Customer", acc);
+                    session.setAttribute("Customer", cus);
                     response.sendRedirect("home.jsp");
                 }
+            }
+            if (service.equals("employeeLogin")) {
+
             }
             if (service.equals("register")) {
 

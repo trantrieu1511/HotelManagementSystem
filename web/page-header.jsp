@@ -28,10 +28,10 @@
                         <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
                         <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-                            <c:if test="${sessionScope==null}">
+                            <c:if test="${sessionScope.Customer==null}">
                             <li class="nav-item"><a href="login.jsp" class="nav-link">Login</a></li>
                             </c:if>
-                            <c:if test="${sessionScope!=null}">
+                            <c:if test="${sessionScope.Customer!=null}">
                             <li class="nav-item"><a href="profile.jsp" class="nav-link">Welcome ${sessionScope.Customer.getFirstName()}</a></li>
                             </c:if>
                     </ul>

@@ -14,12 +14,12 @@ public class Customer {
     int Id;
     String CusID, FirstName, LastName;
     boolean Gender;
-    String DOB, Address, Email, PhoneNumber;
+    String DOB, Address, Email, PhoneNumber, Password;
 
     public Customer() {
     }
 
-    public Customer(int Id, String CusID, String FirstName, String LastName, boolean Gender, String DOB, String Address, String Email, String PhoneNumber) {
+    public Customer(int Id, String CusID, String FirstName, String LastName, boolean Gender, String DOB, String Address, String Email, String PhoneNumber, String Password) {
         this.Id = Id;
         this.CusID = CusID;
         this.FirstName = FirstName;
@@ -29,6 +29,7 @@ public class Customer {
         this.Address = Address;
         this.Email = Email;
         this.PhoneNumber = PhoneNumber;
+        this.Password = Password;
     }
 
     public int getId() {
@@ -103,9 +104,17 @@ public class Customer {
         this.PhoneNumber = PhoneNumber;
     }
 
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String Password) {
+        this.Password = Password;
+    }
+
     @Override
     public String toString() {
-        return "Customer{" + "Id=" + Id + ", CusID=" + CusID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Gender=" + Gender + ", DOB=" + DOB + ", Address=" + Address + ", Email=" + Email + ", PhoneNumber=" + PhoneNumber + '}';
+        return "Customer{" + "Id=" + Id + ", CusID=" + CusID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Gender=" + Gender + ", DOB=" + DOB + ", Address=" + Address + ", Email=" + Email + ", PhoneNumber=" + PhoneNumber + ", Password=" + Password + '}';
     }
 
 }
