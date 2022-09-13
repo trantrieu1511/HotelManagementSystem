@@ -13,14 +13,25 @@ CREATE TABLE Customer(
 	[Address] nvarchar(MAX),
 	Email varchar(35) not null,
 	PhoneNumber varchar(35) not null,
+	[Password] varchar(25) not null
 )
 
-CREATE TABLE Account(
-	CusID varchar(8000) not null,
-	Username varchar(25) primary key,
+CREATE TABLE Employee(
+	Id INT identity,
+    EmpID AS (UPPER(LEFT(CAST(FirstName as varchar),1) + LEFT(CAST(LastName as varchar),1))
+    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS VARCHAR)) PERSISTED PRIMARY KEY,
+	FirstName nvarchar(25) not null,
+	LastName nvarchar(25) not null,
+	Gender bit,
+	DOB varchar(50),
+	HireDate varchar(50),
+	[Address] nvarchar(MAX),
+	Email varchar(35),
+	PhoneNumber varchar(35),
+	Username varchar(25) not null,
 	[Password] varchar(25) not null,
-	Roll smallint not null default 0, -- 0: Customer, 1: Manager, 2: Receptionist
-	FOREIGN KEY (CusID) REFERENCES Customer (CusID)
+	ReportsTo varchar(8000),
+	FOREIGN KEY (ReportsTo) REFERENCES Employee (EmpID)
 )
 
 CREATE TABLE RoomType(

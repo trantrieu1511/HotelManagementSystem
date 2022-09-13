@@ -1,6 +1,6 @@
 ﻿use [MyHotel]
 
-select * from Account
+select * from Employee
 select * from Customer
 select * from Booking
 select * from BookDetail
@@ -8,12 +8,17 @@ select * from BedType
 select * from Room
 select * from RoomType
 
---Account Queries
-insert into Account values('TT00001','trantrieu123', '12345678', 1)
+--Employee Queries
+insert into Employee(FirstName,LastName,Username,[Password]) values(N'Triệu',N'Trần','trantrieu123', '12345678')
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hà',N'Đặng','dangha', 'dangha','TT00001')
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Ngọc',N'Nguyễn','nguyenngoc', 'nguyenngoc','TT00001')
+
+update Employee
+set LastName = N'Trần'
+where Id = 1
 
 --Customer Queries
-insert into Customer values(N'Triệu', N'Trần', 1, '15/11/2002', N'Số nhà 16, Tổ 12, Tân Thịnh, HB, HB, VN', 'trantrieu15112k2@gmail.com', '0868342491')
-
+insert into Customer values(N'A', N'Nguyễn Văn', 1, '20/10/2001', N'Số nhà 5, Tổ 10, Tân Hòa, HB, HB, VN', 'nguyenvana@gmail.com', '0945656677','nguyenvana')
 --BedType Queries
 insert into BedType values('Single Bed')
 insert into BedType values('Double Bed')
@@ -29,7 +34,10 @@ insert into RoomType values('Luxury Room')
 insert into RoomType values('Superior Room')
 
 --Room Queries
+insert into Room values('')
 
 --Booking Queries
+insert into Booking values('')
 
 --BookDetail Queries
+insert into BookDetail values('')
