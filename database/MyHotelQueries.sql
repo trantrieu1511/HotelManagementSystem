@@ -19,6 +19,10 @@ where Id = 1
 
 --Customer Queries
 insert into Customer values(N'A', N'Nguyễn Văn', 1, '20/10/2001', N'Số nhà 5, Tổ 10, Tân Hòa, HB, HB, VN', 'nguyenvana@gmail.com', '0945656677','nguyenvana')
+----register----
+insert into Customer(FirstName,LastName,Email,PhoneNumber,[Password]) values(N'B', N'Nguyễn Văn', 'nguyenvanb@gmail.com', '0916368677','nguyenvanb')
+
+
 --BedType Queries
 insert into BedType values('Single Bed')
 insert into BedType values('Double Bed')

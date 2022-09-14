@@ -76,6 +76,27 @@ public class ControllerAuthentication extends HttpServlet {
 
             }
             if (service.equals("register")) {
+                String firstName = request.getParameter("FirstName");
+                String lastName = request.getParameter("LastName");
+                String email = request.getParameter("Email");
+                String password = request.getParameter("Password");
+                String phoneNumber = request.getParameter("PhoneNumber");
+
+                boolean registerSucceed = daoCus.register(
+                        new Customer(firstName, lastName, email, phoneNumber, password)
+                );
+                if (registerSucceed) {
+                    request.setAttribute("succeed", true);
+                    request.setAttribute("mess", "You have successfully registered as a member of our Hotel! "
+                            + "Use the new info to login!");
+                    RequestDispatcher dispatch = request.getRequestDispatcher("register.jsp");
+                    dispatch.forward(request, response);
+                } else {
+                    request.setAttribute("succeed", false);
+                    request.setAttribute("mess", "Failed to register! Please check again!");
+                    RequestDispatcher dispatch = request.getRequestDispatcher("register.jsp");
+                    dispatch.forward(request, response);
+                }
 
             }
             if (service.equals("logout")) {

@@ -1,99 +1,36 @@
 <%-- 
-    Document   : register
-    Created on : Sep 12, 2022, 4:02:50 PM
+    Document   : login
+    Created on : Sep 10, 2022, 6:24:43 PM
     Author     : DELL
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Register Page</title>
+        <title>Login Page</title>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="css/loginformcss2.css" rel="stylesheet" id="bootstrap-css">
         <!------ Include the above in your HEAD tag ---------->
         <script type="text/javascript">
-            function checkPassword(checkpassword) {
-                var password = document.getElementById('password').value;
-                if ((checkpassword.value && password) != "") {
-                    if (checkpassword.value != password) {
-                        document.getElementById('wrong_pass_alert').style.color = 'red';
-                        document.getElementById('wrong_pass_alert').innerHTML
-                                = '☒ Use same password! Confirm password does not match';
-                        document.getElementById('create').disabled = true;
-                        document.getElementById('create').style.opacity = (0.4);
-                    } else {
-                        document.getElementById('wrong_pass_alert').style.color = 'green';
-                        document.getElementById('wrong_pass_alert').innerHTML =
-                                '🗹 Password Matched';
-                        document.getElementById('create').disabled = false;
-                        document.getElementById('create').style.opacity = (1);
-                    }
-
+            function checkEmailOrPhone() {
+                var emailOrPhone = document.getElementById('login');
+                if (emailOrPhone.value.toString().includes("@")) { //email
+                    emailOrPhone.pattern = "[a-zA-Z0-9]{1,18}[@][a-z]{1,8}[.][a-z]{1,8}";
+                    emailOrPhone.title = "Email must not contain: Unicode characters, special character e.g: !@#$%^&,. etc.. and whitespaces; \n\
+        Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25";
                 } else {
-                    document.getElementById('wrong_pass_alert').innerHTML
-                            = '';
-                    document.getElementById('create').disabled = false;
-                    document.getElementById('create').style.opacity = (1);
+                    emailOrPhone.pattern = "[0-9]{10}";
+                    emailOrPhone.title = "Phone number must be 10-digit number or please enter your email";
                 }
             }
-            function checkconfirmPassword(checkpassword) {
-                var confirm_password = document.getElementById('confirm_password').value;
-                if ((checkpassword.value && confirm_password) != "") {
-                    if (checkpassword.value != confirm_password) {
-                        document.getElementById('wrong_pass_alert').style.color = 'red';
-                        document.getElementById('wrong_pass_alert').innerHTML
-                                = '☒ Use same password! Confirm password does not match';
-                        document.getElementById('create').disabled = true;
-                        document.getElementById('create').style.opacity = (0.4);
-                    } else {
-                        document.getElementById('wrong_pass_alert').style.color = 'green';
-                        document.getElementById('wrong_pass_alert').innerHTML =
-                                '🗹 Password Matched';
-                        document.getElementById('create').disabled = false;
-                        document.getElementById('create').style.opacity = (1);
-                    }
-
-                } else {
-                    document.getElementById('wrong_pass_alert').innerHTML
-                            = '';
-                    document.getElementById('create').disabled = false;
-                    document.getElementById('create').style.opacity = (1);
-                }
-            }
-
         </script>
-        <style>
-            div.col-sm-6{
-                padding: 0px;
-            }
-            #formContent{
-                max-width: 650px;
-            }
-        </style>
+
     </head>
     <body>
-        <%--<c:if test="${succeed!=null}">--%>
-        <div class="msgbox" style="
-             /*border: 2px solid aliceblue;*/
-             /*             background-color: aliceblue;*/
-             padding: 15px; 
-             margin: 0% 25% 0% 25%;
-             text-align: center">
-            <c:if test="${succeed==true}">
-                <div style="color: deepskyblue; margin-bottom: 10px">${mess}</div>
-                <a href="login.jsp" class="btn btn-secondary submit-btn"> Return to Login Page</a>
-            </c:if>
-            <c:if test="${succeed==false}">
-                <div style="color: red; margin-bottom: 10px">${mess}</div>
-                <a href="login.jsp" class="btn btn-secondary submit-btn"> Return to Login Page</a>
-            </c:if>
-        </div>
-        <%--</c:if>--%>
         <div class="wrapper">
             <div id="formContent">
                 <!-- Tabs Titles -->
@@ -108,8 +45,8 @@
 
                 <!-- Register Form -->
                 <form action="authentication" method="POST">
-                    <input type="hidden" name="do" value="register">
-                    <div class="row" style="margin-top: 35px; margin-bottom: 15px;">
+                    <input type="hidden" name="do" value="customerLogin">
+                    <div class="row" style="margin-top: 35px; margin-bottom: 15px; margin-left: 30px;">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>

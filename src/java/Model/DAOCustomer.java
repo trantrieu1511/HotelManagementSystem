@@ -85,6 +85,30 @@ public class DAOCustomer extends DBConnect {
         return null;
     }
 
+    public boolean register(Customer customer) {
+        String sql = "insert into Customer(FirstName,LastName,Email,PhoneNumber,[Password]) "
+                + "values(N'" + customer.getFirstName() + "', N'" + customer.getLastName() + "', "
+                + "?, ?, ?)";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+//            state.setString(1, customer.getFirstName());
+//            state.setString(2, customer.getLastName());
+            state.setString(1, customer.getEmail());
+            state.setString(2, customer.getPhoneNumber());
+            state.setString(3, customer.getPassword());
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         DAOCustomer dao = new DAOCustomer();
         Customer cus = dao.loginUsingEmail("nguyenvana@gmail.com", "nguyenvana");
@@ -92,5 +116,4 @@ public class DAOCustomer extends DBConnect {
         System.out.println(cus.getCusID());
         System.out.println(cus2);
     }
-
 }

@@ -45,10 +45,10 @@ public class ControllerHome extends HttpServlet {
                 dispatch.forward(request, response);
             }
         }
-//        catch (Exception ex) {
-//            ex.printStackTrace();
-//            response.sendRedirect("error404.jsp");
-//        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendRedirect("error404.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

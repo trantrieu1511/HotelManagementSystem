@@ -32,6 +32,15 @@ public class Customer {
         this.Password = Password;
     }
 
+    //register/ add a Customer constructor
+    public Customer(String FirstName, String LastName, String Email, String PhoneNumber, String Password) {
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.PhoneNumber = PhoneNumber;
+        this.Password = Password;
+    }
+
     public int getId() {
         return Id;
     }
