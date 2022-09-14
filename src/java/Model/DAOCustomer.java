@@ -89,7 +89,7 @@ public class DAOCustomer extends DBConnect {
         DAOCustomer dao = new DAOCustomer();
         Customer cus = dao.loginUsingEmail("nguyenvana@gmail.com", "nguyenvana");
         Customer cus2 = dao.loginUsingPhone("0945656677", "nguyenvana");
-        System.out.println(cus);
+        System.out.println(cus.getCusID());
         System.out.println(cus2);
     }
 

@@ -18,8 +18,8 @@ CREATE TABLE Customer(
 
 CREATE TABLE Employee(
 	Id INT identity,
-    EmpID AS (UPPER(LEFT(CAST(FirstName as varchar),1) + LEFT(CAST(LastName as varchar),1))
-    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS VARCHAR)) PERSISTED PRIMARY KEY,
+    EmpID AS (UPPER(LEFT(CAST(FirstName as varchar),2) + LEFT(CAST(LastName as varchar),2))
+    + REPLICATE('0', 3-LEN(Id)) + CAST(Id AS VARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,

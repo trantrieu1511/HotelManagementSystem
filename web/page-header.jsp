@@ -32,8 +32,15 @@
                             <li class="nav-item"><a href="login.jsp" class="nav-link">Login</a></li>
                             </c:if>
                             <c:if test="${sessionScope.Customer!=null}">
-                            <li class="nav-item"><a href="profile.jsp" class="nav-link">Welcome ${sessionScope.Customer.getFirstName()}</a></li>
-                            </c:if>
+                            <li class="nav-item dropdown has-arrow main-drop">
+                                <a href="profile.jsp" class="dropdown-toggle nav-link" data-toggle="dropdown">Welcome ${sessionScope.Customer.getFirstName()}</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="account.jsp">Manage Account</a>
+                                    <!--<a class="dropdown-item" href="settings.html">Settings</a>-->
+                                    <a class="dropdown-item" href="authentication?do=logout">Logout</a>
+                                </div>
+                            </li>
+                        </c:if>
                     </ul>
                 </div>
             </div>

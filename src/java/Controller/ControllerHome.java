@@ -5,8 +5,6 @@
  */
 package Controller;
 
-import Entity.Customer;
-import Model.DAOCustomer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -21,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author DELL
  */
-@WebServlet(name = "ControllerAuthentication", urlPatterns = {"/authentication"})
-public class ControllerAuthentication extends HttpServlet {
+@WebServlet(name = "ControllerHome", urlPatterns = {"/home"})
+public class ControllerHome extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,60 +36,19 @@ public class ControllerAuthentication extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
-            HttpSession session = request.getSession();
-            DAOCustomer daoCus = new DAOCustomer();
-            Customer cus = new Customer();
-
-            if (service == null || service.equals("")) {
-                response.sendRedirect("login.jsp");
+//            HttpSession session = request.getSession();
+            if (service == null) {
+                service = "homeView";
             }
-            if (service.equals("customerLogin")) {
-                String email = "";
-                String phone = "";
-                String password = request.getParameter("Password");
-                if (request.getParameter("EmailOrPhone").contains("@")) {
-                    email = request.getParameter("EmailOrPhone");
-                    cus = daoCus.loginUsingEmail(email, password);
-                } else {
-                    phone = request.getParameter("EmailOrPhone");
-                    cus = daoCus.loginUsingPhone(phone, password);
-                }
-                if (cus == null) {
-                    if (email == "") {
-                        request.setAttribute("mess", "Phone or Password is incorrect! "
-                                + "Please try again!");
-                    } else {
-                        request.setAttribute("mess", "Email or Password is incorrect! "
-                                + "Please try again!");
-                    }
-                    RequestDispatcher dispatch = request.getRequestDispatcher("login.jsp");
-                    dispatch.forward(request, response);
-                } else {
-                    session.setAttribute("Customer", cus);
-                    RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
-                    dispatch.forward(request, response);
-                }
+            if (service.equals("homeView")) {
+                RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                dispatch.forward(request, response);
             }
-            if (service.equals("employeeLogin")) {
-
-            }
-            if (service.equals("register")) {
-
-            }
-            if (service.equals("logout")) {
-                java.util.Enumeration em = session.getAttributeNames();
-                while (em.hasMoreElements()) {
-                    String key = em.nextElement().toString();
-                    if (key.equals("Customer") || key.equals("Employee")) {
-                        session.removeAttribute(key);
-                    }
-                }
-                response.sendRedirect("home.jsp");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            response.sendRedirect("error404.jsp");
         }
+//        catch (Exception ex) {
+//            ex.printStackTrace();
+//            response.sendRedirect("error404.jsp");
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
