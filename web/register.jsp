@@ -80,21 +80,28 @@
         <%--<c:if test="${succeed!=null}">--%>
         <div class="msgbox" style="
              /*border: 2px solid aliceblue;*/
-             /*             background-color: aliceblue;*/
+             /*background-color: aliceblue;*/
              padding: 15px; 
              margin: 0% 25% 0% 25%;
              text-align: center">
             <c:if test="${succeed==true}">
                 <div style="color: deepskyblue; margin-bottom: 10px">${mess}</div>
-                <a href="login.jsp" class="btn btn-secondary submit-btn"> Return to Login Page</a>
+                <a href="login.jsp" class="btn btn-primary submit-btn"> Return to Login Page</a> 
             </c:if>
             <c:if test="${succeed==false}">
                 <div style="color: red; margin-bottom: 10px">${mess}</div>
-                <a href="login.jsp" class="btn btn-secondary submit-btn"> Return to Login Page</a>
             </c:if>
         </div>
         <%--</c:if>--%>
-        <div class="wrapper">
+        <div class="" style="
+             display: flex;
+             align-items: center;
+             flex-direction: column;
+             /* justify-content: center; */
+             width: 100%;
+             min-height: 100%;
+             padding: 20px;
+             ">
             <div id="formContent">
                 <!-- Tabs Titles -->
 
@@ -107,9 +114,13 @@
                 <hr>
 
                 <!-- Register Form -->
-                <form action="authentication" method="POST">
+                <form action="authentication" accept-charset="utf-8" method="POST">
                     <input type="hidden" name="do" value="register">
-                    <div class="row" style="margin-top: 35px; margin-bottom: 15px;">
+                    <div class="row" style="
+                         margin-top: 35px; 
+                         margin-bottom: 15px; 
+                         margin-left: 5px;
+                         margin-right: 5px;">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>

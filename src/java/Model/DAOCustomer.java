@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -19,6 +20,7 @@ public class DAOCustomer extends DBConnect {
 
     Connection conn = null;
     PreparedStatement state = null;
+    Statement st = null;
     ResultSet rs = null;
 
     public Customer loginUsingEmail(String email, String password) {
@@ -87,16 +89,15 @@ public class DAOCustomer extends DBConnect {
 
     public boolean register(Customer customer) {
         String sql = "insert into Customer(FirstName,LastName,Email,PhoneNumber,[Password]) "
-                + "values(N'" + customer.getFirstName() + "', N'" + customer.getLastName() + "', "
-                + "?, ?, ?)";
+                + "values(?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-//            state.setString(1, customer.getFirstName());
-//            state.setString(2, customer.getLastName());
-            state.setString(1, customer.getEmail());
-            state.setString(2, customer.getPhoneNumber());
-            state.setString(3, customer.getPassword());
+            state.setString(1, customer.getFirstName());
+            state.setString(2, customer.getLastName());
+            state.setString(3, customer.getEmail());
+            state.setString(4, customer.getPhoneNumber());
+            state.setString(5, customer.getPassword());
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -109,11 +110,60 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
+    public boolean checkPhoneNumberExist(String phoneNumber) {
+        String sql = "select PhoneNumber from Customer where PhoneNumber = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, phoneNumber);
+            rs = state.executeQuery();
+            if (!rs.next()) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+//            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean checkEmailExist(String email) {
+        String sql = "select Email from Customer where Email = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, email);
+            rs = state.executeQuery();
+            if (!rs.next()) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+//            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         DAOCustomer dao = new DAOCustomer();
-        Customer cus = dao.loginUsingEmail("nguyenvana@gmail.com", "nguyenvana");
-        Customer cus2 = dao.loginUsingPhone("0945656677", "nguyenvana");
-        System.out.println(cus.getCusID());
-        System.out.println(cus2);
+//        Customer cus = dao.loginUsingEmail("nguyenvana@gmail.com", "nguyenvana");
+//        Customer cus2 = dao.loginUsingPhone("0945656677", "nguyenvana");
+//        System.out.println(cus.getCusID());
+//        System.out.println(cus2);
+        boolean emailIsExisted = dao.checkEmailExist("u@gmail.com");
+        boolean phoneNumberIsExisted = dao.checkPhoneNumberExist("0987654321");
+        if (emailIsExisted || phoneNumberIsExisted) {
+            System.out.println("Existed!");
+        } else {
+            System.out.println("Clear!");
+        }
     }
 }

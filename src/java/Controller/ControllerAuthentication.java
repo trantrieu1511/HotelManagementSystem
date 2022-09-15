@@ -36,6 +36,8 @@ public class ControllerAuthentication extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
             HttpSession session = request.getSession();
@@ -82,22 +84,32 @@ public class ControllerAuthentication extends HttpServlet {
                 String password = request.getParameter("Password");
                 String phoneNumber = request.getParameter("PhoneNumber");
 
-                boolean registerSucceed = daoCus.register(
-                        new Customer(firstName, lastName, email, phoneNumber, password)
-                );
-                if (registerSucceed) {
-                    request.setAttribute("succeed", true);
-                    request.setAttribute("mess", "You have successfully registered as a member of our Hotel! "
-                            + "Use the new info to login!");
+                boolean emailIsExisted = daoCus.checkEmailExist(email);
+                boolean phoneNumberIsExisted = daoCus.checkPhoneNumberExist(phoneNumber);
+                if (emailIsExisted || phoneNumberIsExisted) {
+                    request.setAttribute("succeed", false);
+                    request.setAttribute("mess", "Failed to register! "
+                            + "Your email or phone info is duplicated with others! "
+                            + "Please try again!");
                     RequestDispatcher dispatch = request.getRequestDispatcher("register.jsp");
                     dispatch.forward(request, response);
                 } else {
-                    request.setAttribute("succeed", false);
-                    request.setAttribute("mess", "Failed to register! Please check again!");
-                    RequestDispatcher dispatch = request.getRequestDispatcher("register.jsp");
-                    dispatch.forward(request, response);
+                    boolean registerSucceed = daoCus.register(
+                            new Customer(firstName, lastName, email, phoneNumber, password)
+                    );
+                    if (registerSucceed) {
+                        request.setAttribute("succeed", true);
+                        request.setAttribute("mess", "You have successfully registered as a member of our Hotel! "
+                                + "Use the new info to login!");
+                        RequestDispatcher dispatch = request.getRequestDispatcher("register.jsp");
+                        dispatch.forward(request, response);
+                    } else {
+                        request.setAttribute("succeed", false);
+                        request.setAttribute("mess", "Failed to register! For dev, please check the system!");
+                        RequestDispatcher dispatch = request.getRequestDispatcher("register.jsp");
+                        dispatch.forward(request, response);
+                    }
                 }
-
             }
             if (service.equals("logout")) {
                 java.util.Enumeration em = session.getAttributeNames();

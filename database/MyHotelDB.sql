@@ -4,8 +4,8 @@ USE [MyHotel]
 
 CREATE TABLE Customer(
 	Id INT identity,
-    CusID AS (UPPER(LEFT(CAST(FirstName as varchar),1) + LEFT(CAST(LastName as varchar),1))
-    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS VARCHAR)) PERSISTED PRIMARY KEY,
+    CusID AS (UPPER(LEFT(FirstName,1) + LEFT(LastName,1))
+    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,
@@ -18,8 +18,8 @@ CREATE TABLE Customer(
 
 CREATE TABLE Employee(
 	Id INT identity,
-    EmpID AS (UPPER(LEFT(CAST(FirstName as varchar),2) + LEFT(CAST(LastName as varchar),2))
-    + REPLICATE('0', 3-LEN(Id)) + CAST(Id AS VARCHAR)) PERSISTED PRIMARY KEY,
+    EmpID AS (UPPER(LEFT(FirstName,2) + LEFT(LastName,2))
+    + REPLICATE('0', 3-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,
@@ -30,7 +30,7 @@ CREATE TABLE Employee(
 	PhoneNumber varchar(35),
 	Username varchar(25) not null,
 	[Password] varchar(25) not null,
-	ReportsTo varchar(8000),
+	ReportsTo nvarchar(4000),
 	FOREIGN KEY (ReportsTo) REFERENCES Employee (EmpID)
 )
 
@@ -41,7 +41,7 @@ CREATE TABLE RoomType(
 
 CREATE TABLE Booking(
 	BookID int identity(1,1) primary key,
-	CusID varchar(8000) not null,
+	CusID nvarchar(4000) not null,
 	BookDate varchar(50) not null,
 	PaymentStatus bit default 0 not null,
 	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)

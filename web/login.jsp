@@ -28,7 +28,7 @@
                 }
             }
         </script>
-        
+
     </head>
     <body>
         <div class="wrapper">
@@ -64,7 +64,7 @@
                 <!-- Remind Password -->
                 <div id="formFooter">
                     <a class="underlineHover" href="#">Forgot Password?</a><br>
-                    Or Register a new Account <a class="underlineHover" href="register.jsp">here</a>
+                    Don't have an account? Register <a class="underlineHover" href="register.jsp">here</a>
                 </div>
 
             </div>
