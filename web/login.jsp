@@ -31,33 +31,34 @@
 
     </head>
     <body>
-        <div class="wrapper">
-            <div id="formContent">
-                <!-- Tabs Titles -->
+        <jsp:include page="page-header.jsp"></jsp:include>
+            <div class="wrapper">
+                <div id="formContent">
+                    <!-- Tabs Titles -->
 
-                <!-- Icon -->
-                <div class="">
-                    <!--<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />-->
-                    <div style="margin-top: 15px; font-size: x-large;
-                         font-weight: 600;">Login to our Hotel</div>
-                </div>
-                <hr>
+                    <!-- Icon -->
+                    <div class="">
+                        <!--<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />-->
+                        <div style="margin-top: 15px; font-size: x-large;
+                             font-weight: 600;">Login to our Hotel</div>
+                    </div>
+                    <hr>
 
-                <!-- Login Form -->
-                <form action="authentication" method="POST">
-                    <input type="hidden" name="do" value="customerLogin">
-                    <div style="text-align: left; margin-left: 35px;
-                         ">Email: <span class="text-danger">*</span></div>
-                    <input type="text" id="login" class="" name="EmailOrPhone" required="" placeholder="enter email or phone number"
-                           onkeyup="checkEmailOrPhone()">
-                    <div style="text-align: left; margin-left: 35px;
-                         ">Password: <span class="text-danger">*</span></div>
-                    <input type="password" id="password" class="" name="Password" required="" placeholder="enter password" pattern="[a-zA-Z0-9]{1,25}"
-                           title="Password must not contain: Unicode characters, 
-                           special character e.g: !@#$%^&,. etc.. and whitespaces; 
-                           Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
-                    <br>
-                    <span class="text-danger">${mess}</span>
+                    <!-- Login Form -->
+                    <form action="authentication" method="POST">
+                        <input type="hidden" name="do" value="customerLogin">
+                        <div style="text-align: left; margin-left: 35px;
+                             ">Email: <span class="text-danger">*</span></div>
+                        <input type="text" id="login" class="" name="EmailOrPhone" required="" placeholder="enter email or phone number"
+                               onkeyup="checkEmailOrPhone()">
+                        <div style="text-align: left; margin-left: 35px;
+                             ">Password: <span class="text-danger">*</span></div>
+                        <input type="password" id="password" class="" name="Password" required="" placeholder="enter password" pattern="[a-zA-Z0-9]{1,25}"
+                               title="Password must not contain: Unicode characters, 
+                               special character e.g: !@#$%^&,. etc.. and whitespaces; 
+                               Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
+                        <br>
+                        <span class="text-danger">${mess}</span>
                     <input type="submit" class="" value="Log In">
                 </form>
 

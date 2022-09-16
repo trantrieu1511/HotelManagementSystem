@@ -57,7 +57,7 @@
                             <div class="row no-gutters slider-text align-items-center justify-content-end">
                                 <div class="col-md-6 ftco-animate">
                                     <div class="text">
-                                        <h2>Harbor Lights Hotel &amp; Resort</h2>
+                                        <h2>Hotel &amp; Resort</h2>
                                         <h1 class="mb-3">It feels like staying in your own home.</h1>
                                     </div>
                                 </div>

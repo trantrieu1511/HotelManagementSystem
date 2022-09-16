@@ -44,8 +44,7 @@ public class ControllerHome extends HttpServlet {
                 RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
                 dispatch.forward(request, response);
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }

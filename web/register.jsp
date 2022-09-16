@@ -73,10 +73,12 @@
             }
             #formContent{
                 max-width: 650px;
+                text-align: left;
             }
         </style>
     </head>
     <body>
+        <jsp:include page="page-header.jsp"></jsp:include>
         <%--<c:if test="${succeed!=null}">--%>
         <div class="msgbox" style="
              /*border: 2px solid aliceblue;*/
@@ -86,7 +88,6 @@
              text-align: center">
             <c:if test="${succeed==true}">
                 <div style="color: deepskyblue; margin-bottom: 10px">${mess}</div>
-                <a href="login.jsp" class="btn btn-primary submit-btn"> Return to Login Page</a> 
             </c:if>
             <c:if test="${succeed==false}">
                 <div style="color: red; margin-bottom: 10px">${mess}</div>
@@ -102,7 +103,7 @@
              min-height: 100%;
              padding: 20px;
              ">
-            <div id="formContent">
+            <div id="formContent" style="padding-left: 35px">
                 <!-- Tabs Titles -->
 
                 <!-- Icon -->
@@ -112,6 +113,8 @@
                          font-weight: 600;">Register to our Hotel</div>
                 </div>
                 <hr>
+
+                <div>Please fill info into the <span class="text-danger">*</span> field below to register.</div>
 
                 <!-- Register Form -->
                 <form action="authentication" accept-charset="utf-8" method="POST">
@@ -124,7 +127,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="FirstName" id="first_name" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
+                                <input class="form-control" type="text" name="FirstName" id="first_name" placeholder="e.g: Johnson" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                        title="FirstName not contain: 
                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
                                        allow uppercase and lowercase letters, max length: 12">
@@ -133,7 +136,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="LastName" id="last_name" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
+                                <input class="form-control" type="text" name="LastName" id="last_name" placeholder="e.g: Harry" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                        title="LastName not contain: 
                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
                                        allow uppercase and lowercase letters, max length: 12">
@@ -154,7 +157,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Password <span class="text-danger">*</span></label>
-                                <input class="form-control" type="password" name="Password" id="password" 
+                                <input class="form-control" type="password" name="Password" id="password" placeholder="Enter your password"
                                        onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
                                        title="Password not contain: Unicode characters, 
                                        special character e.g: !@#$%^&,. etc.. and spacing characters; 
@@ -165,7 +168,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
-                                <input class="form-control" type="password" name="ConfirmPassword" id="confirm_password"
+                                <input class="form-control" type="password" name="ConfirmPassword" id="confirm_password" placeholder="Re-enter your password"
                                        onkeyup="checkPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
                                        title="Confirm Password not contain: Unicode characters, 
                                        special character e.g: !@#$%^&,. etc.. and spacing characters; 
@@ -173,14 +176,14 @@
                             </div>
                             <span id="wrong_pass_alert"></span>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Phone <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="PhoneNumber" id="phone_number" title="phone number must be 10-digit number" pattern="[0-9]{10}">
-                            </div>
-                        </div>
+                        <!--                        <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Phone <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="PhoneNumber" id="phone_number" title="phone number must be 10-digit number" pattern="[0-9]{10}">
+                                                    </div>
+                                                </div>-->
                     </div>
-                    <div class="submit-section" style="text-align: center">
+                    <div class="submit-section" style="text-align: center; margin-right: 30px;">
                         <input type="submit" class="" id="create" value="register">
                     </div>
                 </form>

@@ -6,7 +6,9 @@
 package Controller;
 
 import Entity.Customer;
+import Entity.Employee;
 import Model.DAOCustomer;
+import Model.DAOEmployee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -21,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author DELL
  */
-@WebServlet(name = "ControllerCustomer", urlPatterns = {"/customer"})
-public class ControllerCustomer extends HttpServlet {
+@WebServlet(name = "ControllerEmployee", urlPatterns = {"/employee"})
+public class ControllerEmployee extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,27 +42,21 @@ public class ControllerCustomer extends HttpServlet {
             String service = request.getParameter("do");
             HttpSession session = request.getSession();
             DAOCustomer daoCus = new DAOCustomer();
-            Customer cus = (Customer) session.getAttribute("Customer");
-            if (cus == null) {
+            DAOEmployee daoEmp = new DAOEmployee();
+            Employee emp = (Employee) session.getAttribute("Employee");
+            if (emp == null) {
                 response.sendRedirect("login.jsp");
             } else {
                 if (service == null) {
-                    service = "displayCustomerAccountSettings";
+                    service = "";
                 }
-                if (service.equals("displayCustomerAccountSettings")) {
-                    RequestDispatcher dispatch = request.getRequestDispatcher("account-settings.jsp");
+                if (service.equals("")) {
+                    RequestDispatcher dispatch = request.getRequestDispatcher("");
                     dispatch.forward(request, response);
                 }
-                if (service.equals("displayCustomerDetails")) {
-                    cus = daoCus.getCustomerDetails(cus.getCusID());
-                    request.setAttribute("cusInfo", cus);
-                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-details.jsp");
-                    dispatch.forward(request, response);
-                }
-                if (service.equals("displayCustomerSecurity")) {
-                    cus = daoCus.getCustomerDetails(cus.getCusID());
-                    request.setAttribute("cusInfo", cus);
-                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+                if (service.equals("")) {
+
+                    RequestDispatcher dispatch = request.getRequestDispatcher("");
                     dispatch.forward(request, response);
                 }
             }

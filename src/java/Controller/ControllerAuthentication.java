@@ -85,11 +85,12 @@ public class ControllerAuthentication extends HttpServlet {
                 String phoneNumber = request.getParameter("PhoneNumber");
 
                 boolean emailIsExisted = daoCus.checkEmailExist(email);
-                boolean phoneNumberIsExisted = daoCus.checkPhoneNumberExist(phoneNumber);
-                if (emailIsExisted || phoneNumberIsExisted) {
+//                boolean phoneNumberIsExisted = daoCus.checkPhoneNumberExist(phoneNumber);
+                if (emailIsExisted //                        || phoneNumberIsExisted
+                        ) {
                     request.setAttribute("succeed", false);
                     request.setAttribute("mess", "Failed to register! "
-                            + "Your email or phone info is duplicated with others! "
+                            + "Your email is duplicated with others! "
                             + "Please try again!");
                     RequestDispatcher dispatch = request.getRequestDispatcher("register.jsp");
                     dispatch.forward(request, response);
