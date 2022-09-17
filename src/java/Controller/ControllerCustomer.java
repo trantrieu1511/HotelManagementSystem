@@ -47,6 +47,8 @@ public class ControllerCustomer extends HttpServlet {
                 response.sendRedirect("login.jsp");
             } else {
                 int setting_option = 0;
+                boolean editSuccess = true;
+                String message = "";
                 if (service == null) {
                     service = "displayCustomerAccountSettings";
                 }
@@ -56,57 +58,88 @@ public class ControllerCustomer extends HttpServlet {
                 }
                 if (service.equals("displayCustomerDetails")) {
                     setting_option = 1;
-                    cus = daoCus.getCustomerDetails(cus.getCusID());
+                    String edit = request.getParameter("edit");
+                    if (edit != null && edit.equals("success")) {
+                        message = "Edit Successfully!";
+                    }
+                    if (edit != null && edit.equals("fail")) {
+                        message = "Edit Failed! For dev, please "
+                                + "check the system for specific error!";
+                    }
+                    cus = daoCus.getCustomerDetails(cus.getId());
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
+                    request.setAttribute("message", message);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-details.jsp");
                     dispatch.forward(request, response);
                 }
                 if (service.equals("displayCustomerSecurity")) {
                     setting_option = 2;
-                    cus = daoCus.getCustomerDetails(cus.getCusID());
+                    String edit = request.getParameter("edit");
+                    if (edit != null && edit.equals("success")) {
+                        message = "Edit Successfully!";
+                    }
+                    if (edit != null && edit.equals("fail")) {
+                        message = "Edit Failed! For dev, please "
+                                + "check the system for specific error!";
+                    }
+                    cus = daoCus.getCustomerDetails(cus.getId());
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
+                    request.setAttribute("message", message);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
                     dispatch.forward(request, response);
                 }
                 if (service.equals("editFullName")) {
                     String firstName = request.getParameter("FirstName");
                     String lastName = request.getParameter("LastName");
-                    out.print(firstName);
-                    out.print(lastName);
-//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
-//                    dispatch.forward(request, response);
+//                    out.print(firstName);
+//                    out.print(lastName);
+                    editSuccess = daoCus.editFullName(firstName, lastName, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
                 }
                 if (service.equals("editEmail")) {
-                    String dob = request.getParameter("DOB");
-                    out.print(dob);
-//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
-//                    dispatch.forward(request, response);
+                    String email = request.getParameter("Email");
+//                    out.print(email);
+                    editSuccess = daoCus.editEmail(email, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
+                }
+                if (service.equals("editPhoneNumber")) {
+                    String phoneNumber = request.getParameter("PhoneNumber");
+//                    out.print(email);
+                    editSuccess = daoCus.editPhoneNumber(phoneNumber, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
                 }
                 if (service.equals("editGender")) {
-                    String dob = request.getParameter("DOB");
-                    out.print(dob);
-//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
-//                    dispatch.forward(request, response);
+                    String isMale = request.getParameter("Gender");
+//                    out.print(isMale);
+                    editSuccess = daoCus.editGender(isMale, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
                 }
                 if (service.equals("editDOB")) {
                     String dob = request.getParameter("DOB");
-                    out.print(dob);
-//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
-//                    dispatch.forward(request, response);
+//                    out.print(dob);
+                    editSuccess = daoCus.editDOB(dob, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
                 }
                 if (service.equals("editAddress")) {
-                    String dob = request.getParameter("DOB");
-                    out.print(dob);
-//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
-//                    dispatch.forward(request, response);
+                    String address = request.getParameter("Address");
+//                    out.print(address);
+                    editSuccess = daoCus.editAddress(address, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
                 }
                 if (service.equals("editPassword")) {
-                    String dob = request.getParameter("DOB");
-                    out.print(dob);
-//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
-//                    dispatch.forward(request, response);
+                    String password = request.getParameter("Password");
+//                    out.print(password);
+                    editSuccess = daoCus.editPassword(password, cus.getCusID());
+                    if (editSuccess) {
+                        response.sendRedirect("customer?do=displayCustomerSecurity&edit=success");
+                    } else {
+                        response.sendRedirect("customer?do=displayCustomerSecurity&edit=fail");
+                    }
+                }
+                if (service.equals("deleteAccount")) {
+
                 }
             }
         } catch (Exception ex) {
@@ -154,4 +187,11 @@ public class ControllerCustomer extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void forwardAndDisplayResult(boolean editSuccess, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (editSuccess) {
+            response.sendRedirect("customer?do=displayCustomerDetails&edit=success");
+        } else {
+            response.sendRedirect("customer?do=displayCustomerDetails&edit=fail");
+        }
+    }
 }
