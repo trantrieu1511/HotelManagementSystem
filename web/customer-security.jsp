@@ -17,6 +17,7 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/customer-account-settings.js"></script>
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
@@ -37,11 +38,30 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Password</h6>
                                         </div>
-                                        <div class="col-sm-7 text-secondary">
+                                        <div class="col-sm-7 text-secondary" id="passwordDiv">
                                         ${cusInfo.getPassword()}
                                     </div>
+                                    <form class="col-sm-7 text-secondary" id="passwordForm" action="customer" hidden="">
+                                        <input type="hidden" name="do" value="editPassword">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Password <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="password" name="Password" id="password" placeholder="Enter your password"
+                                                           onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
+                                                           title="Password not contain: Unicode characters, 
+                                                           special character e.g: !@#$%^&,. etc.. and whitespaces; 
+                                                           allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="submit-section">
+                                            <button class="btn btn-info submit-btn">Save</button>
+                                        </div>
+                                    </form>
                                     <div class="col-sm-2 text-secondary">
-                                        <a href="" id="editPassword" onclick="event.preventDefault()" style="text-decoration: none">Edit</a>
+                                        <a href="" id="btnEditPassword" class="btnEdit" onclick="event.preventDefault(); editPassword(true);" style="text-decoration: none">Edit</a>
+                                        <a href="" id="btnCancelEditPassword" onclick="event.preventDefault(); editPassword(false);" style="text-decoration: none" hidden="">Cancel</a>
                                     </div>
                                 </div>
                                 <hr>

@@ -160,7 +160,7 @@
                                 <input class="form-control" type="password" name="Password" id="password" placeholder="Enter your password"
                                        onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
                                        title="Password not contain: Unicode characters, 
-                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                       special character e.g: !@#$%^&,. etc.. and whitespaces; 
                                        allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                             </div>
 

@@ -36,6 +36,8 @@ public class ControllerCustomer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
             HttpSession session = request.getSession();
@@ -44,6 +46,7 @@ public class ControllerCustomer extends HttpServlet {
             if (cus == null) {
                 response.sendRedirect("login.jsp");
             } else {
+                int setting_option = 0;
                 if (service == null) {
                     service = "displayCustomerAccountSettings";
                 }
@@ -52,16 +55,58 @@ public class ControllerCustomer extends HttpServlet {
                     dispatch.forward(request, response);
                 }
                 if (service.equals("displayCustomerDetails")) {
+                    setting_option = 1;
                     cus = daoCus.getCustomerDetails(cus.getCusID());
                     request.setAttribute("cusInfo", cus);
+                    request.setAttribute("settingOption", setting_option);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-details.jsp");
                     dispatch.forward(request, response);
                 }
                 if (service.equals("displayCustomerSecurity")) {
+                    setting_option = 2;
                     cus = daoCus.getCustomerDetails(cus.getCusID());
                     request.setAttribute("cusInfo", cus);
+                    request.setAttribute("settingOption", setting_option);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
                     dispatch.forward(request, response);
+                }
+                if (service.equals("editFullName")) {
+                    String firstName = request.getParameter("FirstName");
+                    String lastName = request.getParameter("LastName");
+                    out.print(firstName);
+                    out.print(lastName);
+//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+//                    dispatch.forward(request, response);
+                }
+                if (service.equals("editEmail")) {
+                    String dob = request.getParameter("DOB");
+                    out.print(dob);
+//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+//                    dispatch.forward(request, response);
+                }
+                if (service.equals("editGender")) {
+                    String dob = request.getParameter("DOB");
+                    out.print(dob);
+//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+//                    dispatch.forward(request, response);
+                }
+                if (service.equals("editDOB")) {
+                    String dob = request.getParameter("DOB");
+                    out.print(dob);
+//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+//                    dispatch.forward(request, response);
+                }
+                if (service.equals("editAddress")) {
+                    String dob = request.getParameter("DOB");
+                    out.print(dob);
+//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+//                    dispatch.forward(request, response);
+                }
+                if (service.equals("editPassword")) {
+                    String dob = request.getParameter("DOB");
+                    out.print(dob);
+//                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+//                    dispatch.forward(request, response);
                 }
             }
         } catch (Exception ex) {
