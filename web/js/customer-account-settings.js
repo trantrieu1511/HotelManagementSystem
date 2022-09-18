@@ -102,6 +102,21 @@ function editPassword(isEdit) {
         disableBtn(false);
     }
 }
+function editDeleteAcc(isEdit) {
+    if (isEdit == true) {
+        document.getElementById('btnEditDeleteAcc').hidden = true;
+        document.getElementById('btnCancelEditDeleteAcc').hidden = false;
+        document.getElementById('deleteAccDiv').hidden = true;
+        document.getElementById('deleteAccForm').hidden = false;
+        disableBtn(true);
+    } else {
+        document.getElementById('btnEditDeleteAcc').hidden = false;
+        document.getElementById('btnCancelEditDeleteAcc').hidden = true;
+        document.getElementById('deleteAccDiv').hidden = false;
+        document.getElementById('deleteAccForm').hidden = true;
+        disableBtn(false);
+    }
+}
 function disableBtn(isDisable) {
     const collection = document.getElementsByClassName("btnEdit");
     if (isDisable == true) {

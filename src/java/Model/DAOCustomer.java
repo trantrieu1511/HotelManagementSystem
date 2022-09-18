@@ -24,6 +24,8 @@ public class DAOCustomer extends DBConnect {
     PreparedStatement state = null;
     Statement st = null;
     ResultSet rs = null;
+    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
 
     public Customer loginUsingEmail(String email, String password) {
         String sql = "select * from Customer where Email = ? and Password = ?";
@@ -168,14 +170,16 @@ public class DAOCustomer extends DBConnect {
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getBoolean("Gender"),
-                        rs.getString("DOB"),
+                        (rs.getString("DOB") != null
+                        ? sdf1.format(sdf2.parse(rs.getString("DOB")))
+                        : rs.getString("DOB")),
                         rs.getString("Address"),
                         rs.getString("Email"),
                         rs.getString("PhoneNumber"),
                         rs.getString("Password")
                 );
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -280,9 +284,6 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
-    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-
     public boolean editDOB(String dob, String cusId) {
         String sql = "update Customer set DOB = ? where CusID = ?";
         try {
@@ -328,6 +329,24 @@ public class DAOCustomer extends DBConnect {
             state = conn.prepareStatement(sql);
             state.setString(1, password);
             state.setString(2, cusId);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean deleteCustomer(String Id) {
+        String sql = "delete from Customer where Id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, Id);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

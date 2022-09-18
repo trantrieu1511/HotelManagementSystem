@@ -20,9 +20,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/customer-account-settings.js"></script>
         <script type="text/javascript">
-            <c:if test="${message!=''}">
+            <c:if test="${alert!=''}">
             window.onload = function () {
-                alert("${message}");
+                alert("${alert}");
             }
             </c:if>
             $(function () {
@@ -51,21 +51,46 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Password</h6>
                                         </div>
-                                        <div class="col-sm-7 text-secondary" id="passwordDiv">
+                                        <div class="col-sm-7 text-secondary" id="passwordDiv" ${hasMessage ? " hidden" : ""}>
                                         ${cusInfo.getPassword()}
                                     </div>
-                                    <form class="col-sm-7 text-secondary" id="passwordForm" action="customer" hidden="">
+                                    <form class="col-sm-7 text-secondary" id="passwordForm" action="customer" ${hasMessage == false ? " hidden" : ""}>
                                         <input type="hidden" name="do" value="editPassword">
                                         <div class="row">
-                                            <div class="col-sm-12 col-md-6">
+                                            <div class="col-sm-12 col-md-12">
                                                 <div class="form-group">
-                                                    <label class="col-form-label">Password <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="password" name="Password" id="password" placeholder="Enter your password"
-                                                           onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
+                                                    <label class="col-form-label">Old password <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="password" name="OldPassword" id="old_password" placeholder="Enter your password"
+                                                           required pattern="[a-zA-Z0-9]{1,12}"
+                                                           title="Password not contain: Unicode characters, 
+                                                           special character e.g: !@#$%^&,. etc.. and whitespaces; 
+                                                           allow uppercase, lowercase letters and numeric characters (0-9), max length: 12"
+                                                           value="${cusInfo.getPassword()}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path d="M12.013 4.501c-3.88-.065-8.202 2.372-11.39 5.88a2.414 2.414 0 0 0-.001 3.232c3.183 3.506 7.481 5.95 11.39 5.885 3.885.066 8.183-2.378 11.367-5.883.83-.92.83-2.314.002-3.232-3.194-3.512-7.515-5.947-11.394-5.882zm0 1.5c3.378-.057 7.328 2.17 10.256 5.389.31.344.31.872-.002 1.219-2.92 3.213-6.848 5.446-10.254 5.39-3.432.056-7.36-2.178-10.279-5.392a.912.912 0 0 1 .002-1.22c2.922-3.216 6.872-5.443 10.251-5.386zM15 12a3 3 0 1 1-6 .004 3 3 0 0 1 6-.007V12zm1.5 0v-.003a4.5 4.5 0 1 0-9-.002 4.5 4.5 0 0 0 9 .005z"></path></svg>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">New password <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="password" name="NewPassword" id="new_password" placeholder="Enter your password"
+                                                           required pattern="[a-zA-Z0-9]{1,12}"
                                                            title="Password not contain: Unicode characters, 
                                                            special character e.g: !@#$%^&,. etc.. and whitespaces; 
                                                            allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Confirm new password <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="password" name="ConfirmPassword" id="confirm_password" placeholder="Enter your password"
+                                                           required pattern="[a-zA-Z0-9]{1,12}"
+                                                           title="Confirm Password not contain: Unicode characters, 
+                                                           special character e.g: !@#$%^&,. etc.. and whitespaces; 
+                                                           allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
+                                                </div>
+                                            </div>
+                                            <div id="message" style="color: red">
+                                                ${message}
                                             </div>
                                         </div>
                                         <div class="submit-section">
@@ -73,8 +98,8 @@
                                         </div>
                                     </form>
                                     <div class="col-sm-2 text-secondary">
-                                        <a href="" id="btnEditPassword" class="btnEdit" onclick="event.preventDefault(); editPassword(true);" style="text-decoration: none">Edit</a>
-                                        <a href="" id="btnCancelEditPassword" onclick="event.preventDefault(); editPassword(false);" style="text-decoration: none" hidden="">Cancel</a>
+                                        <a href="" id="btnEditPassword" class="btnEdit" onclick="event.preventDefault(); editPassword(true);" style="text-decoration: none" ${hasMessage ? " hidden" : ""}>Edit</a>
+                                        <a href="" id="btnCancelEditPassword" onclick="event.preventDefault(); editPassword(false);" style="text-decoration: none" ${hasMessage == false ? " hidden" : ""}>Cancel</a>
                                     </div>
                                 </div>
                                 <hr>
@@ -82,11 +107,31 @@
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Delete Account</h6>
                                     </div>
-                                    <div class="col-sm-6 text-secondary">
+                                    <div class="col-sm-6 text-secondary" id="deleteAccDiv">
                                         Permanently delete your account
                                     </div>
+                                    <form class="col-sm-6 text-secondary" action="customer" method="post" id="deleteAccForm" hidden="">
+                                        <input type="hidden" name="do" value="deleteAccount">
+                                        <input type="hidden" name="Id" value="${cusInfo.getId()}">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Do you really want to delete your account? Once it has been done, you cannot undo it!</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Click yes to proceed delete!</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="submit-section">
+                                            <button class="btn btn-info submit-btn">Yes</button>
+                                        </div>
+                                    </form>
                                     <div class="col-sm-3 text-secondary">
-                                        <a href="" id="editPassword" onclick="event.preventDefault()" style="text-decoration: none">Delete account</a>
+                                        <a href="" id="btnEditDeleteAcc" class="btnEdit" onclick="event.preventDefault(), editDeleteAcc(true)" style="text-decoration: none">Delete account</a>
+                                        <a href="" id="btnCancelEditDeleteAcc" onclick="event.preventDefault(), editDeleteAcc(false)" style="text-decoration: none" hidden="">Cancel</a>
                                     </div>
                                 </div>
                                 <hr>

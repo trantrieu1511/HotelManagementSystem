@@ -48,45 +48,60 @@ public class ControllerCustomer extends HttpServlet {
             } else {
                 int setting_option = 0;
                 boolean editSuccess = true;
+                boolean hasMessage = false;
+                String alert = "";
                 String message = "";
                 if (service == null) {
-                    service = "displayCustomerAccountSettings";
+                    service = "displayAccountSettings";
                 }
-                if (service.equals("displayCustomerAccountSettings")) {
+                if (service.equals("displayAccountSettings")) {
                     RequestDispatcher dispatch = request.getRequestDispatcher("account-settings.jsp");
                     dispatch.forward(request, response);
                 }
-                if (service.equals("displayCustomerDetails")) {
+                if (service.equals("displayPersonalDetails")) {
                     setting_option = 1;
                     String edit = request.getParameter("edit");
                     if (edit != null && edit.equals("success")) {
-                        message = "Edit Successfully!";
+//                        alert = "Edit Successfully!";
                     }
                     if (edit != null && edit.equals("fail")) {
-                        message = "Edit Failed! For dev, please "
+                        alert = "Edit Failed! For dev, please "
                                 + "check the system for specific error!";
                     }
                     cus = daoCus.getCustomerDetails(cus.getId());
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
-                    request.setAttribute("message", message);
+                    request.setAttribute("alert", alert);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-details.jsp");
                     dispatch.forward(request, response);
                 }
-                if (service.equals("displayCustomerSecurity")) {
+                if (service.equals("displayAccountSecurity")) {
                     setting_option = 2;
                     String edit = request.getParameter("edit");
+                    String editMessage = request.getParameter("edit-message");
                     if (edit != null && edit.equals("success")) {
-                        message = "Edit Successfully!";
+//                        alert = "Edit Successfully!";
                     }
                     if (edit != null && edit.equals("fail")) {
-                        message = "Edit Failed! For dev, please "
+                        alert = "Edit Failed! For dev, please "
                                 + "check the system for specific error!";
+                    }
+                    if (editMessage != null && editMessage.equals("sameNewPassword")) {
+                        message = "Please enter new password different than your old "
+                                + "one!";
+                        hasMessage = true;
+                    }
+                    if (editMessage != null && editMessage.equals("confirmPassIsNotMatch")) {
+                        message = "Confirm password is not match with your new password! "
+                                + "Please try enter again!";
+                        hasMessage = true;
                     }
                     cus = daoCus.getCustomerDetails(cus.getId());
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
+                    request.setAttribute("alert", alert);
                     request.setAttribute("message", message);
+                    request.setAttribute("hasMessage", hasMessage);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
                     dispatch.forward(request, response);
                 }
@@ -129,17 +144,36 @@ public class ControllerCustomer extends HttpServlet {
                     forwardAndDisplayResult(editSuccess, request, response);
                 }
                 if (service.equals("editPassword")) {
-                    String password = request.getParameter("Password");
+                    String oldPassword = request.getParameter("OldPassword");
+                    String newPassword = request.getParameter("NewPassword");
+                    String confirmPassword = request.getParameter("ConfirmPassword");
 //                    out.print(password);
-                    editSuccess = daoCus.editPassword(password, cus.getCusID());
+                    if (newPassword.equals(oldPassword)) {
+                        response.sendRedirect("customer?do=displayAccountSecurity"
+                                + "&edit-message=sameNewPassword");
+                        return;
+                    }
+                    if (!confirmPassword.equals(newPassword)) {
+                        response.sendRedirect("customer?do=displayAccountSecurity"
+                                + "&edit-message=confirmPassIsNotMatch");
+                        return;
+                    }
+                    editSuccess = daoCus.editPassword(newPassword, cus.getCusID());
                     if (editSuccess) {
-                        response.sendRedirect("customer?do=displayCustomerSecurity&edit=success");
+                        response.sendRedirect("customer?do=displayAccountSecurity&edit=success");
                     } else {
-                        response.sendRedirect("customer?do=displayCustomerSecurity&edit=fail");
+                        response.sendRedirect("customer?do=displayAccountSecurity&edit=fail");
                     }
                 }
                 if (service.equals("deleteAccount")) {
-
+                    String Id = request.getParameter("Id");
+//                    out.print(Id);
+                    boolean deleteSuccess = daoCus.deleteCustomer(Id);
+                    if (deleteSuccess) {
+                        response.sendRedirect("customer?do=displayAccountSecurity&edit=success");
+                    } else {
+                        response.sendRedirect("customer?do=displayAccountSecurity&edit=fail");
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -189,9 +223,9 @@ public class ControllerCustomer extends HttpServlet {
 
     private void forwardAndDisplayResult(boolean editSuccess, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (editSuccess) {
-            response.sendRedirect("customer?do=displayCustomerDetails&edit=success");
+            response.sendRedirect("customer?do=displayPersonalDetails&edit=success");
         } else {
-            response.sendRedirect("customer?do=displayCustomerDetails&edit=fail");
+            response.sendRedirect("customer?do=displayPersonalDetails&edit=fail");
         }
     }
 }

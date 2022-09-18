@@ -17,8 +17,10 @@ insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'
 delete from Employee where Id = 5
 
 update Employee
-set LastName = N'Trần'
-where Id = 1
+set 
+--LastName = N'Trần',
+Gender = 'true'
+where Id = '1'
 
 --Customer Queries
 insert into Customer values(N'A', N'Nguyễn Văn', 1, '20/10/2001', N'Số nhà 5, Tổ 10, Tân Hòa, HB, HB, VN', 'nguyenvana@gmail.com', '0945656677','nguyenvana')
@@ -26,6 +28,7 @@ insert into Customer values(N'A', N'Nguyễn Văn', 1, '20/10/2001', N'Số nhà
 insert into Customer(FirstName,LastName,Email,PhoneNumber,[Password]) values(N'B', N'Nguyễn Văn', 'nguyenvanb@gmail.com', '0916368677','nguyenvanb')
 insert into Customer(FirstName,LastName,Email,PhoneNumber,[Password]) values(N'Vi', N'Ánh Quang', 'anhquangvi@gmail.com', '0956478933','anhquangvi')
 
+delete from Customer where Id = '999'
 
 --BedType Queries
 insert into BedType values('Single Bed')

@@ -20,9 +20,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/customer-account-settings.js"></script>
         <script type="text/javascript">
-            <c:if test="${message!=''}">
+            <c:if test="${alert!=''}">
             window.onload = function () {
-                alert("${message}");
+                alert("${alert}");
             }
             </c:if>
             $(function () {
@@ -77,7 +77,8 @@
                                                     <input class="form-control" type="text" name="FirstName" id="first_name" placeholder="e.g: Johnson" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                                            title="FirstName not contain: 
                                                            Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
-                                                           allow uppercase and lowercase letters, max length: 12">
+                                                           allow uppercase and lowercase letters, max length: 12"
+                                                           value="${cusInfo.getFirstName()}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-6">
@@ -86,7 +87,8 @@
                                                     <input class="form-control" type="text" name="LastName" id="last_name" placeholder="e.g: Harry" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                                            title="LastName not contain: 
                                                            Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
-                                                           allow uppercase and lowercase letters, max length: 12">
+                                                           allow uppercase and lowercase letters, max length: 12"
+                                                           value="${cusInfo.getLastName()}">
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +122,8 @@
                                                            allow uppercase, lowercase letters and numeric characters (0-9);
                                                            maximum length of parts of email: 
                                                            username: 20, mail server: 12, domain: 12; 
-                                                           max length: 46">
+                                                           max length: 46"
+                                                           value="${cusInfo.getEmail()}">
                                                 </div>
                                             </div>
                                         </div>
@@ -151,7 +154,8 @@
                                                 <div class="form-group">
                                                     <label class="col-form-label" for="phone_number">Phone <span class="text-danger">*</span></label>
                                                     <input class="form-control" type="text" name="PhoneNumber" id="phone_number" required pattern="[0-9]{10}"
-                                                           title="phone number must be 10-digit number">
+                                                           title="phone number must be 10-digit number"
+                                                           value="${cusInfo.getPhoneNumber()}">
                                                 </div>
                                             </div>
                                         </div>
@@ -210,13 +214,13 @@
                                                     <div class="row">
                                                         <div class="col-sm-12 col-md-6">
                                                             <!--<span class="form-control">-->
-                                                            <input type="radio" name="Gender" id="Male" value="true">
+                                                            <input type="radio" name="Gender" id="Male" value="true" ${cusInfo.isGender() ? " checked" : ""}>
                                                             <label class="col-form-label" for="Male">Male</label>
                                                             <!--</span>-->
                                                         </div>
                                                         <div class="col-sm-12 col-md-6" style="padding-right: 0px">
                                                             <!--<span class="form-control">-->
-                                                            <input type="radio" name="Gender" id="Female" value="false">
+                                                            <input type="radio" name="Gender" id="Female" value="false" ${cusInfo.isGender() == false ? " checked" : ""}>
                                                             <label class="col-form-label" for="Female">Female</label>
                                                             <!--</span>-->
                                                         </div>
@@ -275,7 +279,7 @@
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="form-group">
                                                     <label class="col-form-label" for="DOB">Date of Birth <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="date" name="DOB" id="DOB" required="" onkeydown="event.preventDefault()">
+                                                    <input class="form-control" type="date" name="DOB" id="DOB" required="" onkeydown="event.preventDefault()" value="${cusInfo.getDOB()}">
                                                 </div>
                                             </div>
                                         </div>
@@ -305,12 +309,12 @@
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="address">Address <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="address" name="Address" value="" required pattern="[A-Za-z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ., ]{1,100}"
+                                                    <input type="text" class="form-control" id="address" name="Address" required pattern="[A-Za-z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ., ]{1,100}"
                                                            title="Address must not contain: 
                                                            Special character e.g: !@#$%^&,. etc..; 
                                                            Allow uppercase, lowercase letters, whitespaces 
                                                            and numeric characters (0-9), max length: 100"
-                                                           >
+                                                           value="${cusInfo.getAddress()}">
                                                 </div>
                                             </div>
                                         </div>
@@ -324,23 +328,6 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <!--                                <div class="row">
-                                                                    <div class="col-sm-3">
-                                                                        <h6 class="mb-0">Password</h6>
-                                                                    </div>
-                                                                    <div class="col-sm-7 text-secondary">
-                                ${cusInfo.getPassword()}
-                            </div>
-                            <div class="col-sm-2 text-secondary">
-                                <a href="" id="editPassword" onclick="event.preventDefault()" style="text-decoration: none">Edit</a>
-                            </div>
-                        </div>
-                        <hr>-->
-                                <!--                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                        <a class="btn btn-info " target="__blank" href="">Edit</a>
-                                                                    </div>
-                                                                </div>-->
                             </div>
                         </div>
 
