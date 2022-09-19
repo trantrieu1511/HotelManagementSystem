@@ -4,6 +4,7 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
-        <h1>Your account has been deleted!</h1>
-        
+        <jsp:include page="page-header.jsp"></jsp:include>
+        <c:if test="${deleteSucceed==true}">
+            <!--<div style="color: deepskyblue; margin-bottom: 10px">${mess}<a href="login.jsp">here</a></div>-->
+            <h1 style="color: deepskyblue; margin-bottom: 10px">${message}</h1>
+        </c:if>
+        <c:if test="${deleteSucceed==false}">
+            <!--<div style="color: red; margin-bottom: 10px">${mess}</div>-->
+            <h1 style="color: deepskyblue; margin-bottom: 10px">${message}</h1>
+        </c:if>
+        Click the MyHotel in nav-bar to navigate back to home page
     </body>
 </html>

@@ -12,8 +12,8 @@ CREATE TABLE Customer(
 	DOB varchar(50),
 	[Address] nvarchar(MAX),
 	Email varchar(35) not null,
-	PhoneNumber varchar(35) not null,
-	[Password] varchar(25) not null
+	PhoneNumber varchar(35),
+	[Password] varchar(25)
 )
 
 CREATE TABLE Employee(
@@ -55,6 +55,7 @@ CREATE TABLE Room(
 	[Floor] int not null,
 	[View] nvarchar(MAX),
 	img nvarchar(MAX),
+	[Description] nvachar(MAX),
 	foreign key (RoomTypeID) references RoomType (RoomTypeID)
 )
 

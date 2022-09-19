@@ -75,24 +75,29 @@
                 max-width: 650px;
                 text-align: left;
             }
+            .form-group{
+                text-align: center;
+            }
+            .col-form-label {
+                padding-left: 35px;
+            }
+            .submit-section{
+                text-align: center; 
+                /*margin-right: 30px;*/
+            }
         </style>
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
         <%--<c:if test="${succeed!=null}">--%>
-        <div class="msgbox" style="
-             /*border: 2px solid aliceblue;*/
-             /*background-color: aliceblue;*/
-             padding: 15px; 
-             margin: 0% 25% 0% 25%;
-             text-align: center">
-            <c:if test="${succeed==true}">
-                <div style="color: deepskyblue; margin-bottom: 10px">${mess}</div>
-            </c:if>
-            <c:if test="${succeed==false}">
-                <div style="color: red; margin-bottom: 10px">${mess}</div>
-            </c:if>
-        </div>
+        <!--        <div class="msgbox" style="
+                     /*border: 2px solid aliceblue;*/
+                     /*background-color: aliceblue;*/
+                     padding: 15px; 
+                     margin: 0% 25% 0% 25%;
+                     text-align: center">
+                    
+                </div>-->
         <%--</c:if>--%>
         <div class="" style="
              display: flex;
@@ -103,19 +108,27 @@
              min-height: 100%;
              padding: 20px;
              ">
-            <div id="formContent" style="padding-left: 35px">
+            <div id="formContent">
                 <!-- Tabs Titles -->
 
                 <!-- Icon -->
                 <div class="">
                     <!--<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />-->
                     <div style="margin-top: 15px; font-size: x-large;
-                         font-weight: 600;">Register to our Hotel</div>
+                         font-weight: 600; text-align: center">Register to our Hotel</div>
                 </div>
                 <hr>
 
-                <div>Please fill info into the <span class="text-danger">*</span> field below to register.</div>
+                <div style="padding-left: 35px;">Please fill info into the <span class="text-danger">*</span> field below to register.</div>
 
+                <c:if test="${succeed==true}">
+                    <br>
+                    <div style="color: deepskyblue; margin-bottom: 10px">${mess}<a href="login.jsp">here</a></div>
+                </c:if>
+                <c:if test="${succeed==false}">
+                    <br>
+                    <div style="color: red; margin-bottom: 10px">${mess}</div>
+                </c:if>
                 <!-- Register Form -->
                 <form action="authentication" accept-charset="utf-8" method="POST">
                     <input type="hidden" name="do" value="register">
@@ -125,8 +138,8 @@
                          margin-left: 5px;
                          margin-right: 5px;">
                         <div class="col-sm-6">
+                            <label class="col-form-label">First Name <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="FirstName" id="first_name" placeholder="e.g: Johnson" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                        title="FirstName not contain: 
                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
@@ -134,8 +147,8 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="LastName" id="last_name" placeholder="e.g: Harry" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                        title="LastName not contain: 
                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
@@ -143,8 +156,8 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <label class="col-form-label">Email <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="Email" id="email" placeholder="e.g: abc@mail.com" required pattern="[a-zA-Z0-9]{1,12}[@][a-z]{1,6}[.][a-z]{1,6}"
                                        title="email not allow: Unicode characters, 
                                        special character other than @ and . and spacing characters;  
@@ -155,8 +168,8 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <label class="col-form-label">Password <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <label class="col-form-label">Password <span class="text-danger">*</span></label>
                                 <input class="form-control" type="password" name="Password" id="password" placeholder="Enter your password"
                                        onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
                                        title="Password not contain: Unicode characters, 
@@ -166,8 +179,8 @@
 
                         </div>
                         <div class="col-sm-6">
+                            <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
                                 <input class="form-control" type="password" name="ConfirmPassword" id="confirm_password" placeholder="Re-enter your password"
                                        onkeyup="checkPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
                                        title="Confirm Password not contain: Unicode characters, 
@@ -183,7 +196,7 @@
                                                     </div>
                                                 </div>-->
                     </div>
-                    <div class="submit-section" style="text-align: center; margin-right: 30px;">
+                    <div class="submit-section">
                         <input type="submit" class="" id="create" value="register">
                     </div>
                 </form>

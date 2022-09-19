@@ -23,11 +23,11 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <!--<li class="nav-item active"><a href="home.jsp" class="nav-link">Home</a></li>-->
-                        <li class="nav-item"><a href="rooms.html" class="nav-link">Our Rooms</a></li>
+                        <li class="nav-item"><a href="rooms.jsp" class="nav-link">Our Rooms</a></li>
                         <li class="nav-item"><a href="restaurant.html" class="nav-link">Restaurant</a></li>
                         <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
                         <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="contact.jsp" class="nav-link">Contact</a></li>
                             <c:if test="${sessionScope.Customer==null}">
                             <li class="nav-item"><a href="login.jsp" class="nav-link">Login</a></li>
                             </c:if>

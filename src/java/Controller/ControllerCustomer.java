@@ -69,6 +69,7 @@ public class ControllerCustomer extends HttpServlet {
                                 + "check the system for specific error!";
                     }
                     cus = daoCus.getCustomerDetails(cus.getId());
+                    session.setAttribute("Customer", cus);
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
                     request.setAttribute("alert", alert);
@@ -97,6 +98,7 @@ public class ControllerCustomer extends HttpServlet {
                         hasMessage = true;
                     }
                     cus = daoCus.getCustomerDetails(cus.getId());
+                    session.setAttribute("Customer", cus);
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
                     request.setAttribute("alert", alert);
@@ -170,9 +172,20 @@ public class ControllerCustomer extends HttpServlet {
 //                    out.print(Id);
                     boolean deleteSuccess = daoCus.deleteCustomer(Id);
                     if (deleteSuccess) {
-                        response.sendRedirect("customer?do=displayAccountSecurity&edit=success");
+                        cus = daoCus.getCustomerDetails(cus.getId());
+                        session.setAttribute("Customer", cus);
+                        request.setAttribute("message", "Account has been successfully deleted!");
+                        request.setAttribute("deleteSucceed", true);
+                        RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
+                        dispatch.forward(request, response);
                     } else {
-                        response.sendRedirect("customer?do=displayAccountSecurity&edit=fail");
+                        cus = daoCus.getCustomerDetails(cus.getId());
+                        session.setAttribute("Customer", cus);
+                        request.setAttribute("message", "Edit Failed! For dev, please "
+                                + "check the system for specific error!");
+                        request.setAttribute("deleteSucceed", false);
+                        RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
+                        dispatch.forward(request, response);
                     }
                 }
             }

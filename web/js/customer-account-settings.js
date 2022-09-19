@@ -108,12 +108,16 @@ function editDeleteAcc(isEdit) {
         document.getElementById('btnCancelEditDeleteAcc').hidden = false;
         document.getElementById('deleteAccDiv').hidden = true;
         document.getElementById('deleteAccForm').hidden = false;
+        document.getElementById('deleteAccForm').setAttribute("class", "col-sm-7 text-secondary");
+        document.getElementById('submit-section').setAttribute("class", "col-sm-2 text-secondary");
         disableBtn(true);
     } else {
         document.getElementById('btnEditDeleteAcc').hidden = false;
         document.getElementById('btnCancelEditDeleteAcc').hidden = true;
         document.getElementById('deleteAccDiv').hidden = false;
         document.getElementById('deleteAccForm').hidden = true;
+        document.getElementById('deleteAccForm').setAttribute("class", "col-sm-6 text-secondary")
+        document.getElementById('submit-section').setAttribute("class", "col-sm-3 text-secondary")
         disableBtn(false);
     }
 }
@@ -145,5 +149,40 @@ function disableBtn(isDisable) {
 //        collection[3].style.display = "block";
 //        collection[4].style.display = "block";
 //        collection[5].style.display = "block";
+    }
+}
+function showPassword(isShowPassword, type) {
+    if (type == 1) { //old password
+        if (isShowPassword) {
+            document.getElementById('btnShowPassword').hidden = true;
+            document.getElementById('btnHidePassword').hidden = false;
+            document.getElementById('old_password').type = "text";
+        } else {
+            document.getElementById('btnShowPassword').hidden = false;
+            document.getElementById('btnHidePassword').hidden = true;
+            document.getElementById('old_password').type = "password";
+        }
+    }
+    if (type == 2) { //new password
+        if (isShowPassword) {
+            document.getElementById('btnShowPassword2').hidden = true;
+            document.getElementById('btnHidePassword2').hidden = false;
+            document.getElementById('new_password').type = "text";
+        } else {
+            document.getElementById('btnShowPassword2').hidden = false;
+            document.getElementById('btnHidePassword2').hidden = true;
+            document.getElementById('new_password').type = "password";
+        }
+    }
+    if (type == 3) { //confirm password
+        if (isShowPassword) {
+            document.getElementById('btnShowPassword3').hidden = true;
+            document.getElementById('btnHidePassword3').hidden = false;
+            document.getElementById('confirm_password').type = "text";
+        } else {
+            document.getElementById('btnShowPassword3').hidden = false;
+            document.getElementById('btnHidePassword3').hidden = true;
+            document.getElementById('confirm_password').type = "password";
+        }
     }
 }
