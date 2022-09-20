@@ -36,13 +36,17 @@ CREATE TABLE Employee(
 
 CREATE TABLE RoomType(
 	RoomTypeID int identity(1,1) primary key,
-	[Name] nvarchar(100) not null
+	[Name] nvarchar(100) not null,
+	Price money not null,
+	Img nvarchar(MAX),
+	[Description] nvarchar(MAX),
 )
 
 CREATE TABLE Booking(
 	BookID int identity(1,1) primary key,
 	CusID nvarchar(4000) not null,
 	BookDate varchar(50) not null,
+	TotalAmount money not null,
 	PaymentStatus bit default 0 not null,
 	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
 )
@@ -51,20 +55,23 @@ CREATE TABLE Room(
 	RoomID int identity(1,1) primary key,
 	[Name] varchar(20) not null,
 	RoomTypeID int not null,
-	Price money not null,
 	[Floor] int not null,
 	[View] nvarchar(MAX),
-	img nvarchar(MAX),
-	[Description] nvachar(MAX),
 	foreign key (RoomTypeID) references RoomType (RoomTypeID)
 )
 
 CREATE TABLE BedType(
 	BedTypeID int identity(1,1) primary key,
-	[Name] nvarchar(100) not null,
+	[Name] nvarchar(100) not null
+)
+
+CREATE TABLE RoomDetail(
+	RD_ID int identity primary key,
 	RoomID int not null,
-	Amount int not null,
+	BedTypeID int not null,
+	BedAmount int not null,
 	foreign key (RoomID) references Room (RoomID),
+	foreign key (BedTypeID) references BedType (BedTypeID)
 )
 
 CREATE TABLE BookDetail(
@@ -73,6 +80,7 @@ CREATE TABLE BookDetail(
 	RoomID int not null,
 	CheckIn varchar(50) not null,
 	CheckOut varchar(50) not null,
+	Amount money not null,
 	foreign key (BookID) references Booking (BookID),
 	foreign key (RoomID) references Room (RoomID)
 )

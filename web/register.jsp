@@ -72,18 +72,25 @@
                 padding: 0px;
             }
             #formContent{
-                max-width: 650px;
+                max-width: 600px;
                 text-align: left;
             }
             .form-group{
                 text-align: center;
             }
             .col-form-label {
-                padding-left: 35px;
+                padding-left: 25px;
             }
             .submit-section{
                 text-align: center; 
                 /*margin-right: 30px;*/
+            }
+            .wrapper{
+                background-color: whitesmoke;
+            }
+            input.form-control{
+                text-align: left;
+                padding: 10px 5px;
             }
         </style>
     </head>
@@ -99,15 +106,7 @@
                     
                 </div>-->
         <%--</c:if>--%>
-        <div class="" style="
-             display: flex;
-             align-items: center;
-             flex-direction: column;
-             /* justify-content: center; */
-             width: 100%;
-             min-height: 100%;
-             padding: 20px;
-             ">
+        <div class="wrapper" style="">
             <div id="formContent">
                 <!-- Tabs Titles -->
 
@@ -140,7 +139,7 @@
                         <div class="col-sm-6">
                             <label class="col-form-label">First Name <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <input class="form-control" type="text" name="FirstName" id="first_name" placeholder="e.g: Johnson" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
+                                <input class="form-control" type="text" name="FirstName" id="first_name" placeholder="" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                        title="FirstName not contain: 
                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
                                        allow uppercase and lowercase letters, max length: 12">
@@ -149,7 +148,7 @@
                         <div class="col-sm-6">
                             <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <input class="form-control" type="text" name="LastName" id="last_name" placeholder="e.g: Harry" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
+                                <input class="form-control" type="text" name="LastName" id="last_name" placeholder="" required pattern="[A-Za-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ ]{1,12}"
                                        title="LastName not contain: 
                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
                                        allow uppercase and lowercase letters, max length: 12">
@@ -170,7 +169,7 @@
                         <div class="col-sm-6">
                             <label class="col-form-label">Password <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <input class="form-control" type="password" name="Password" id="password" placeholder="Enter your password"
+                                <input class="form-control" type="password" name="Password" id="password" placeholder=""
                                        onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
                                        title="Password not contain: Unicode characters, 
                                        special character e.g: !@#$%^&,. etc.. and whitespaces; 
@@ -181,13 +180,13 @@
                         <div class="col-sm-6">
                             <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
                             <div class="form-group">
-                                <input class="form-control" type="password" name="ConfirmPassword" id="confirm_password" placeholder="Re-enter your password"
+                                <input class="form-control" type="password" name="ConfirmPassword" id="confirm_password" placeholder=""
                                        onkeyup="checkPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
                                        title="Confirm Password not contain: Unicode characters, 
                                        special character e.g: !@#$%^&,. etc.. and spacing characters; 
                                        allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                             </div>
-                            <span id="wrong_pass_alert"></span>
+                            <span id="wrong_pass_alert" style="margin-left: 25px"></span>
                         </div>
                         <!--                        <div class="col-sm-6">
                                                     <div class="form-group">
@@ -197,7 +196,7 @@
                                                 </div>-->
                     </div>
                     <div class="submit-section">
-                        <input type="submit" class="" id="create" value="register">
+                        <input type="submit" class="" id="create" value="register" style="box-shadow: none">
                     </div>
                 </form>
             </div>

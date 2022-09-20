@@ -64,7 +64,23 @@
             #old_password:focus{
                 /*                border-color: inherit;
                                 -webkit-box-shadow: none;*/
-                box-shadow: none;
+                /*box-shadow: none;*/
+                padding: 0px;
+                padding-left: 0.75rem;
+                padding-right: 1.39rem;
+                box-sizing: content-box;
+            }
+            #new_password:focus{
+                padding: 0px;
+                padding-left: 0.75rem;
+                padding-right: 1.39rem;
+                box-sizing: content-box;
+            }
+            #confirm_password:focus{
+                padding: 0px;
+                padding-left: 0.75rem;
+                padding-right: 1.39rem;
+                box-sizing: content-box;
             }
             .form-group1{
                 margin-bottom: 1rem;
@@ -130,12 +146,26 @@
                                                                style="border: 0px;"
                                                                readonly="">
                                                     </div>
+                                                    <script>
+                                                        function showPassword2() {
+                                                            var oldPasswordNode = document.querySelector('#old_password');
+                                                            var type = (oldPasswordNode.getAttribute('type') === "password" ? "text" : "password");
+                                                            oldPasswordNode.setAttribute("type", type);
+                                                            if (type == "password") {
+                                                                document.getElementById('btnShowPassword').hidden = false;
+                                                                document.getElementById('btnHidePassword').hidden = true;
+                                                            } else {
+                                                                document.getElementById('btnShowPassword').hidden = true;
+                                                                document.getElementById('btnHidePassword').hidden = false;
+                                                            }
+                                                        }
+                                                    </script>
                                                     <div>
-                                                        <button class="btn btn-default" id="btnShowPassword" onclick="event.preventDefault();showPassword(true, 1);">
+                                                        <button class="btn btn-default" id="btnShowPassword" onclick="event.preventDefault();showPassword2();">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M12.013 4.501c-3.88-.065-8.202 2.372-11.39 5.88a2.414 2.414 0 0 0-.001 3.232c3.183 3.506 7.481 5.95 11.39 5.885 3.885.066 8.183-2.378 11.367-5.883.83-.92.83-2.314.002-3.232-3.194-3.512-7.515-5.947-11.394-5.882zm0 1.5c3.378-.057 7.328 2.17 10.256 5.389.31.344.31.872-.002 1.219-2.92 3.213-6.848 5.446-10.254 5.39-3.432.056-7.36-2.178-10.279-5.392a.912.912 0 0 1 .002-1.22c2.922-3.216 6.872-5.443 10.251-5.386zM15 12a3 3 0 1 1-6 .004 3 3 0 0 1 6-.007V12zm1.5 0v-.003a4.5 4.5 0 1 0-9-.002 4.5 4.5 0 0 0 9 .005z"></path></svg>
                                                         </button>
                                                         <!--<svg id="svgHidePassword" hidden="" onclick="showPassword(false)" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M12.013 4.501c-3.88-.065-8.202 2.372-11.39 5.88a2.414 2.414 0 0 0-.001 3.232c3.183 3.506 7.481 5.95 11.39 5.885 3.885.066 8.183-2.378 11.367-5.883.83-.92.83-2.314.002-3.232-3.194-3.512-7.515-5.947-11.394-5.882zm0 1.5c3.378-.057 7.328 2.17 10.256 5.389.31.344.31.872-.002 1.219-2.92 3.213-6.848 5.446-10.254 5.39-3.432.056-7.36-2.178-10.279-5.392a.912.912 0 0 1 .002-1.22c2.922-3.216 6.872-5.443 10.251-5.386zM15 12a3 3 0 1 1-6 .004 3 3 0 0 1 6-.007V12zm1.5 0v-.003a4.5 4.5 0 1 0-9-.002 4.5 4.5 0 0 0 9 .005z"></path></svg>-->
-                                                        <button class="btn btn-default" id="btnHidePassword" hidden="" onclick="event.preventDefault();showPassword(false, 1);">
+                                                        <button class="btn btn-default" id="btnHidePassword" hidden="" onclick="event.preventDefault();showPassword2();">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M3.302 21.541l18.75-18a.75.75 0 1 0-1.038-1.082l-18.75 18a.75.75 0 1 0 1.038 1.082zm5.44-1.774c1.056.328 2.157.491 3.264.483 3.89.066 8.189-2.378 11.373-5.883.83-.92.83-2.314.002-3.232a21.333 21.333 0 0 0-3.189-2.86.75.75 0 0 0-.884 1.21 19.816 19.816 0 0 1 2.962 2.657c.31.344.31.872-.003 1.219-2.92 3.212-6.848 5.446-10.254 5.39a9.272 9.272 0 0 1-2.827-.416.75.75 0 0 0-.444 1.432zm5.852-14.213a10.298 10.298 0 0 0-2.602-.304C8.134 5.186 3.813 7.623.624 11.13c-.83.92-.83 2.315-.002 3.233.829.908 1.73 1.74 2.697 2.49a.75.75 0 1 0 .92-1.184 20.048 20.048 0 0 1-2.506-2.314.912.912 0 0 1 .003-1.218C4.66 8.921 8.61 6.694 11.988 6.75a8.854 8.854 0 0 1 2.244.26.75.75 0 1 0 .362-1.456zM9 12.75c0-1.656 1.342-3 2.998-3H12a.75.75 0 0 0 0-1.5h-.002a4.499 4.499 0 0 0-4.498 4.5.75.75 0 0 0 1.5 0zm6 0a3 3 0 0 1-3 3 .75.75 0 0 0 0 1.5h.001a4.5 4.5 0 0 0 4.499-4.501.75.75 0 0 0-1.5 0z"></path></svg>
                                                         </button>
                                                     </div>
@@ -153,11 +183,13 @@
                                                                style="border: 0px;">
                                                     </div>
                                                     <div>
-                                                        <button class="btn btn-default" id="btnShowPassword2" onclick="event.preventDefault();showPassword(true, 2);">
+                                                        <button class="btn btn-default" id="btnShowPassword2" onclick="event.preventDefault();
+                                                                showPassword(true, 2);">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M12.013 4.501c-3.88-.065-8.202 2.372-11.39 5.88a2.414 2.414 0 0 0-.001 3.232c3.183 3.506 7.481 5.95 11.39 5.885 3.885.066 8.183-2.378 11.367-5.883.83-.92.83-2.314.002-3.232-3.194-3.512-7.515-5.947-11.394-5.882zm0 1.5c3.378-.057 7.328 2.17 10.256 5.389.31.344.31.872-.002 1.219-2.92 3.213-6.848 5.446-10.254 5.39-3.432.056-7.36-2.178-10.279-5.392a.912.912 0 0 1 .002-1.22c2.922-3.216 6.872-5.443 10.251-5.386zM15 12a3 3 0 1 1-6 .004 3 3 0 0 1 6-.007V12zm1.5 0v-.003a4.5 4.5 0 1 0-9-.002 4.5 4.5 0 0 0 9 .005z"></path></svg>
                                                         </button>
                                                         <!--<svg id="svgHidePassword" hidden="" onclick="showPassword(false)" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M12.013 4.501c-3.88-.065-8.202 2.372-11.39 5.88a2.414 2.414 0 0 0-.001 3.232c3.183 3.506 7.481 5.95 11.39 5.885 3.885.066 8.183-2.378 11.367-5.883.83-.92.83-2.314.002-3.232-3.194-3.512-7.515-5.947-11.394-5.882zm0 1.5c3.378-.057 7.328 2.17 10.256 5.389.31.344.31.872-.002 1.219-2.92 3.213-6.848 5.446-10.254 5.39-3.432.056-7.36-2.178-10.279-5.392a.912.912 0 0 1 .002-1.22c2.922-3.216 6.872-5.443 10.251-5.386zM15 12a3 3 0 1 1-6 .004 3 3 0 0 1 6-.007V12zm1.5 0v-.003a4.5 4.5 0 1 0-9-.002 4.5 4.5 0 0 0 9 .005z"></path></svg>-->
-                                                        <button class="btn btn-default" id="btnHidePassword2" hidden="" onclick="event.preventDefault();showPassword(false, 2);">
+                                                        <button class="btn btn-default" id="btnHidePassword2" hidden="" onclick="event.preventDefault();
+                                                                showPassword(false, 2);">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M3.302 21.541l18.75-18a.75.75 0 1 0-1.038-1.082l-18.75 18a.75.75 0 1 0 1.038 1.082zm5.44-1.774c1.056.328 2.157.491 3.264.483 3.89.066 8.189-2.378 11.373-5.883.83-.92.83-2.314.002-3.232a21.333 21.333 0 0 0-3.189-2.86.75.75 0 0 0-.884 1.21 19.816 19.816 0 0 1 2.962 2.657c.31.344.31.872-.003 1.219-2.92 3.212-6.848 5.446-10.254 5.39a9.272 9.272 0 0 1-2.827-.416.75.75 0 0 0-.444 1.432zm5.852-14.213a10.298 10.298 0 0 0-2.602-.304C8.134 5.186 3.813 7.623.624 11.13c-.83.92-.83 2.315-.002 3.233.829.908 1.73 1.74 2.697 2.49a.75.75 0 1 0 .92-1.184 20.048 20.048 0 0 1-2.506-2.314.912.912 0 0 1 .003-1.218C4.66 8.921 8.61 6.694 11.988 6.75a8.854 8.854 0 0 1 2.244.26.75.75 0 1 0 .362-1.456zM9 12.75c0-1.656 1.342-3 2.998-3H12a.75.75 0 0 0 0-1.5h-.002a4.499 4.499 0 0 0-4.498 4.5.75.75 0 0 0 1.5 0zm6 0a3 3 0 0 1-3 3 .75.75 0 0 0 0 1.5h.001a4.5 4.5 0 0 0 4.499-4.501.75.75 0 0 0-1.5 0z"></path></svg>
                                                         </button>
                                                     </div>
@@ -179,7 +211,8 @@
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M12.013 4.501c-3.88-.065-8.202 2.372-11.39 5.88a2.414 2.414 0 0 0-.001 3.232c3.183 3.506 7.481 5.95 11.39 5.885 3.885.066 8.183-2.378 11.367-5.883.83-.92.83-2.314.002-3.232-3.194-3.512-7.515-5.947-11.394-5.882zm0 1.5c3.378-.057 7.328 2.17 10.256 5.389.31.344.31.872-.002 1.219-2.92 3.213-6.848 5.446-10.254 5.39-3.432.056-7.36-2.178-10.279-5.392a.912.912 0 0 1 .002-1.22c2.922-3.216 6.872-5.443 10.251-5.386zM15 12a3 3 0 1 1-6 .004 3 3 0 0 1 6-.007V12zm1.5 0v-.003a4.5 4.5 0 1 0-9-.002 4.5 4.5 0 0 0 9 .005z"></path></svg>
                                                         </button>
                                                         <!--<svg id="svgHidePassword" hidden="" onclick="showPassword(false)" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M12.013 4.501c-3.88-.065-8.202 2.372-11.39 5.88a2.414 2.414 0 0 0-.001 3.232c3.183 3.506 7.481 5.95 11.39 5.885 3.885.066 8.183-2.378 11.367-5.883.83-.92.83-2.314.002-3.232-3.194-3.512-7.515-5.947-11.394-5.882zm0 1.5c3.378-.057 7.328 2.17 10.256 5.389.31.344.31.872-.002 1.219-2.92 3.213-6.848 5.446-10.254 5.39-3.432.056-7.36-2.178-10.279-5.392a.912.912 0 0 1 .002-1.22c2.922-3.216 6.872-5.443 10.251-5.386zM15 12a3 3 0 1 1-6 .004 3 3 0 0 1 6-.007V12zm1.5 0v-.003a4.5 4.5 0 1 0-9-.002 4.5 4.5 0 0 0 9 .005z"></path></svg>-->
-                                                        <button class="btn btn-default" id="btnHidePassword3" hidden="" onclick="event.preventDefault();showPassword(false, 3);">
+                                                        <button class="btn btn-default" id="btnHidePassword3" hidden="" onclick="event.preventDefault();
+                                                                showPassword(false, 3);">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path d="M3.302 21.541l18.75-18a.75.75 0 1 0-1.038-1.082l-18.75 18a.75.75 0 1 0 1.038 1.082zm5.44-1.774c1.056.328 2.157.491 3.264.483 3.89.066 8.189-2.378 11.373-5.883.83-.92.83-2.314.002-3.232a21.333 21.333 0 0 0-3.189-2.86.75.75 0 0 0-.884 1.21 19.816 19.816 0 0 1 2.962 2.657c.31.344.31.872-.003 1.219-2.92 3.212-6.848 5.446-10.254 5.39a9.272 9.272 0 0 1-2.827-.416.75.75 0 0 0-.444 1.432zm5.852-14.213a10.298 10.298 0 0 0-2.602-.304C8.134 5.186 3.813 7.623.624 11.13c-.83.92-.83 2.315-.002 3.233.829.908 1.73 1.74 2.697 2.49a.75.75 0 1 0 .92-1.184 20.048 20.048 0 0 1-2.506-2.314.912.912 0 0 1 .003-1.218C4.66 8.921 8.61 6.694 11.988 6.75a8.854 8.854 0 0 1 2.244.26.75.75 0 1 0 .362-1.456zM9 12.75c0-1.656 1.342-3 2.998-3H12a.75.75 0 0 0 0-1.5h-.002a4.499 4.499 0 0 0-4.498 4.5.75.75 0 0 0 1.5 0zm6 0a3 3 0 0 1-3 3 .75.75 0 0 0 0 1.5h.001a4.5 4.5 0 0 0 4.499-4.501.75.75 0 0 0-1.5 0z"></path></svg>
                                                         </button>
                                                     </div>
@@ -195,7 +228,8 @@
                                     </form>
                                     <div class="col-sm-2 text-secondary">
                                         <a href="" id="btnEditPassword" class="btnEdit" onclick="event.preventDefault(); editPassword(true);" style="text-decoration: none" ${hasMessage ? " hidden" : ""}>Edit</a>
-                                        <a href="" id="btnCancelEditPassword" onclick="event.preventDefault(); editPassword(false);" style="text-decoration: none" ${hasMessage == false ? " hidden" : ""}>Cancel</a>
+                                        <a href="" id="btnCancelEditPassword" onclick="event.preventDefault();
+                                                editPassword(false);" style="text-decoration: none" ${hasMessage == false ? " hidden" : ""}>Cancel</a>
                                     </div>
                                 </div>
                                 <hr>

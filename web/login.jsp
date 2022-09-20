@@ -28,7 +28,11 @@
                 }
             }
         </script>
-
+        <style>
+            .wrapper{
+                background-color: whitesmoke;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
@@ -51,7 +55,8 @@
                              ">Email: <span class="text-danger">*</span></div>
                         <input type="text" id="login" class="" name="EmailOrPhone" required="" placeholder="enter email or phone number"
                                onkeyup="checkEmailOrPhone()">
-                        <div style="text-align: left; margin-left: 35px;
+                        <br>
+                        <div style="text-align: left; margin-left: 35px; margin-top: 15px;
                              ">Password: <span class="text-danger">*</span></div>
                         <input type="password" id="password" class="" name="Password" required="" placeholder="enter password" pattern="[a-zA-Z0-9]{1,25}"
                                title="Password must not contain: Unicode characters, 
@@ -59,7 +64,12 @@
                                Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
                         <br>
                         <span class="text-danger">${mess}</span>
-                    <input type="submit" class="" value="Log In">
+                    <input type="submit" class="" value="Log In" style="
+                           margin-top: 2rem;
+                           padding-left: 168px;
+                           padding-right: 168px;
+                           box-shadow: none;
+                           ">
                 </form>
 
                 <!-- Remind Password -->

@@ -135,9 +135,9 @@ public class ControllerCustomer extends HttpServlet {
                 }
                 if (service.equals("editDOB")) {
                     String dob = request.getParameter("DOB");
-//                    out.print(dob);
-                    editSuccess = daoCus.editDOB(dob, cus.getCusID());
-                    forwardAndDisplayResult(editSuccess, request, response);
+                    out.print(dob);
+//                    editSuccess = daoCus.editDOB(dob, cus.getCusID());
+//                    forwardAndDisplayResult(editSuccess, request, response);
                 }
                 if (service.equals("editAddress")) {
                     String address = request.getParameter("Address");
