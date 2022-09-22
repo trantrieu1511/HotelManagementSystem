@@ -4,8 +4,8 @@ USE [MyHotel]
 
 CREATE TABLE Customer(
 	Id INT identity,
-    CusID AS (UPPER(LEFT(FirstName,1) + LEFT(LastName,1))
-    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
+    --CusID AS (UPPER(LEFT(FirstName,1) + LEFT(LastName,1))
+    --+ REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,
@@ -18,8 +18,8 @@ CREATE TABLE Customer(
 
 CREATE TABLE Employee(
 	Id INT identity,
-    EmpID AS (UPPER(LEFT(FirstName,2) + LEFT(LastName,2))
-    + REPLICATE('0', 3-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
+    EmpID AS (UPPER(LEFT(FirstName,1) + LEFT(LastName,1))
+    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,
@@ -42,13 +42,18 @@ CREATE TABLE RoomType(
 	[Description] nvarchar(MAX),
 )
 
-CREATE TABLE Booking(
-	BookID int identity(1,1) primary key,
-	CusID nvarchar(4000) not null,
-	BookDate varchar(50) not null,
-	TotalAmount money not null,
-	PaymentStatus bit default 0 not null,
-	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
+CREATE TABLE BedType(
+	BedTypeID int identity(1,1) primary key,
+	[Name] nvarchar(100) not null
+)
+
+CREATE TABLE RoomTypeDetail(
+	RTD_ID int identity primary key,
+	RoomTypeID int not null,
+	BedTypeID int not null,
+	BedAmount int not null,
+	foreign key (RoomTypeID) references RoomType (RoomTypeID),
+	foreign key (BedTypeID) references BedType (BedTypeID)
 )
 
 CREATE TABLE Room(
@@ -60,18 +65,13 @@ CREATE TABLE Room(
 	foreign key (RoomTypeID) references RoomType (RoomTypeID)
 )
 
-CREATE TABLE BedType(
-	BedTypeID int identity(1,1) primary key,
-	[Name] nvarchar(100) not null
-)
-
-CREATE TABLE RoomDetail(
-	RD_ID int identity primary key,
-	RoomID int not null,
-	BedTypeID int not null,
-	BedAmount int not null,
-	foreign key (RoomID) references Room (RoomID),
-	foreign key (BedTypeID) references BedType (BedTypeID)
+CREATE TABLE Booking(
+	BookID int identity(1,1) primary key,
+	CusID nvarchar(4000) not null,
+	BookDate varchar(50) not null,
+	TotalAmount money not null,
+	PaymentStatus bit default 0 not null,
+	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
 )
 
 CREATE TABLE BookDetail(

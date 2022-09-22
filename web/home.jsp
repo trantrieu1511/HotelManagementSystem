@@ -71,28 +71,29 @@
                 <div class="container">
                     <div class="row no-gutters">
                         <div class="col-lg-12">
-                            <form action="#" class="booking-form aside-stretch" method="post">
+                            <form action="customer" class="booking-form aside-stretch" method="post">
+                                <input type="hidden" name="do" value="checkAvailabiltyOfRoom">
                                 <div class="row">
                                     <div class="col-md d-flex py-md-4">
                                         <div class="form-group align-self-stretch d-flex align-items-end">
                                             <div class="wrap align-self-stretch py-3 px-4">
-                                                <label for="#">Check-in Date</label>
-                                                <input type="text" class="form-control checkin_date" placeholder="Check-in date">
+                                                <label for="checkInDate">Check-in Date</label>
+                                                <input type="text" id="checkInDate" name="checkInDate" onkeydown="event.preventDefault()" class="form-control checkin_date" placeholder="Check-in date">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md d-flex py-md-4">
                                         <div class="form-group align-self-stretch d-flex align-items-end">
                                             <div class="wrap align-self-stretch py-3 px-4">
-                                                <label for="#">Check-out Date</label>
-                                                <input type="text" class="form-control checkout_date" placeholder="Check-out date">
+                                                <label for="checkOutDate">Check-out Date</label>
+                                                <input type="text" id="checkOutDate" name="checkOutDate" onkeydown="event.preventDefault()" class="form-control checkout_date" placeholder="Check-out date">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md d-flex py-md-4">
                                         <div class="form-group align-self-stretch d-flex align-items-end">
                                             <div class="wrap align-self-stretch py-3 px-4">
-                                                <label for="#">Guests</label>
+                                                <label for="adult">Guests</label>
                                                 <div class="form-field">
                                                     <div class="select-wrap">
                                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -130,7 +131,7 @@
                                     </div>
                                     <div class="col-md d-flex">
                                         <div class="form-group d-flex align-self-stretch">
-                                            <a href="#" class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block"><span>Check Availability <small>Best Price Guaranteed!</small></span></a>
+                                            <button href="#" class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block"><span>Check Availability <small>Best Price Guaranteed!</small></span></button>
                                         </div>
                                     </div>
                                 </div>

@@ -44,22 +44,22 @@ public class ControllerEmployee extends HttpServlet {
             DAOCustomer daoCus = new DAOCustomer();
             DAOEmployee daoEmp = new DAOEmployee();
             Employee emp = (Employee) session.getAttribute("Employee");
-            if (emp == null) {
-                response.sendRedirect("login.jsp");
-            } else {
-                if (service == null) {
-                    service = "";
-                }
-                if (service.equals("")) {
-                    RequestDispatcher dispatch = request.getRequestDispatcher("");
-                    dispatch.forward(request, response);
-                }
-                if (service.equals("")) {
-
-                    RequestDispatcher dispatch = request.getRequestDispatcher("");
-                    dispatch.forward(request, response);
-                }
+//            if (emp == null) {
+//                response.sendRedirect("login.jsp");
+//            } else {
+            if (service == null) {
+                service = "";
             }
+            if (service.equals("")) {
+                RequestDispatcher dispatch = request.getRequestDispatcher("");
+                dispatch.forward(request, response);
+            }
+            if (service.equals("")) {
+
+                RequestDispatcher dispatch = request.getRequestDispatcher("");
+                dispatch.forward(request, response);
+            }
+//            }
         } catch (Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("error404.jsp");
