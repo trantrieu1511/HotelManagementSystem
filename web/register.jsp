@@ -118,7 +118,7 @@
                 </div>
                 <hr>
 
-                <div style="padding-left: 35px;">Please fill info into the <span class="text-danger">*</span> field below to register.</div>
+                <div style="padding-left: 35px;">Please fill your info into the <span class="text-danger">*</span> field below to register.</div>
 
                 <c:if test="${succeed==true}">
                     <br>

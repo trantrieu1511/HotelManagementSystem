@@ -31,6 +31,9 @@
                 });
             })
         </script>
+        <c:if test="${sessionScope.Customer == null}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
         <style type="text/css">
             .btnPassword{
                 background-color: white;
@@ -52,7 +55,7 @@
                 padding: 6px 6px;
                 border-radius: 0.25rem;
             }
-            button.btn-default:active{
+            button.btn-default svg:active{
                 transform: translateY(1px);
                 /*box-shadow: none;*/
             }

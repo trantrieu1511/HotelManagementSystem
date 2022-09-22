@@ -31,6 +31,9 @@
                 });
             })
         </script>
+        <c:if test="${sessionScope.Customer == null}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
     </head>
 
     <body>

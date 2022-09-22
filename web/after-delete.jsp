@@ -19,16 +19,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     </head>
+    <c:if test="${sessionScope.Customer == null}">
+        <c:redirect url="login.jsp"></c:redirect>
+    </c:if>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
         <c:if test="${deleteSucceed==true}">
             <!--<div style="color: deepskyblue; margin-bottom: 10px">${mess}<a href="login.jsp">here</a></div>-->
-            <h1 style="color: deepskyblue; margin-bottom: 10px">${message}</h1>
+            <h1 style="color: deepskyblue; margin-left: 3rem; margin-bottom: 10px">${message}</h1>
         </c:if>
         <c:if test="${deleteSucceed==false}">
             <!--<div style="color: red; margin-bottom: 10px">${mess}</div>-->
-            <h1 style="color: deepskyblue; margin-bottom: 10px">${message}</h1>
+            <h1 style="color: deepskyblue; margin-left: 3rem; margin-bottom: 10px">${message}</h1>
         </c:if>
-        Click the MyHotel in nav-bar to navigate back to home page
+        <div style="margin-left: 3rem;">Click the MyHotel in nav-bar to navigate back to home page</div>
     </body>
 </html>

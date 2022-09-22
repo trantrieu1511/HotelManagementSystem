@@ -1,11 +1,11 @@
 --CREATE DATABASE [MyHotel]
 --DROP DATABASE [MyHotel]
 USE [MyHotel]
-
+--USE [master]
 CREATE TABLE Customer(
 	Id INT identity,
-    --CusID AS (UPPER(LEFT(FirstName,1) + LEFT(LastName,1))
-    --+ REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
+    CusID AS ('CUS'
+    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,
@@ -69,7 +69,6 @@ CREATE TABLE Booking(
 	BookID int identity(1,1) primary key,
 	CusID nvarchar(4000) not null,
 	BookDate varchar(50) not null,
-	TotalAmount money not null,
 	PaymentStatus bit default 0 not null,
 	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
 )

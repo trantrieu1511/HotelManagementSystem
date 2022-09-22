@@ -1,16 +1,16 @@
-﻿CREATE FUNCTION fn_remove_accents(@textvalue1 nvarchar(50))
-RETURNS nvarchar(50) as
+﻿CREATE FUNCTION fn_remove_accents(@textvalue1 nvarchar)
+RETURNS nvarchar as
 BEGIN
 	--declare
-	declare @textvalue nvarchar(50);
-	declare @withaccents nvarchar(50);
-	declare @withoutaccents nvarchar(50);
+	declare @textvalue nvarchar;
+	declare @withaccents nvarchar;
+	declare @withoutaccents nvarchar;
 	declare @count int
 
     -- ACCENTS
 	SET @textvalue = @textvalue1;
     SET @withaccents = 'àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ';
-    SET @withoutaccents = 'aadeoouaaaaaaaaaaaaaaaeeeeeeeeeeiiiiiooooooooooooooouuuuuuuuuuyyyyyAADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOUUUUUUUUUUYYYYY';
+    SET @withoutaccents = 'aaaaaaaaaaaaaaaaaeeeeeeeeeeediiiiiooooooooooooooooouuuuuuuuuuuyyyyyAAAAAAAAAAAAAAAAAEEEEEEEEEEEDIIIIIOOOOOOOOOOOOOOOOOUUUUUUUUUUUYYYYY';
     SET @count = LEN(@withaccents);
 
     WHILE @count > 0 
@@ -22,5 +22,8 @@ BEGIN
     RETURN @textvalue;
 END
 
-select dbo.fn_remove_accents(TenKH) as TenKH from tblKhachHang
-select TenKH from tblKhachHang
+--drop function dbo.fn_remove_accents
+select dbo.fn_remove_accents(N'Ơ Hôm nay tôi buồn')
+select Len(N'Ơ Hôm nay tôi buồn')
+select Len(N'àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ')
+--select TenKH from tblKhachHang

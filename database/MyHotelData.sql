@@ -8,10 +8,10 @@ insert into Customer(FirstName,LastName,Email,PhoneNumber,[Password]) values(N'V
 
 --insert Employee
 insert into Employee(FirstName,LastName,Username,[Password]) values(N'Triệu',N'Trần','trantrieu123', '12345678')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hà',N'Đặng','dangha', 'dangha','TRTR001')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Ngọc',N'Nguyễn','nguyenngoc', 'nguyenngoc','TRTR001')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Chinh',N'Nguyễn','nguyenchinh', 'nguyenchinh','TRTR001')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hiếu',N'Trần','tranhieu', 'tranhieu',N'HÀĐẶ002')
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hà', N'Đặng', 'dangha', 'dangha','TT00001')
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Ngọc', N'Nguyễn', 'nguyenngoc', 'nguyenngoc', 'TT00001')
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Chinh', N'Nguyễn', 'nguyenchinh', 'nguyenchinh', 'TT00001')
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hiếu', N'Trần', 'tranhieu', 'tranhieu', N'HĐ00002')
 
 --insert BedType
 insert into BedType values('Single Bed')
@@ -25,17 +25,17 @@ insert into BedType values('Triple Bed')
 --values('King Room', 2753000,N'Là gian phòng hạng sang của khách sạn, phòng King thường nằm trên tầng cao nhất trong khách sạn. Với diên tích khoảng 150m2, phòng King gồm 2 phòng ngủ, 1 phòng khách, phòng bếp, 1 phòng sauna, ban công riêng, v..v..
 --Các thiết bị nội thất trong phòng đều là những sản phẩm cao cấp nhất, hiện đại và tiện nghi nhất.')
 
-insert into RoomType([Name], Price, [Description]) 
-values('Family Room', 350000, 'Family room of 40-45m2, each room has 2 to 3 beds, with luxurious furniture, full facilities. Family Room up to 5 people per room. This is the perfect choice for families or small groups of friends to go out together. Some rooms are equipped with windows, family bath tubs and warm decoration, but also full of novelty and comfort to bring airy space, comfort, friendly and convenient for you to enjoy. Get the best holiday with family or close friends.')
-insert into RoomType([Name], Price, [Description]) 
-values('Deluxe Room', 1025000, 'Deluxe rooms with harmonious design, luxurious interior with full modern facilities. Area of about 60-65m2 each room is equipped with windows and balcony to bring the cool air, the most comfortable for you. The rooms are luxuriously furnished with high quality wood floor, spacious space, with windows and balconies overlooking the sea, you can easily watch the sunset or sunrise in your room.')
-insert into RoomType([Name], Price, [Description]) 
-values('Superior Room', 850000,'Superior rooms are about 20m2 are designed in harmony with luxury furniture and full of modern facilities and to the comfort and convenience for you. The standard room consists of 2 small beds or 1 large bed suitable for couples traveling on vacation. Rooms may have a small window with sea view or view of the campus to help you look at the beautiful surroundings.')
-insert into RoomType([Name], Price, [Description]) 
-values('Luxury Room', 1520000,'Luxury rooms with harmonious design, luxurious interior with full modern facilities. Area of about 60-65m2 each room is equipped with windows and balcony to bring the cool air, the most comfortable for you. The rooms are luxuriously furnished with high quality wood floor, spacious space, with windows and balconies overlooking the sea, you can easily watch the sunset or sunrise in your room.')
-insert into RoomType([Name], Price, [Description]) 
-values('Suite Room', 2535000, 'The Royal Suite has a total area of ​​about 70m2, which is divided into a bedroom and a separate living room with a small balcony with tea table outside so you can enjoy it. Wake up to the sun or sunset. Our Royal Suite rooms with unique architecture and luxurious interior will bring you the feeling of comfort, into a luxurious and classy space.')
-select * from RoomType
+insert into RoomType([Name], Price, Img, [Description]) 
+values('Family Room', 350000, 'images/room-1.jpg', 'Family room of 40-45m2, each room has 2 to 3 beds, with luxurious furniture, full facilities. Family Room up to 5 people per room. This is the perfect choice for families or small groups of friends to go out together. Some rooms are equipped with windows, family bath tubs and warm decoration, but also full of novelty and comfort to bring airy space, comfort, friendly and convenient for you to enjoy. Get the best holiday with family or close friends.')
+insert into RoomType([Name], Price, Img, [Description]) 
+values('Deluxe Room', 1025000, 'images/room-5.jpg', 'Deluxe rooms with harmonious design, luxurious interior with full modern facilities. Area of about 60-65m2 each room is equipped with windows and balcony to bring the cool air, the most comfortable for you. The rooms are luxuriously furnished with high quality wood floor, spacious space, with windows and balconies overlooking the sea, you can easily watch the sunset or sunrise in your room.')
+insert into RoomType([Name], Price, Img, [Description]) 
+values('Superior Room', 850000, 'images/room-6.jpg', 'Superior rooms are about 20m2 are designed in harmony with luxury furniture and full of modern facilities and to the comfort and convenience for you. The standard room consists of 2 small beds or 1 large bed suitable for couples traveling on vacation. Rooms may have a small window with sea view or view of the campus to help you look at the beautiful surroundings.')
+insert into RoomType([Name], Price, Img, [Description]) 
+values('Luxury Room', 1520000, 'images/room-4.jpg', 'Luxury rooms with harmonious design, luxurious interior with full modern facilities. Area of about 60-65m2 each room is equipped with windows and balcony to bring the cool air, the most comfortable for you. The rooms are luxuriously furnished with high quality wood floor, spacious space, with windows and balconies overlooking the sea, you can easily watch the sunset or sunrise in your room.')
+insert into RoomType([Name], Price, Img, [Description]) 
+values('Suite Room', 2535000, 'images/room-2.jpg', 'The Royal Suite has a total area of ​​about 70m2, which is divided into a bedroom and a separate living room with a small balcony with tea table outside so you can enjoy it. Wake up to the sun or sunset. Our Royal Suite rooms with unique architecture and luxurious interior will bring you the feeling of comfort, into a luxurious and classy space.')
+--select * from RoomType
 
 --insert RoomTypeDetail
 insert into RoomTypeDetail 
@@ -85,9 +85,14 @@ insert into Room values('502', 5, 5, 'Beautiful Beach view')
 insert into Room values('503', 5, 5, 'Beautiful Beach view')
 
 --insert Booking
---insert into Booking values('')
+--select * from Booking
+insert into Booking(CusID, BookDate) values('CUS00001', '22/09/2022')
 
 --insert BookDetail
---insert into BookDetail values('')
-
---insert RoomTypeDetail
+--select * from BookDetail
+--select * from Booking
+--select * from Room
+insert into BookDetail values(1,1,'22/09/2022','23/09/2022',DATEDIFF(DAY,'2022-09-22','2022-09-23')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 1))
+update BookDetail
+set Amount = 350000
+where BD_ID = 1

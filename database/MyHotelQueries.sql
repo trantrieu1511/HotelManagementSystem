@@ -36,8 +36,10 @@ set [Description] = 'The Royal Suite has a total area of ​​about 70m2, which
 where RoomTypeID = 3
 
 update RoomType 
-set [Description] = N'phòng tiêu chuẩn trong khách sạn, là loại phòng đơn giản nhất với những trang bị tối thiểu, có diện tích nhỏ, ở tầng thấp, không có view hoặc view không đẹp. Đây là loại phòng có mức giá thấp nhất trong khách sạn'
-where RoomTypeID = 1
+set 
+--[Description] = N'phòng tiêu chuẩn trong khách sạn, là loại phòng đơn giản nhất với những trang bị tối thiểu, có diện tích nhỏ, ở tầng thấp, không có view hoặc view không đẹp. Đây là loại phòng có mức giá thấp nhất trong khách sạn',
+Img = 'images/room-2.jpg'
+where RoomTypeID = 5
 
 --RoomTypeDetail Queries
 --select r.RoomID, r.[Name], r.[Floor], r.[View], rt.* from Room r join RoomType rt on r.RoomTypeID = rt.RoomTypeID 
