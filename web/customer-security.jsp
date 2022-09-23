@@ -35,22 +35,22 @@
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
         <style type="text/css">
-            .btnPassword{
-                background-color: white;
-                border: 0px;
-                padding: 6px 6px;
-            }
-            .btnPassword:hover{
-                background-color: whitesmoke;
-                padding: 6px 6px;
-            }
-            .btnPassword:active{
-                /*background-color: white;*/
-                /*box-shadow: 0 5px #666;*/
-                transform: translateY(1px);
-                border-style: outset;
-                border: 0px;
-            }
+            /*            .btnPassword{
+                            background-color: white;
+                            border: 0px;
+                            padding: 6px 6px;
+                        }
+                        .btnPassword:hover{
+                            background-color: whitesmoke;
+                            padding: 6px 6px;
+                        }
+                        .btnPassword:active{
+                            background-color: white;
+                            box-shadow: 0 5px #666;
+                            transform: translateY(1px);
+                            border-style: outset;
+                            border: 0px;
+                        }*/
             button.btn-default{
                 padding: 6px 6px;
                 border-radius: 0.25rem;
@@ -109,6 +109,18 @@
                                                                                     border-radius: 0.25rem;
                                                                                     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
                                                                                 }*/
+            nav{
+                background-color: midnightblue;
+            }
+            .nav-item a, .navbar-brand {
+                color: white;
+            }
+            .nav-item a:hover, .navbar-brand:hover {
+                color: blue;
+            }
+            a.dropdown-item{
+                color: black;
+            }
         </style>
     </head>
     <body>

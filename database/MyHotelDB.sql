@@ -2,6 +2,7 @@
 --DROP DATABASE [MyHotel]
 USE [MyHotel]
 --USE [master]
+
 CREATE TABLE Customer(
 	Id INT identity,
     CusID AS ('CUS'

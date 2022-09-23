@@ -93,6 +93,3 @@ insert into Booking(CusID, BookDate) values('CUS00001', '22/09/2022')
 --select * from Booking
 --select * from Room
 insert into BookDetail values(1,1,'22/09/2022','23/09/2022',DATEDIFF(DAY,'2022-09-22','2022-09-23')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 1))
-update BookDetail
-set Amount = 350000
-where BD_ID = 1

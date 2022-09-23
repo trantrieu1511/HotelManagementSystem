@@ -196,7 +196,9 @@ public class ControllerCustomer extends HttpServlet {
                 String checkOutDate = request.getParameter("checkOutDate");
                 String adult = request.getParameter("adult");
                 String children = request.getParameter("children");
-                
+
+                RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
+                dispatch.forward(request, response);
             }
             if (service.equals("viewHotelRooms")) {
 

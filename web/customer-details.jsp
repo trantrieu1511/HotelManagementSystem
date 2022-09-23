@@ -19,6 +19,20 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/customer-account-settings.js"></script>
+        <style>
+            nav{
+                background-color: midnightblue;
+            }
+            .nav-item a, .navbar-brand {
+                color: white;
+            }
+            .nav-item a:hover, .navbar-brand:hover {
+                color: blue;
+            }
+            a.dropdown-item{
+                color: black;
+            }
+        </style>
         <script type="text/javascript">
             <c:if test="${alert!=''}">
             window.onload = function () {
@@ -116,7 +130,7 @@
                                     <form class="col-sm-7 text-secondary" id="emailForm" action="customer" hidden="">
                                         <input type="hidden" name="do" value="editEmail">
                                         <div class="row">
-                                            <div class="col-sm-12 col-md-6">
+                                            <div class="col-sm-12 col-md-9">
                                                 <div class="form-group">
                                                     <label class="col-form-label" for="email">Email <span class="text-danger">*</span></label>
                                                     <input class="form-control" type="text" name="Email" id="email" placeholder="e.g: abc@mail.com" required pattern="[a-zA-Z0-9]{1,12}[@][a-z]{1,6}[.][a-z]{1,6}"
@@ -309,7 +323,7 @@
                                     <form class="col-sm-7 text-secondary" id="addressForm" action="customer" hidden="">
                                         <input type="hidden" name="do" value="editAddress">
                                         <div class="row">
-                                            <div class="col-sm-12 col-md-6">
+                                            <div class="col-sm-12 col-md-12">
                                                 <div class="form-group">
                                                     <label for="address">Address <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="address" name="Address" required pattern="[A-Za-z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ., ]{1,100}"

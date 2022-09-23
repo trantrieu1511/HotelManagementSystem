@@ -65,3 +65,6 @@ select * from Booking
 
 --BookDetail Queries
 select * from BookDetail
+update BookDetail
+set Amount = 350000
+where BD_ID = 1

@@ -32,6 +32,16 @@
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript">
+            window.onload = function () {
+                var today = new Date().toISOString().split('T')[0];
+                const tomorrow = new Date(); // The Date object returns today's timestamp
+                tomorrow.setDate(tomorrow.getDate() + 1);
+//                alert(today);
+                document.getElementById('checkInDate').setAttribute('min', today);
+                document.getElementById('checkOutDate').setAttribute('min', tomorrow.toISOString().split('T')[0]);
+            }
+        </script>
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
@@ -78,7 +88,7 @@
                                         <div class="form-group align-self-stretch d-flex align-items-end">
                                             <div class="wrap align-self-stretch py-3 px-4">
                                                 <label for="checkInDate">Check-in Date</label>
-                                                <input type="text" id="checkInDate" name="checkInDate" onkeydown="event.preventDefault()" class="form-control checkin_date" placeholder="Check-in date">
+                                                <input type="date" id="checkInDate" name="checkInDate" required="" onkeydown="event.preventDefault()" class="form-control " placeholder="Check-in date">
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +96,7 @@
                                         <div class="form-group align-self-stretch d-flex align-items-end">
                                             <div class="wrap align-self-stretch py-3 px-4">
                                                 <label for="checkOutDate">Check-out Date</label>
-                                                <input type="text" id="checkOutDate" name="checkOutDate" onkeydown="event.preventDefault()" class="form-control checkout_date" placeholder="Check-out date">
+                                                <input type="date" id="checkOutDate" name="checkOutDate" required="" onkeydown="event.preventDefault()" class="form-control " placeholder="Check-out date">
                                             </div>
                                         </div>
                                     </div>
@@ -99,11 +109,11 @@
                                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                         <select name="adult" id="adult" class="form-control">
                                                             <option value="1">1 Adult</option>
-                                                            <option value="2">2 Adult</option>
-                                                            <option value="3">3 Adult</option>
-                                                            <option value="4">4 Adult</option>
-                                                            <option value="5">5 Adult</option>
-                                                            <option value="6">6 Adult</option>
+                                                            <option value="2">2 Adults</option>
+                                                            <option value="3">3 Adults</option>
+                                                            <option value="4">4 Adults</option>
+                                                            <option value="5">5 Adults</option>
+                                                            <option value="6">6 Adults</option>
                                                         </select>
                                                     </div>
                                                 </div>
