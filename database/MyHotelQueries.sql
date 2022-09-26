@@ -41,6 +41,12 @@ set
 Img = 'images/room-2.jpg'
 where RoomTypeID = 5
 
+update RoomType
+set 
+Adult = 4, 
+Children = 3
+where RoomTypeID = 2
+
 --RoomTypeDetail Queries
 --select r.RoomID, r.[Name], r.[Floor], r.[View], rt.* from Room r join RoomType rt on r.RoomTypeID = rt.RoomTypeID 
 --order by r.[Name]
@@ -48,6 +54,9 @@ where RoomTypeID = 5
 --join RoomDetail rd on r.RoomID = rd.RoomID join BedType bt on rd.BedTypeID = bt.BedTypeID
 select * from RoomTypeDetail
 delete from RoomTypeDetail where RTD_ID = 2
+--select RoomTypeDetail
+select * from RoomType rt join RoomTypeDetail rtd
+on rt.RoomTypeID = rtd.RoomTypeID where rt.RoomTypeID = 2
 
 --Room Queries
 select * from Room order by Name

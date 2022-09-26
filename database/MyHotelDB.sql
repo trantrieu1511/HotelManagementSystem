@@ -41,6 +41,8 @@ CREATE TABLE RoomType(
 	Price money not null,
 	Img nvarchar(MAX),
 	[Description] nvarchar(MAX),
+	Adult int not null,
+	Children int not null
 )
 
 CREATE TABLE BedType(

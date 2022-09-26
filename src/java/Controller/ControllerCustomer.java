@@ -205,6 +205,10 @@ public class ControllerCustomer extends HttpServlet {
                 RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
                 dispatch.forward(request, response);
             }
+            if (service.equals("proceedBooking")) {
+                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
+                dispatch.forward(request, response);
+            }
 //            }
         } catch (Exception ex) {
             ex.printStackTrace();

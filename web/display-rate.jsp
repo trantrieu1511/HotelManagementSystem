@@ -15,6 +15,8 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- FontAwesome JS-->
+        <script src="https://kit.fontawesome.com/310efd8ed3.js" crossorigin="anonymous"></script>
         <!-- Date-range picker -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -53,6 +55,7 @@
                 margin-bottom: 1rem;
             }
             #adult, #children, #checkInDate, #checkOutDate{
+                border-radius: 0px;
                 box-shadow: none;
             }
             label{
@@ -70,8 +73,15 @@
             a.dropdown-item{
                 color: black;
             }
-            body{
-                /*background-color: whitesmoke;*/
+            #rate-table{
+                width: 900px; 
+                height: 8rem;
+            }
+            @media only screen and (min-width: 1200px) {
+                #rate-table{
+                    width: 100%; 
+                    height: 100%;
+                }
             }
         </style>
         <script type="text/javascript">
@@ -130,13 +140,30 @@
                         ],
                         "firstDay": 1
                     },
+                    "autoApply": true,
 //                    "startDate": today,
 //                    "endDate": (end.format('DD/MM/YYYY') === today ? "25/09/2022" : end),
                     "minDate": today
                 }, function (start, end, label) {
                     console.log('New date range selected: ' + start.format('DD/MM/YYYY') + ' to ' + end.format('DD/MM/YYYY') + ' (predefined range: ' + label + ')');
+                }).on('hide.daterangepicker', function (ev, picker) {
+                    var day1 = picker.startDate.format('DD/MM/YYYY');
+                    var day2 = picker.endDate.format('DD/MM/YYYY');
+                    if (day1 === day2) {
+                        var tomorrow = new Date(); // The Date object returns today's timestamp
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        tomorrow = ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
+                                ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
+                                tomorrow.getFullYear();
+                        $('input[name="daterange"]').val(day1 + " - " + tomorrow);
+                    }
                 });
             });
+//            $('#daterange').on('show.daterangepicker', function (ev, picker) {
+//            //do something, like clearing an input
+//            var date = $('#daterange').split(' - ');
+//            if (date)
+//            });
         </script>
     </head>
     <body>
@@ -161,7 +188,7 @@
                                         <div class="col-md d-flex py-md-4">
                                             <div class="form-group align-self-stretch d-flex align-items-end">
                                                 <div class="wrap align-self-stretch py-3 px-4">
-                                                    <label for="checkInDate">Check-in Date</label>
+                                                    <!--<label for="checkInDate">Check-in Date</label>-->
                                                     <input type="text" id="checkInDate" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date"
                                                            value="">
                                                 </div>
@@ -178,7 +205,7 @@
                                         <div class="col-md d-flex py-md-4">
                                             <div class="form-group align-self-stretch d-flex align-items-end">
                                                 <div class="wrap align-self-stretch py-3 px-4">
-                                                    <label for="adult">Guests</label>
+                                                    <!--<label for="adult">Guests</label>-->
                                                     <div class="form-field">
                                                         <div class="select-wrap">
                                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -198,7 +225,7 @@
                                         <div class="col-md d-flex py-md-4">
                                             <div class="form-group align-self-stretch d-flex align-items-end">
                                                 <div class="wrap align-self-stretch py-3 px-4">
-                                                    <label for="children">Children</label>
+                                                    <!--<label for="children">Children</label>-->
                                                     <div class="form-field">
                                                         <div class="select-wrap">
                                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -214,10 +241,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md d-flex py-md-4">
                                             <div class="form-group ">
-                                                <label for="children"></label>
-                                                <button href="#" class="btn btn-primary "><span>Change Search</span></button>
+                                                <button href="#" class="btn btn-primary " style="width: 100%; border-radius: 0px;"><span>Change Search</span></button>
                                             </div>
                                         </div>
                                     </div>
@@ -226,11 +252,13 @@
                         </div>
                     </div>
                 </section>
-                <table border="1" style="width: 100%; height: 100%">
+                <table id="rate-table" border="1">
                     <thead>
                         <tr>
                             <th>Acommodation</th>
+                            <th>Sleep</th>
                             <th>Today's price</th>
+                            <th>Your choices</th>
                             <th>Select amount</th>
                             <th></th>
                         </tr>
@@ -238,7 +266,14 @@
                     <tbody>
                         <tr>
                             <td>a</td>
+                            <td style="width: 8%;">
+                                <i class="fa-solid fa-user"></i>
+                                <i class="fa-solid fa-user"></i>
+                                +
+                                <i class="fa-solid fa-user fa-xs"></i>
+                            </td>
                             <td>a</td>
+                            <td>My choices</td>
                             <td style="width: 5%; text-align: center"><div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                 <select name="amount" id="amount" class="">
                                     <option value="1">1</option>
@@ -248,15 +283,14 @@
                                     <option value="5">5</option>
                                 </select></td>
                             <td style="text-align: center">
-                                <button class="btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
-                                        margin-top: 1rem; width: 70%">
+                                <a href="customer?do=proceedBooking" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
+                                   margin-top: 1rem; width: 70%">
                                     I'll Reserve
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-
 
             </div>
         </div>
