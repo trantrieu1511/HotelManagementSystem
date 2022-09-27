@@ -46,170 +46,152 @@ public class ControllerCustomer extends HttpServlet {
             SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
             HttpSession session = request.getSession();
             Customer cus = (Customer) session.getAttribute("Customer");
-//            if (cus == null) {
-//                response.sendRedirect("login.jsp");
-//            } else {
-            int setting_option = 0;
-            boolean editSuccess = true;
-            boolean hasMessage = false;
-            String alert = "";
-            String message = "";
-            if (service == null) {
-                service = "displayAccountSettings";
-            }
-            if (service.equals("displayAccountSettings")) {
-                RequestDispatcher dispatch = request.getRequestDispatcher("account-settings.jsp");
-                dispatch.forward(request, response);
-            }
-            if (service.equals("displayPersonalDetails")) {
-                setting_option = 1;
-                String edit = request.getParameter("edit");
-                if (edit != null && edit.equals("success")) {
+            if (cus == null) {
+                response.sendRedirect("login.jsp");
+            } else {
+                int setting_option = 0;
+                boolean editSuccess = true;
+                boolean hasMessage = false;
+                String alert = "";
+                String message = "";
+                if (service == null) {
+                    service = "displayAccountSettings";
+                }
+                if (service.equals("displayAccountSettings")) {
+                    RequestDispatcher dispatch = request.getRequestDispatcher("account-settings.jsp");
+                    dispatch.forward(request, response);
+                }
+                if (service.equals("displayPersonalDetails")) {
+                    setting_option = 1;
+                    String edit = request.getParameter("edit");
+                    if (edit != null && edit.equals("success")) {
 //                        alert = "Edit Successfully!";
+                    }
+                    if (edit != null && edit.equals("fail")) {
+                        alert = "Edit Failed! For dev, please "
+                                + "check the system for specific error!";
+                    }
+                    cus = daoCus.getCustomerDetails(cus.getId());
+                    session.setAttribute("Customer", cus);
+                    request.setAttribute("cusInfo", cus);
+                    request.setAttribute("settingOption", setting_option);
+                    request.setAttribute("alert", alert);
+                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-details.jsp");
+                    dispatch.forward(request, response);
                 }
-                if (edit != null && edit.equals("fail")) {
-                    alert = "Edit Failed! For dev, please "
-                            + "check the system for specific error!";
-                }
-                cus = daoCus.getCustomerDetails(cus.getId());
-                session.setAttribute("Customer", cus);
-                request.setAttribute("cusInfo", cus);
-                request.setAttribute("settingOption", setting_option);
-                request.setAttribute("alert", alert);
-                RequestDispatcher dispatch = request.getRequestDispatcher("customer-details.jsp");
-                dispatch.forward(request, response);
-            }
-            if (service.equals("displayAccountSecurity")) {
-                setting_option = 2;
-                String edit = request.getParameter("edit");
-                String editMessage = request.getParameter("edit-message");
-                if (edit != null && edit.equals("success")) {
+                if (service.equals("displayAccountSecurity")) {
+                    setting_option = 2;
+                    String edit = request.getParameter("edit");
+                    String editMessage = request.getParameter("edit-message");
+                    if (edit != null && edit.equals("success")) {
 //                        alert = "Edit Successfully!";
+                    }
+                    if (edit != null && edit.equals("fail")) {
+                        alert = "Edit Failed! For dev, please "
+                                + "check the system for specific error!";
+                    }
+                    if (editMessage != null && editMessage.equals("sameNewPassword")) {
+                        message = "Please enter new password different than your old "
+                                + "one!";
+                        hasMessage = true;
+                    }
+                    if (editMessage != null && editMessage.equals("confirmPassIsNotMatch")) {
+                        message = "Confirm password is not match with your new password! "
+                                + "Please try enter again!";
+                        hasMessage = true;
+                    }
+                    cus = daoCus.getCustomerDetails(cus.getId());
+                    session.setAttribute("Customer", cus);
+                    request.setAttribute("cusInfo", cus);
+                    request.setAttribute("settingOption", setting_option);
+                    request.setAttribute("alert", alert);
+                    request.setAttribute("message", message);
+                    request.setAttribute("hasMessage", hasMessage);
+                    RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
+                    dispatch.forward(request, response);
                 }
-                if (edit != null && edit.equals("fail")) {
-                    alert = "Edit Failed! For dev, please "
-                            + "check the system for specific error!";
-                }
-                if (editMessage != null && editMessage.equals("sameNewPassword")) {
-                    message = "Please enter new password different than your old "
-                            + "one!";
-                    hasMessage = true;
-                }
-                if (editMessage != null && editMessage.equals("confirmPassIsNotMatch")) {
-                    message = "Confirm password is not match with your new password! "
-                            + "Please try enter again!";
-                    hasMessage = true;
-                }
-                cus = daoCus.getCustomerDetails(cus.getId());
-                session.setAttribute("Customer", cus);
-                request.setAttribute("cusInfo", cus);
-                request.setAttribute("settingOption", setting_option);
-                request.setAttribute("alert", alert);
-                request.setAttribute("message", message);
-                request.setAttribute("hasMessage", hasMessage);
-                RequestDispatcher dispatch = request.getRequestDispatcher("customer-security.jsp");
-                dispatch.forward(request, response);
-            }
-            if (service.equals("editFullName")) {
-                String firstName = request.getParameter("FirstName");
-                String lastName = request.getParameter("LastName");
+                if (service.equals("editFullName")) {
+                    String firstName = request.getParameter("FirstName");
+                    String lastName = request.getParameter("LastName");
 //                    out.print(firstName);
 //                    out.print(lastName);
-                editSuccess = daoCus.editFullName(firstName, lastName, cus.getCusID());
-                forwardAndDisplayResult(editSuccess, request, response);
-            }
-            if (service.equals("editEmail")) {
-                String email = request.getParameter("Email");
+                    editSuccess = daoCus.editFullName(firstName, lastName, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
+                }
+                if (service.equals("editEmail")) {
+                    String email = request.getParameter("Email");
 //                    out.print(email);
-                editSuccess = daoCus.editEmail(email, cus.getCusID());
-                forwardAndDisplayResult(editSuccess, request, response);
-            }
-            if (service.equals("editPhoneNumber")) {
-                String phoneNumber = request.getParameter("PhoneNumber");
+                    editSuccess = daoCus.editEmail(email, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
+                }
+                if (service.equals("editPhoneNumber")) {
+                    String phoneNumber = request.getParameter("PhoneNumber");
 //                    out.print(email);
-                editSuccess = daoCus.editPhoneNumber(phoneNumber, cus.getCusID());
-                forwardAndDisplayResult(editSuccess, request, response);
-            }
-            if (service.equals("editGender")) {
-                String isMale = request.getParameter("Gender");
+                    editSuccess = daoCus.editPhoneNumber(phoneNumber, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
+                }
+                if (service.equals("editGender")) {
+                    String isMale = request.getParameter("Gender");
 //                    out.print(isMale);
-                editSuccess = daoCus.editGender(isMale, cus.getCusID());
-                forwardAndDisplayResult(editSuccess, request, response);
-            }
-            if (service.equals("editDOB")) {
-                String dob = request.getParameter("DOB");
-                out.print(dob);
-//                    editSuccess = daoCus.editDOB(dob, cus.getCusID());
-//                    forwardAndDisplayResult(editSuccess, request, response);
-            }
-            if (service.equals("editAddress")) {
-                String address = request.getParameter("Address");
+                    editSuccess = daoCus.editGender(isMale, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
+                }
+                if (service.equals("editDOB")) {
+                    String dob = request.getParameter("DOB");
+//                out.print(dob);
+                    editSuccess = daoCus.editDOB(dob, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
+                }
+                if (service.equals("editAddress")) {
+                    String address = request.getParameter("Address");
 //                    out.print(address);
-                editSuccess = daoCus.editAddress(address, cus.getCusID());
-                forwardAndDisplayResult(editSuccess, request, response);
-            }
-            if (service.equals("editPassword")) {
-                String oldPassword = request.getParameter("OldPassword");
-                String newPassword = request.getParameter("NewPassword");
-                String confirmPassword = request.getParameter("ConfirmPassword");
+                    editSuccess = daoCus.editAddress(address, cus.getCusID());
+                    forwardAndDisplayResult(editSuccess, request, response);
+                }
+                if (service.equals("editPassword")) {
+                    String oldPassword = request.getParameter("OldPassword");
+                    String newPassword = request.getParameter("NewPassword");
+                    String confirmPassword = request.getParameter("ConfirmPassword");
 //                    out.print(password);
-                if (newPassword.equals(oldPassword)) {
-                    response.sendRedirect("customer?do=displayAccountSecurity"
-                            + "&edit-message=sameNewPassword");
-                    return;
+                    if (newPassword.equals(oldPassword)) {
+                        response.sendRedirect("customer?do=displayAccountSecurity"
+                                + "&edit-message=sameNewPassword");
+                        return;
+                    }
+                    if (!confirmPassword.equals(newPassword)) {
+                        response.sendRedirect("customer?do=displayAccountSecurity"
+                                + "&edit-message=confirmPassIsNotMatch");
+                        return;
+                    }
+                    editSuccess = daoCus.editPassword(newPassword, cus.getCusID());
+                    if (editSuccess) {
+                        response.sendRedirect("customer?do=displayAccountSecurity&edit=success");
+                    } else {
+                        response.sendRedirect("customer?do=displayAccountSecurity&edit=fail");
+                    }
                 }
-                if (!confirmPassword.equals(newPassword)) {
-                    response.sendRedirect("customer?do=displayAccountSecurity"
-                            + "&edit-message=confirmPassIsNotMatch");
-                    return;
-                }
-                editSuccess = daoCus.editPassword(newPassword, cus.getCusID());
-                if (editSuccess) {
-                    response.sendRedirect("customer?do=displayAccountSecurity&edit=success");
-                } else {
-                    response.sendRedirect("customer?do=displayAccountSecurity&edit=fail");
-                }
-            }
-            if (service.equals("deleteAccount")) {
-                String Id = request.getParameter("Id");
+                if (service.equals("deleteAccount")) {
+                    String Id = request.getParameter("Id");
 //                    out.print(Id);
-                boolean deleteSuccess = daoCus.deleteCustomer(Id);
-                if (deleteSuccess) {
-                    cus = daoCus.getCustomerDetails(cus.getId());
-                    session.setAttribute("Customer", cus);
-                    request.setAttribute("message", "Account has been successfully deleted!");
-                    request.setAttribute("deleteSucceed", true);
-                    RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
-                    dispatch.forward(request, response);
-                } else {
-                    cus = daoCus.getCustomerDetails(cus.getId());
-                    session.setAttribute("Customer", cus);
-                    request.setAttribute("message", "Edit Failed! For dev, please "
-                            + "check the system for specific error!");
-                    request.setAttribute("deleteSucceed", false);
-                    RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
-                    dispatch.forward(request, response);
+                    boolean deleteSuccess = daoCus.deleteCustomer(Id);
+                    if (deleteSuccess) {
+                        cus = daoCus.getCustomerDetails(cus.getId());
+                        session.setAttribute("Customer", cus);
+                        request.setAttribute("message", "Account has been successfully deleted!");
+                        request.setAttribute("deleteSucceed", true);
+                        RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
+                        dispatch.forward(request, response);
+                    } else {
+                        cus = daoCus.getCustomerDetails(cus.getId());
+                        session.setAttribute("Customer", cus);
+                        request.setAttribute("message", "Edit Failed! For dev, please "
+                                + "check the system for specific error!");
+                        request.setAttribute("deleteSucceed", false);
+                        RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
+                        dispatch.forward(request, response);
+                    }
                 }
             }
-            if (service.equals("checkAvailabiltyOfRoom")) {
-                String checkInDate = request.getParameter("checkInDate");
-                String checkOutDate = request.getParameter("checkOutDate");
-                String adult = request.getParameter("adult");
-                String children = request.getParameter("children");
-
-                RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
-                dispatch.forward(request, response);
-            }
-            if (service.equals("viewHotelRooms")) {
-
-                RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
-                dispatch.forward(request, response);
-            }
-            if (service.equals("proceedBooking")) {
-                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
-                dispatch.forward(request, response);
-            }
-//            }
         } catch (Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("error404.jsp");

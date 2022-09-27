@@ -143,7 +143,7 @@
                 <div class="container">
                     <div class="row no-gutters">
                         <div class="col-lg-12">
-                            <form action="customer" class="booking-form aside-stretch" method="post">
+                            <form action="booking" class="booking-form aside-stretch" method="post">
                                 <input type="hidden" name="do" value="checkAvailabiltyOfRoom">
                                 <div class="row">
                                     <div class="col-md d-flex py-md-4">

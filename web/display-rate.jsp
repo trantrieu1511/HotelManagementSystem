@@ -51,8 +51,9 @@
                 display: block!important;
             }
             section{
-                border: 1px solid darkblue;
-                margin-bottom: 1rem;
+                /*border: 1px solid darkblue;*/
+                /*margin-bottom: 1rem;*/
+                margin-top: 1rem;
             }
             #adult, #children, #checkInDate, #checkOutDate{
                 border-radius: 0px;
@@ -77,8 +78,22 @@
                 width: 900px; 
                 height: 8rem;
             }
+            #rate-recommend-table{
+                width: 900px; 
+                height: 8rem;
+            }
+            td{
+                border-right: 1px solid gainsboro;
+            }
+            table{
+                border-radius: 5px;
+            }
             @media only screen and (min-width: 1200px) {
                 #rate-table{
+                    width: 100%; 
+                    height: 100%;
+                }
+                #rate-recommend-table{
                     width: 100%; 
                     height: 100%;
                 }
@@ -170,16 +185,41 @@
         <jsp:include page="page-header.jsp"></jsp:include>
         <div class="container">
             <div class="main-body">
+                <h3>
+                    Recommended for:
+                </h3>
                 <br>
-                <div>
-                    <h2>
-                        Availability
-                    </h2>
-
+                <div style="margin-bottom: 5px;">
+                    <strong>2 rooms for 2 adults, 1 child</strong>
                 </div>
+                <table id="rate-recommend-table" border="0" style="
+                       box-shadow: 0px 0px 5px 0px black;
+                       ">
+                    <tbody>
+                        <tr>
+                            <td>
+                                2 × Superior Double or Twin Room
+                                Price for: 2 adults + 1 child
+                            </td>
+                            <td style="width: 8%;">
+                                VND 100,000
+                            </td>
+                            <td style="text-align: center">
+                                <a href="#rate-table" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
+                                   margin-top: 1rem; margin-bottom: 1rem; width: 70%">
+                                    Reserve your selection
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h2>
+                    Availability
+                </h2>
                 <br>
                 <section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb">
-                    <div class="container" style="margin-top: 1rem;">
+                    <div class="container">
                         <div class="row no-gutters">
                             <div class="col-lg-12">
                                 <form action="customer" class="booking-form aside-stretch" method="post">
@@ -283,7 +323,7 @@
                                     <option value="5">5</option>
                                 </select></td>
                             <td style="text-align: center">
-                                <a href="customer?do=proceedBooking" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
+                                <a href="booking?do=proceedBooking" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
                                    margin-top: 1rem; width: 70%">
                                     I'll Reserve
                                 </a>

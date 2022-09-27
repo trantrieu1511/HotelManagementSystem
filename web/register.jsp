@@ -85,12 +85,24 @@
                 text-align: center; 
                 /*margin-right: 30px;*/
             }
-            .wrapper{
-                background-color: whitesmoke;
-            }
             input.form-control{
                 text-align: left;
                 padding: 10px 5px;
+            }
+            .wrapper{
+                background-color: #f7f7ff;
+            }
+            nav{
+                background-color: midnightblue;
+            }
+            .nav-item a, .navbar-brand {
+                color: white;
+            }
+            .nav-item a:hover, .navbar-brand:hover {
+                color: blue;
+            }
+            a.dropdown-item{
+                color: black;
             }
         </style>
     </head>
@@ -118,7 +130,7 @@
                 </div>
                 <hr>
 
-                <div style="padding-left: 35px;">Please fill your info into the <span class="text-danger">*</span> field below to register.</div>
+                <div style="padding-left: 35px; font-weight: bold;">Please fill your info into the <span class="text-danger">*</span> field below to register.</div>
 
                 <c:if test="${succeed==true}">
                     <br>

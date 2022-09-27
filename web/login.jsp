@@ -30,8 +30,25 @@
         </script>
         <style>
             .wrapper{
-                background-color: whitesmoke;
+                background-color: #f7f7ff;
             }
+            nav{
+                background-color: midnightblue;
+            }
+            .nav-item a, .navbar-brand {
+                color: white;
+            }
+            .nav-item a:hover, .navbar-brand:hover {
+                color: blue;
+            }
+            a.dropdown-item{
+                color: black;
+            }
+            #formContent{
+                /*box-shadow: none;*/
+                /*border: 1px solid black;*/
+            }
+
         </style>
     </head>
     <body>
