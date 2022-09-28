@@ -77,3 +77,22 @@ select * from BookDetail
 update BookDetail
 set Amount = 350000
 where BD_ID = 1
+
+--display all RoomType in hotel
+select * from RoomType
+
+--display availability of Rooms (recommend rooms)
+select b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
+r.[Name], r.[Floor], r.[View], rt.RoomTypeID, rt.[Name], rt.Price,
+rt.Img, rt.[Description], rt.Adult, rt.Children
+from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID full outer join Room r
+on bd.RoomID = r.RoomID full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID 
+where PaymentStatus = 1 or PaymentStatus is null
+--and r.RoomTypeID = 1
+and rt.Adult >= 2 and rt.Children >= 2
+
+select rtd.RTD_ID, rtd.RoomTypeID, bt.[Name], 
+rtd.BedAmount from RoomTypeDetail rtd join BedType bt
+on rtd.BedTypeID = bt.BedTypeID where rtd.RoomTypeID = 2

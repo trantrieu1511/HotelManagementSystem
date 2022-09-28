@@ -73,6 +73,7 @@ CREATE TABLE Booking(
 	CusID nvarchar(4000) not null,
 	BookDate varchar(50) not null,
 	PaymentStatus bit default 0 not null,
+	SpecialRequests nvarchar(MAX),
 	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
 )
 

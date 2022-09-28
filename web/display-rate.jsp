@@ -39,7 +39,7 @@
             }
             div.py-md-4{
                 padding: 0px!important;
-                text-align: 
+                /*text-align:*/ 
             }
             .py-3 {
                 padding: 0px!important;
@@ -83,11 +83,12 @@
                 height: 8rem;
             }
             td{
-                border-right: 1px solid gainsboro;
+                /*border-right: 1px solid gainsboro;*/
             }
-            table{
-                border-radius: 5px;
-            }
+            /*            table{
+                            border-radius: 3px;
+                            border: 1px solid black;
+                        }*/
             @media only screen and (min-width: 1200px) {
                 #rate-table{
                     width: 100%; 
@@ -185,16 +186,14 @@
         <jsp:include page="page-header.jsp"></jsp:include>
         <div class="container">
             <div class="main-body">
-                <h3>
-                    Recommended for:
-                </h3>
-                <br>
+                <!--                <h2>
+                                    Recommended:
+                                </h2>
+                                <br>-->
                 <div style="margin-bottom: 5px;">
                     <strong>2 rooms for 2 adults, 1 child</strong>
                 </div>
-                <table id="rate-recommend-table" border="0" style="
-                       box-shadow: 0px 0px 5px 0px black;
-                       ">
+                <table id="rate-recommend-table" border="1">
                     <tbody>
                         <tr>
                             <td>
@@ -222,7 +221,7 @@
                     <div class="container">
                         <div class="row no-gutters">
                             <div class="col-lg-12">
-                                <form action="customer" class="booking-form aside-stretch" method="post">
+                                <form action="booking" class="booking-form aside-stretch" method="post">
                                     <input type="hidden" name="do" value="checkAvailabiltyOfRoom">
                                     <div class="row">
                                         <div class="col-md d-flex py-md-4">

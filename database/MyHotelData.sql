@@ -87,9 +87,14 @@ insert into Room values('503', 5, 5, 'Beautiful Beach view')
 --insert Booking
 --select * from Booking
 insert into Booking(CusID, BookDate) values('CUS00001', '22/09/2022')
+insert into Booking(CusID, BookDate) values('CUS00002', '28/09/2022')
 
 --insert BookDetail
 --select * from BookDetail
 --select * from Booking
 --select * from Room
+--select * from RoomType
+--select * from RoomTypeDetail
 insert into BookDetail values(1,1,'22/09/2022','23/09/2022',DATEDIFF(DAY,'2022-09-22','2022-09-23')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 1))
+insert into BookDetail values(2,7,'28/09/2022','30/09/2022',DATEDIFF(DAY,'2022-09-28','2022-09-30')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 7))
+--delete from BookDetail where BD_ID = 2

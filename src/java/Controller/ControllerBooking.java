@@ -41,6 +41,7 @@ public class ControllerBooking extends HttpServlet {
                 String adult = request.getParameter("adult");
                 String children = request.getParameter("children");
 
+                
                 RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
                 dispatch.forward(request, response);
             }
