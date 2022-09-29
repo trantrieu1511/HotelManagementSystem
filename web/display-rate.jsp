@@ -55,9 +55,13 @@
                 /*margin-bottom: 1rem;*/
                 margin-top: 1rem;
             }
-            #adult, #children, #checkInDate, #checkOutDate{
+            #adult, #children, #room, #checkInDate, #checkOutDate{
                 border-radius: 0px;
                 box-shadow: none;
+            }
+            .btn-secondary{
+                border: none;
+                border-radius: 0px;
             }
             label{
                 font-weight: 500;
@@ -184,150 +188,191 @@
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
-        <div class="container">
-            <div class="main-body">
-                <!--                <h2>
-                                    Recommended:
-                                </h2>
-                                <br>-->
-                <div style="margin-bottom: 5px;">
-                    <strong>2 rooms for 2 adults, 1 child</strong>
-                </div>
-                <table id="rate-recommend-table" border="1">
-                    <tbody>
-                        <tr>
-                            <td>
-                                2 × Superior Double or Twin Room
-                                Price for: 2 adults + 1 child
-                            </td>
-                            <td style="width: 8%;">
-                                VND 100,000
-                            </td>
-                            <td style="text-align: center">
-                                <a href="#rate-table" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
-                                   margin-top: 1rem; margin-bottom: 1rem; width: 70%">
-                                    Reserve your selection
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <h2>
-                    Availability
-                </h2>
-                <br>
-                <section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb">
-                    <div class="container">
-                        <div class="row no-gutters">
-                            <div class="col-lg-12">
-                                <form action="booking" class="booking-form aside-stretch" method="post">
-                                    <input type="hidden" name="do" value="checkAvailabiltyOfRoom">
-                                    <div class="row">
-                                        <div class="col-md d-flex py-md-4">
-                                            <div class="form-group align-self-stretch d-flex align-items-end">
-                                                <div class="wrap align-self-stretch py-3 px-4">
-                                                    <!--<label for="checkInDate">Check-in Date</label>-->
-                                                    <input type="text" id="checkInDate" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date"
-                                                           value="">
+            <div class="container">
+                <div class="main-body">
+                    <!--                <h2>
+                                        Recommended:
+                                    </h2>
+                                    <br>-->
+                    <div style="margin-bottom: 5px;">
+                        <strong>2 rooms for 2 adults, 1 child</strong>
+                    </div>
+                    <table id="rate-recommend-table" border="1">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    2 × Superior Double or Twin Room
+                                    Price for: 2 adults + 1 child
+                                </td>
+                                <td style="width: 8%;">
+                                    <strong>VND 100,000</strong>
+                                </td>
+                                <td style="text-align: center">
+                                    <a href="#rate-table" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
+                                       margin-top: 1rem; margin-bottom: 1rem; width: 70%">
+                                        Reserve your selection
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <h2>
+                        Availability
+                    </h2>
+                    <br>
+                    <section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb">
+                        <div class="container">
+                            <div class="row no-gutters">
+                                <div class="col-lg-12">
+                                    <form action="booking" class="booking-form aside-stretch" method="post">
+                                        <input type="hidden" name="do" value="checkAvailabiltyOfRoom">
+                                        <div class="row">
+                                            <div class="col-md d-flex py-md-4">
+                                                <div class="form-group align-self-stretch d-flex align-items-end">
+                                                    <div class="wrap align-self-stretch py-3 px-4">
+                                                        <!--<label for="checkInDate">Check-in Date</label>-->
+                                                        <input type="text" id="checkInDate" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date"
+                                                               value="">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!--                                        <div class="col-md d-flex py-md-4">
-                                                                                    <div class="form-group align-self-stretch d-flex align-items-end">
-                                                                                        <div class="wrap align-self-stretch py-3 px-4">
-                                                                                            <label for="checkOutDate">Check-out Date</label>
-                                                                                            <input type="text" id="checkOutDate" name="checkOutDate" required="" onkeydown="event.preventDefault()" class="form-control checkout_date" placeholder="Check-out date">
+                                            <!--                                        <div class="col-md d-flex py-md-4">
+                                                                                        <div class="form-group align-self-stretch d-flex align-items-end">
+                                                                                            <div class="wrap align-self-stretch py-3 px-4">
+                                                                                                <label for="checkOutDate">Check-out Date</label>
+                                                                                                <input type="text" id="checkOutDate" name="checkOutDate" required="" onkeydown="event.preventDefault()" class="form-control checkout_date" placeholder="Check-out date">
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                </div>-->
-                                        <div class="col-md d-flex py-md-4">
-                                            <div class="form-group align-self-stretch d-flex align-items-end">
-                                                <div class="wrap align-self-stretch py-3 px-4">
-                                                    <!--<label for="adult">Guests</label>-->
-                                                    <div class="form-field">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="adult" id="adult" class="form-control">
-                                                                <option value="1">1 Adult</option>
-                                                                <option value="2">2 Adults</option>
-                                                                <option value="3">3 Adults</option>
-                                                                <option value="4">4 Adults</option>
-                                                                <option value="5">5 Adults</option>
-                                                                <option value="6">6 Adults</option>
-                                                            </select>
+                                                                                    </div>-->
+                                            <div class="col-md d-flex py-md-4">
+                                                <div class="form-group align-self-stretch d-flex align-items-end">
+                                                    <div class="wrap align-self-stretch py-3 px-4">
+                                                        <!--<label for="adult">Guests</label>-->
+                                                        <div class="form-field">
+                                                            <div class="select-wrap">
+                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                <select name="adult" id="adult" class="form-control">
+                                                                    <option value="1">1 Adult</option>
+                                                                    <option value="2">2 Adults</option>
+                                                                    <option value="3">3 Adults</option>
+                                                                    <option value="4">4 Adults</option>
+                                                                    <option value="5">5 Adults</option>
+                                                                    <option value="6">6 Adults</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md d-flex py-md-4">
-                                            <div class="form-group align-self-stretch d-flex align-items-end">
-                                                <div class="wrap align-self-stretch py-3 px-4">
-                                                    <!--<label for="children">Children</label>-->
-                                                    <div class="form-field">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="children" id="children" class="form-control">
-                                                                <option value="1">1 Child</option>
-                                                                <option value="2">2 Children</option>
-                                                                <option value="3">3 Children</option>
-                                                                <option value="4">4 Children</option>
-                                                                <option value="5">5 Children</option>
-                                                            </select>
+                                            <div class="col-md d-flex py-md-4">
+                                                <div class="form-group align-self-stretch d-flex align-items-end">
+                                                    <div class="wrap align-self-stretch py-3 px-4">
+                                                        <!--<label for="children">Children</label>-->
+                                                        <div class="form-field">
+                                                            <div class="select-wrap">
+                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                <select name="children" id="children" class="form-control">
+                                                                    <option value="1">1 Child</option>
+                                                                    <option value="2">2 Children</option>
+                                                                    <option value="3">3 Children</option>
+                                                                    <option value="4">4 Children</option>
+                                                                    <option value="5">5 Children</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md d-flex py-md-4">
-                                            <div class="form-group ">
-                                                <button href="#" class="btn btn-primary " style="width: 100%; border-radius: 0px;"><span>Change Search</span></button>
+                                            <div class="col-md d-flex py-md-4">
+                                                <div class="form-group align-self-stretch d-flex align-items-end">
+                                                    <div class="wrap align-self-stretch py-3 px-4">
+                                                        <!--<label for="children">Children</label>-->
+                                                        <div class="form-field">
+                                                            <div class="select-wrap">
+                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                <select name="room" id="room" class="form-control">
+                                                                    <option value="1">1 room</option>
+                                                                    <option value="2">2 rooms</option>
+                                                                    <option value="3">3 rooms</option>
+                                                                    <option value="4">4 rooms</option>
+                                                                    <option value="5">5 rooms</option>
+                                                                    <option value="5">6 rooms</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md d-flex py-md-4">
+                                                <div class="form-group ">
+                                                    <button href="#" class="btn btn-primary " style="width: 100%; border-radius: 0px;"><span>Change Search</span></button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-                <table id="rate-table" border="1">
-                    <thead>
-                        <tr>
-                            <th>Acommodation</th>
-                            <th>Sleep</th>
-                            <th>Today's price</th>
-                            <th>Your choices</th>
-                            <th>Select amount</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>a</td>
-                            <td style="width: 8%;">
-                                <i class="fa-solid fa-user"></i>
-                                <i class="fa-solid fa-user"></i>
-                                +
-                                <i class="fa-solid fa-user fa-xs"></i>
-                            </td>
-                            <td>a</td>
-                            <td>My choices</td>
-                            <td style="width: 5%; text-align: center"><div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="amount" id="amount" class="">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select></td>
-                            <td style="text-align: center">
-                                <a href="booking?do=proceedBooking" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
-                                   margin-top: 1rem; width: 70%">
-                                    I'll Reserve
-                                </a>
-                            </td>
-                        </tr>
+                    </section>
+                    <table id="rate-table" border="1">
+                        <thead>
+                            <tr>
+                                <th>Accommodation</th>
+                                <th>Sleep</th>
+                                <th>Today's price</th>
+                                <th>Your choices</th>
+                                <th>Select amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${listRoomType}" var="rt">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <h4>${rt.getName()}</h4>
+                                    </div>
+                                    <img src="${rt.getImg()}" width="200" height="150">
+                                    <div>Bed:</div>
+                                    <c:forEach items="${listRoomTypeDetail}" var="rtd">
+                                        <c:if test="${rt.getRoomTypeID()==rtd.getRoomTypeID()}">
+                                            <div>
+                                                ${rtd.getName()} x ${rtd.getBedAmount()}
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
+                                    <!--${rt.getDescription()}-->
+                                </td>
+                                <td style="width: 8%;">
+                                    <c:forEach var = "i" begin = "1" end = "2">
+                                        <i class="fa-solid fa-user"></i>
+                                    </c:forEach>
+                                    +
+                                    <c:forEach var = "i" begin = "1" end = "2">
+                                        <i class="fa-solid fa-user fa-xs"></i>
+                                    </c:forEach>
+                                </td>
+                                <td>
+                                    <div>${rt.getPrice()}</div>
+                                </td>
+                                <td>My choices</td>
+                                <td style="width: 5%; text-align: center"><div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                    <select name="amount" id="amount" class="">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select></td>
+                                <td style="text-align: center">
+                                    <a href="booking?do=proceedBooking" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
+                                       margin-top: 1rem; width: 70%">
+                                        I'll Reserve
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
 

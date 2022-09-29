@@ -81,7 +81,7 @@ where BD_ID = 1
 --display all RoomType in hotel
 select * from RoomType
 
---display availability of Rooms (recommend rooms)
+--display availability of Rooms
 select b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
 r.[Name], r.[Floor], r.[View], rt.RoomTypeID, rt.[Name], rt.Price,
 rt.Img, rt.[Description], rt.Adult, rt.Children
@@ -93,6 +93,26 @@ where PaymentStatus = 1 or PaymentStatus is null
 --and r.RoomTypeID = 1
 and rt.Adult >= 2 and rt.Children >= 2
 
+--count rooms that are available to some condition
+select Count(*) from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID full outer join Room r
+on bd.RoomID = r.RoomID full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID 
+where PaymentStatus = 1 or PaymentStatus is null
+and r.RoomTypeID = 1
+
+--select BedTypes and BedAmount of a RoomType
 select rtd.RTD_ID, rtd.RoomTypeID, bt.[Name], 
 rtd.BedAmount from RoomTypeDetail rtd join BedType bt
 on rtd.BedTypeID = bt.BedTypeID where rtd.RoomTypeID = 2
+
+select rtd.RTD_ID, rt.[Name], bt.[Name], 
+rtd.BedAmount from RoomType rt join RoomTypeDetail rtd 
+on rt.RoomTypeID = rtd.RoomTypeID join BedType bt
+on rtd.BedTypeID = bt.BedTypeID where rtd.RoomTypeID = 2
+
+--select rooms according to customer's demand (recommend the cheapest room)
+--select * from RoomType where Adult * @roomnum <= @adult and Children * @roomnum <= @children
+--and Price = MIN(Price)
+select * from RoomType where Adult * 2 >= 5 and Children * 2 >= 4
+and Price = (select MIN(Price) from RoomType where Adult * 2 >= 5 and Children * 2 >= 4)

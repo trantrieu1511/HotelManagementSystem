@@ -5,8 +5,14 @@
  */
 package Controller;
 
+import Entity.RoomType;
+import Entity.RoomTypeDetail;
+import Model.DAORoomType;
+import Model.DAORoomTypeDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,13 +41,21 @@ public class ControllerBooking extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
+            RoomType rt = new RoomType();
+            RoomTypeDetail rtd = new RoomTypeDetail();
+            DAORoomType daoRt = new DAORoomType();
+            DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
             if (service.equals("checkAvailabiltyOfRoom")) {
                 String checkInDate = request.getParameter("checkInDate");
                 String checkOutDate = request.getParameter("checkOutDate");
                 String adult = request.getParameter("adult");
                 String children = request.getParameter("children");
-
-                
+//                String room = request.getParameter("room");
+//                rt = daoRt.getRecommendedRoomType(adult, children, room);
+                List<RoomType> listRt = daoRt.listRoomType();
+                List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
+                request.setAttribute("listRoomType", listRt);
+                request.setAttribute("listRoomTypeDetail", listRtd);
                 RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
                 dispatch.forward(request, response);
             }
