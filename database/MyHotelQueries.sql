@@ -94,7 +94,15 @@ where PaymentStatus = 1 or PaymentStatus is null
 and rt.Adult >= 2 and rt.Children >= 2
 
 --count rooms that are available to some condition
-select Count(*) from Booking b full outer join BookDetail bd
+select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID full outer join Room r
+on bd.RoomID = r.RoomID full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID 
+where PaymentStatus = 1 or PaymentStatus is null
+--and r.RoomTypeID = 2
+group by rt.RoomTypeID
+
+select * from Booking b full outer join BookDetail bd
 on b.BookID = bd.BookID full outer join Room r
 on bd.RoomID = r.RoomID full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 

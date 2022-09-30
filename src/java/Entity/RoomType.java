@@ -18,6 +18,7 @@ public class RoomType {
     int Adult, Children;
     String BedName;
     int BedAmount;
+    int NoOfAvailableRoom;
 
     public RoomType() {
     }
@@ -30,6 +31,12 @@ public class RoomType {
         this.Description = Description;
         this.Adult = Adult;
         this.Children = Children;
+    }
+
+    //constructor for available rooms
+    public RoomType(int RoomTypeID, int NoOfAvailableRoom) {
+        this.RoomTypeID = RoomTypeID;
+        this.NoOfAvailableRoom = NoOfAvailableRoom;
     }
 
     public int getRoomTypeID() {
@@ -107,6 +114,14 @@ public class RoomType {
 
     public void setBedAmount(int BedAmount) {
         this.BedAmount = BedAmount;
+    }
+
+    public int getNoOfAvailableRoom() {
+        return NoOfAvailableRoom;
+    }
+
+    public void setNoOfAvailableRoom(int NoOfAvailableRoom) {
+        this.NoOfAvailableRoom = NoOfAvailableRoom;
     }
 
 }

@@ -7,10 +7,12 @@ package Controller;
 
 import Entity.RoomType;
 import Entity.RoomTypeDetail;
+import Model.DAOBooking;
 import Model.DAORoomType;
 import Model.DAORoomTypeDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -43,21 +45,29 @@ public class ControllerBooking extends HttpServlet {
             String service = request.getParameter("do");
             RoomType rt = new RoomType();
             RoomTypeDetail rtd = new RoomTypeDetail();
+
             DAORoomType daoRt = new DAORoomType();
             DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
+            DAOBooking daoB = new DAOBooking();
+
+            int i = 0;
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
             if (service.equals("checkAvailabiltyOfRoom")) {
-                String checkInDate = request.getParameter("checkInDate");
-                String checkOutDate = request.getParameter("checkOutDate");
-                String adult = request.getParameter("adult");
-                String children = request.getParameter("children");
-//                String room = request.getParameter("room");
-//                rt = daoRt.getRecommendedRoomType(adult, children, room);
-                List<RoomType> listRt = daoRt.listRoomType();
-                List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
-                request.setAttribute("listRoomType", listRt);
-                request.setAttribute("listRoomTypeDetail", listRtd);
-                RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
-                dispatch.forward(request, response);
+                String action = request.getParameter("action");
+                if (action == null) {
+                    String checkInDate_date = request.getParameter("checkInDate");
+                    String checkOutDate_date = request.getParameter("checkOutDate");
+                    String checkInDate = sdf2.format(sdf1.parse(checkInDate_date));
+                    String checkOutDate = sdf2.format(sdf1.parse(checkOutDate_date));
+                    checkAvailabiltyOfRoom(daoRt, daoRtd, daoB, checkInDate, checkOutDate, request, response);
+                } else {
+                    String daterange = request.getParameter("daterange");
+                    String split[] = daterange.split(" - ");
+                    String checkInDate = split[0];
+                    String checkOutDate = split[1];
+                    checkAvailabiltyOfRoom(daoRt, daoRtd, daoB, checkInDate, checkOutDate, request, response);
+                }
             }
             if (service.equals("proceedBooking")) {
                 RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
@@ -106,5 +116,27 @@ public class ControllerBooking extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void checkAvailabiltyOfRoom(DAORoomType daoRt, DAORoomTypeDetail daoRtd, DAOBooking daoB, String checkInDate, String checkOutDate, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String adult = request.getParameter("adult");
+        String children = request.getParameter("children");
+//                String room = request.getParameter("room");
+//                rt = daoRt.getRecommendedRoomType(adult, children, room);
+        List<RoomType> listRt = daoRt.listRoomType();
+        List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
+        List<RoomType> listAvailableRooms = null;
+        for (RoomType roomType : listRt) {
+            listAvailableRooms = daoB.listAvailableRoom();
+        }
+        request.setAttribute("listRoomType", listRt);
+        request.setAttribute("listRoomTypeDetail", listRtd);
+        request.setAttribute("adult", adult);
+        request.setAttribute("children", children);
+        request.setAttribute("checkInDate", checkInDate);
+        request.setAttribute("checkOutDate", checkOutDate);
+        request.setAttribute("listAvailableRooms", listAvailableRooms);
+        RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
+        dispatch.forward(request, response);
+    }
 
 }

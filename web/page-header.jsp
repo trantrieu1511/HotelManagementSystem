@@ -11,6 +11,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Header Page</title>
+        <style>
+            nav{
+                background-color: midnightblue;
+            }
+            .navbar-toggler {
+                color: white;
+            }
+            .nav-item a, .navbar-brand {
+                color: white;
+            }
+            .nav-item a:hover, .navbar-brand:hover {
+                color: blue;
+            }
+            a.dropdown-item{
+                color: black;
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-blue ftco_navbar bg-blue ftco-navbar-light" id="ftco-navbar">

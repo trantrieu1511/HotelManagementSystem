@@ -63,11 +63,23 @@
                 border: none;
                 border-radius: 0px;
             }
+            .view-room{
+                color: black;
+            }
+            img{
+                padding-bottom: 10px;
+            }
+            .view-room:hover{
+                color: #007bff;
+            }
             label{
                 font-weight: 500;
             }
             nav{
                 background-color: midnightblue;
+            }
+            .navbar-toggler {
+                color: white;
             }
             .nav-item a, .navbar-brand {
                 color: white;
@@ -78,22 +90,61 @@
             a.dropdown-item{
                 color: black;
             }
-            #rate-table{
-                width: 900px; 
-                height: 8rem;
+            .rate-table-full{
+                display: flex;
+                width: 1300px; 
+                height: 100%;
             }
             #rate-recommend-table{
-                width: 900px; 
+                width: 1300px; 
                 height: 8rem;
+            }
+            #rate-table{
+                width: 1000px; 
+                height: 8rem;
+            }
+            .fake-table-body{
+                border: 1px solid #5bbaff;
+                border-right: white;
+                border-left: white;
+                border-bottom: white;
+            }
+            .fake-table{
+                border: 1px solid #5bbaff;
+                border-right: white;
+                border-left: white;
+                border-top: white;
+            }
+            .fake-table-head{
+                padding-top: 68px;
+                padding-right: 295px;
+                background-color: midnightblue;
+                border: 1px solid darkblue;
+            }
+            .fake-table-body{
+                padding-top: 5px;
+                text-align: center;
+            }
+            .room-data{
+                vertical-align: top;
+                padding-top: 5px;
+                padding-left: 10px;
             }
             td{
                 /*border-right: 1px solid gainsboro;*/
+            }
+            li{
+                padding-bottom: 10px;
             }
             /*            table{
                             border-radius: 3px;
                             border: 1px solid black;
                         }*/
             @media only screen and (min-width: 1200px) {
+                .rate-table-full{
+                    width: 100%; 
+                    height: 100%;
+                }
                 #rate-table{
                     width: 100%; 
                     height: 100%;
@@ -101,6 +152,12 @@
                 #rate-recommend-table{
                     width: 100%; 
                     height: 100%;
+                }
+                .fake-table-head{
+                    padding-top: 68px;
+                    padding-right: 190px;
+                    background-color: midnightblue;
+                    border: 1px solid darkblue;
                 }
             }
         </style>
@@ -227,95 +284,98 @@
                                 <div class="col-lg-12">
                                     <form action="booking" class="booking-form aside-stretch" method="post">
                                         <input type="hidden" name="do" value="checkAvailabiltyOfRoom">
+                                        <input type="hidden" name="action" value="changeSearch">
                                         <div class="row">
                                             <div class="col-md d-flex py-md-4">
                                                 <div class="form-group align-self-stretch d-flex align-items-end">
                                                     <div class="wrap align-self-stretch py-3 px-4">
                                                         <!--<label for="checkInDate">Check-in Date</label>-->
                                                         <input type="text" id="checkInDate" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date"
-                                                               value="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--                                        <div class="col-md d-flex py-md-4">
-                                                                                        <div class="form-group align-self-stretch d-flex align-items-end">
-                                                                                            <div class="wrap align-self-stretch py-3 px-4">
-                                                                                                <label for="checkOutDate">Check-out Date</label>
-                                                                                                <input type="text" id="checkOutDate" name="checkOutDate" required="" onkeydown="event.preventDefault()" class="form-control checkout_date" placeholder="Check-out date">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>-->
-                                            <div class="col-md d-flex py-md-4">
-                                                <div class="form-group align-self-stretch d-flex align-items-end">
-                                                    <div class="wrap align-self-stretch py-3 px-4">
-                                                        <!--<label for="adult">Guests</label>-->
-                                                        <div class="form-field">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                <select name="adult" id="adult" class="form-control">
-                                                                    <option value="1">1 Adult</option>
-                                                                    <option value="2">2 Adults</option>
-                                                                    <option value="3">3 Adults</option>
-                                                                    <option value="4">4 Adults</option>
-                                                                    <option value="5">5 Adults</option>
-                                                                    <option value="6">6 Adults</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md d-flex py-md-4">
-                                                <div class="form-group align-self-stretch d-flex align-items-end">
-                                                    <div class="wrap align-self-stretch py-3 px-4">
-                                                        <!--<label for="children">Children</label>-->
-                                                        <div class="form-field">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                <select name="children" id="children" class="form-control">
-                                                                    <option value="1">1 Child</option>
-                                                                    <option value="2">2 Children</option>
-                                                                    <option value="3">3 Children</option>
-                                                                    <option value="4">4 Children</option>
-                                                                    <option value="5">5 Children</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md d-flex py-md-4">
-                                                <div class="form-group align-self-stretch d-flex align-items-end">
-                                                    <div class="wrap align-self-stretch py-3 px-4">
-                                                        <!--<label for="children">Children</label>-->
-                                                        <div class="form-field">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                <select name="room" id="room" class="form-control">
-                                                                    <option value="1">1 room</option>
-                                                                    <option value="2">2 rooms</option>
-                                                                    <option value="3">3 rooms</option>
-                                                                    <option value="4">4 rooms</option>
-                                                                    <option value="5">5 rooms</option>
-                                                                    <option value="5">6 rooms</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md d-flex py-md-4">
-                                                <div class="form-group ">
-                                                    <button href="#" class="btn btn-primary " style="width: 100%; border-radius: 0px;"><span>Change Search</span></button>
+                                                               value="${checkInDate==null? "01/01/1990":checkInDate} - ${checkOutDate==null? "01/01/1990":checkOutDate}">
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                        <!--                                        <div class="col-md d-flex py-md-4">
+                                                                                    <div class="form-group align-self-stretch d-flex align-items-end">
+                                                                                        <div class="wrap align-self-stretch py-3 px-4">
+                                                                                            <label for="checkOutDate">Check-out Date</label>
+                                                                                            <input type="text" id="checkOutDate" name="checkOutDate" required="" onkeydown="event.preventDefault()" class="form-control checkout_date" placeholder="Check-out date">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>-->
+                                        <div class="col-md d-flex py-md-4">
+                                            <div class="form-group align-self-stretch d-flex align-items-end">
+                                                <div class="wrap align-self-stretch py-3 px-4">
+                                                    <!--<label for="adult">Guests</label>-->
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                            <select name="adult" id="adult" class="form-control">
+                                                                <option value="1" ${adult == 1 ? "selected":""}>1 Adult</option>
+                                                                <c:forEach var="i" begin="2" end="6">
+                                                                    <option value="${i}" ${adult == i ? "selected":""}>${i} Adults</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md d-flex py-md-4">
+                                            <div class="form-group align-self-stretch d-flex align-items-end">
+                                                <div class="wrap align-self-stretch py-3 px-4">
+                                                    <!--<label for="children">Children</label>-->
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                            <select name="children" id="children" class="form-control">
+                                                                <option value="1" ${children == 1 ? "selected":""}>1 Child</option>
+                                                                <c:forEach var="i" begin="2" end="6">
+                                                                    <option value="${i}" ${children == i ? "selected":""}>${i} Children</option>
+                                                                </c:forEach>
+                                                                <!--                                                                <option value="2">2 Children</option>
+                                                                                                                                <option value="3">3 Children</option>
+                                                                                                                                <option value="4">4 Children</option>
+                                                                                                                                <option value="5">5 Children</option>-->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md d-flex py-md-4">
+                                            <div class="form-group align-self-stretch d-flex align-items-end">
+                                                <div class="wrap align-self-stretch py-3 px-4">
+                                                    <!--<label for="children">Children</label>-->
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                            <select name="room" id="room" class="form-control">
+                                                                <option value="1">1 room</option>
+                                                                <option value="2">2 rooms</option>
+                                                                <option value="3">3 rooms</option>
+                                                                <option value="4">4 rooms</option>
+                                                                <option value="5">5 rooms</option>
+                                                                <option value="5">6 rooms</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md d-flex py-md-4">
+                                            <div class="form-group ">
+                                                <button href="#" class="btn btn-primary " style="width: 100%; border-radius: 0px;"><span>Change Search</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </section>
-                    <table id="rate-table" border="1">
+                    </div>
+                </section>
+                <section class="rate-table-full">
+                    <table id="rate-table" border="1" style="border-color: #5bbaff; border-left: transparent;">
                         <thead>
                             <tr>
                                 <th>Accommodation</th>
@@ -323,59 +383,146 @@
                                 <th>Today's price</th>
                                 <th>Your choices</th>
                                 <th>Select amount</th>
-                                <th></th>
+                                <!--<th></th>-->
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${listRoomType}" var="rt">
-                            <tr>
-                                <td>
-                                    <div>
-                                        <h4>${rt.getName()}</h4>
-                                    </div>
-                                    <img src="${rt.getImg()}" width="200" height="150">
-                                    <div>Bed:</div>
-                                    <c:forEach items="${listRoomTypeDetail}" var="rtd">
-                                        <c:if test="${rt.getRoomTypeID()==rtd.getRoomTypeID()}">
-                                            <div>
-                                                ${rtd.getName()} x ${rtd.getBedAmount()}
+                            <c:forEach items="${listRoomType}" var="rt">
+                                <tr>
+                                    <td class="room-data">
+                                        <a class="view-room" href="#"><div>
+                                                <h4>${rt.getName()}</h4>
                                             </div>
-                                        </c:if>
-                                    </c:forEach>
-                                    <!--${rt.getDescription()}-->
-                                </td>
-                                <td style="width: 8%;">
-                                    <c:forEach var = "i" begin = "1" end = "2">
-                                        <i class="fa-solid fa-user"></i>
-                                    </c:forEach>
-                                    +
-                                    <c:forEach var = "i" begin = "1" end = "2">
-                                        <i class="fa-solid fa-user fa-xs"></i>
-                                    </c:forEach>
-                                </td>
-                                <td>
-                                    <div>${rt.getPrice()}</div>
-                                </td>
-                                <td>My choices</td>
-                                <td style="width: 5%; text-align: center"><div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                    <select name="amount" id="amount" class="">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select></td>
-                                <td style="text-align: center">
-                                    <a href="booking?do=proceedBooking" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
-                                       margin-top: 1rem; width: 70%">
-                                        I'll Reserve
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                                            <img src="${rt.getImg()}" width="200" height="150">
+                                        </a>
 
+                                        <div>Bed:</div>
+                                        <c:forEach items="${listRoomTypeDetail}" var="rtd">
+                                            <c:if test="${rt.getRoomTypeID()==rtd.getRoomTypeID()}">
+                                                <div>
+                                                    ${rtd.getName()} x ${rtd.getBedAmount()}
+                                                </div>
+                                            </c:if>
+                                        </c:forEach>
+                                        <!--${rt.getDescription()}-->
+                                    </td>
+                                    <td class="room-data" style="width: 8%;">
+                                        <div>
+                                            <i class="fa-solid fa-user"></i> x ${rt.getAdult()}
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-user fa-xs"></i> x ${rt.getChildren()}    
+                                        </div>
+                                    </td>
+                                    <td class="room-data">
+                                        <div><strong>VND ${rt.getPrice()}</strong></div>
+                                    </td>
+                                    <td class="room-data" style="width: 25%">
+                                        <div style="color: green;">
+                                            <svg class="bk-icon -streamline-checkmark_fill" fill="#008009" height="16" width="16" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M56.33 102a6 6 0 0 1-4.24-1.75L19.27 67.54A6.014 6.014 0 1 1 27.74 59l27.94 27.88 44-58.49a6 6 0 1 1 9.58 7.22l-48.17 64a5.998 5.998 0 0 1-4.34 2.39z"></path></svg>
+                                            <strong>Free cancellation</strong>
+                                        </div>
+                                        <div style="color: green;">
+                                            <svg class="bk-icon -streamline-checkmark_fill" fill="#008009" height="16" width="16" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M56.33 102a6 6 0 0 1-4.24-1.75L19.27 67.54A6.014 6.014 0 1 1 27.74 59l27.94 27.88 44-58.49a6 6 0 1 1 9.58 7.22l-48.17 64a5.998 5.998 0 0 1-4.34 2.39z"></path></svg>
+                                            <strong>NO PREPAYMENT NEEDED</strong> - pay at the property 
+                                        </div>
+                                    </td>
+                                    <td style="width: 5%; text-align: center; vertical-align: top; padding-top: 5px;">
+                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                        <select name="amount" id="amount" class="" style="width: 80%;" required="">
+                                            <option value="">0</option>
+                                            <c:forEach items="${listAvailableRooms}" var="list">
+                                                <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
+                                                    <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
+                                                        <option value="${j}">${j} (${j*rt.getPrice()})</option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                    <div class="fake-table">
+                        <div class="fake-table-head">
+
+                        </div>
+                        <div class="fake-table-body">
+                            <a href="#" data-toggle="modal" data-target="#RT${rt.getRoomTypeID()}" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
+                               margin-top: 1rem; width: 70%;
+                               width: 90%; padding: 10px 0px;">
+                                I'll Reserve
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <%--<c:forEach items="${listRoomType}" var="rt">--%>
+<!--                    <div id="RT${rt.getRoomTypeID()}" class="modal custom-modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Your selection</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="booking" method="post" accept-charset="utf-8">
+                                        <input type="hidden" name="do" value="proceedBooking">
+                                        <div class="row">
+                                            <ul style="list-style: none;">
+                                                <li>
+                                                    <strong>${rt.getName()}</strong>
+                                                </li>
+                                                <li>
+                                                    <label for="amount">Select amount <span class="text-danger">*</span></label>
+                                                    <select name="amount" id="amount" class="" style="width: 80%;">
+                <c:forEach items="${listAvailableRooms}" var="list">
+                    <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
+                        <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
+                            <option value="${j}">${j} (${j*rt.getPrice()})</option>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
+            </select>
+        </li>
+        <li>${rt.getPrice()}</li>
+        <li>
+            <img src="${rt.getImg()}" height="200" width="250"> 
+        </li>
+        <li>Adult x ${rt.getAdult()}</li>
+        <li>Children x ${rt.getChildren()}</li>
+        <li>
+            <div class="submit-section">
+                <input type="submit" class="btn btn-primary submit-btn" id="create" value="I'll reserve it" style="border-radius: 0px;">
+            </div>
+        </li>
+    </ul>
+                                                <div class="col-md-12">
+                                                    <strong>${rt.getName()}</strong>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label for="amount">Select amount <span class="text-danger">*</span></label>
+                                                    <select name="amount" id="amount" class="" style="width: 80%;">
+                <c:forEach items="${listAvailableRooms}" var="list">
+                    <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
+                        <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
+                            <option value="${j}">${j} (${j*rt.getPrice()})</option>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
+            </select>
+        </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>-->
+                <%--</c:forEach>--%>
             </div>
         </div>
 
