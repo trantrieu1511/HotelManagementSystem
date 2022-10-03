@@ -60,6 +60,9 @@ public class ControllerBooking extends HttpServlet {
                     String checkOutDate_date = request.getParameter("checkOutDate");
                     String checkInDate = sdf2.format(sdf1.parse(checkInDate_date));
                     String checkOutDate = sdf2.format(sdf1.parse(checkOutDate_date));
+//                    out.print(checkInDate);
+//                    out.print("<br>");
+//                    out.print(checkOutDate);
                     checkAvailabiltyOfRoom(daoRt, daoRtd, daoB, checkInDate, checkOutDate, request, response);
                 } else {
                     String daterange = request.getParameter("daterange");
@@ -117,26 +120,64 @@ public class ControllerBooking extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    List<RoomType> listRecommendRooms = new ArrayList<>();
+    String message = "";
+    String notice = "";
+    int adult = 0;
+    int remained_adult = 0;
+    int children = 0;
+    int room = 0;
+    int count_unavailableRoomType = 0;
+
     public void checkAvailabiltyOfRoom(DAORoomType daoRt, DAORoomTypeDetail daoRtd, DAOBooking daoB, String checkInDate, String checkOutDate, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String adult = request.getParameter("adult");
-        String children = request.getParameter("children");
-//                String room = request.getParameter("room");
-//                rt = daoRt.getRecommendedRoomType(adult, children, room);
+        adult = Integer.parseInt(request.getParameter("adult"));
+        children = Integer.parseInt(request.getParameter("children"));
+        room = Integer.parseInt(request.getParameter("room"));
         List<RoomType> listRt = daoRt.listRoomType();
         List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
-        List<RoomType> listAvailableRooms = null;
-        for (RoomType roomType : listRt) {
-            listAvailableRooms = daoB.listAvailableRoom();
+        List<RoomType> listAvailableRooms = daoB.listAvailableRoom();
+
+        //recommend rooms
+        listRecommendRooms.clear();
+        if (room > adult) {
+            adult = 2;
+            children = 0;
+            room = 1;
+            listRecommendRooms = daoB.listRecommendRoom(listRecommendRooms, 0, adult, children, room);
+        }
+        listRt.forEach(itemRt -> {
+            listAvailableRooms.forEach(itemAr -> {
+                if (itemRt.getRoomTypeID() == itemAr.getRoomTypeID()) {
+                    if (itemAr.getNoOfAvailableRoom() == 0) {
+                        count_unavailableRoomType++;
+                        if (count_unavailableRoomType == listAvailableRooms.size()) {
+                            notice = "There are currently no room left in our hotel this time period.";
+                        }
+                        listRecommendRooms = daoB.listRecommendRoom(listRecommendRooms, 0, adult, children, room);
+                    } else {
+                        listRecommendRooms = daoB.listRecommendRoom(listRecommendRooms, itemRt.getRoomTypeID(), adult, children, room);
+                    }
+                }
+            });
+        });
+
+        if (listRecommendRooms.isEmpty()) {
+            message = "Choose the rooms you need below in the list: ";
+        } else {
+            message = "Choices we have for you: ";
         }
         request.setAttribute("listRoomType", listRt);
         request.setAttribute("listRoomTypeDetail", listRtd);
+        request.setAttribute("listAvailableRooms", listAvailableRooms);
+        request.setAttribute("listRecommendRooms", listRecommendRooms);
         request.setAttribute("adult", adult);
         request.setAttribute("children", children);
+        request.setAttribute("room", room);
         request.setAttribute("checkInDate", checkInDate);
         request.setAttribute("checkOutDate", checkOutDate);
-        request.setAttribute("listAvailableRooms", listAvailableRooms);
+        request.setAttribute("message", message);
+        request.setAttribute("notice", notice);
         RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
         dispatch.forward(request, response);
     }
-
 }

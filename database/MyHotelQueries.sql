@@ -99,7 +99,7 @@ on b.BookID = bd.BookID full outer join Room r
 on bd.RoomID = r.RoomID full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
 where PaymentStatus = 1 or PaymentStatus is null
---and r.RoomTypeID = 2
+and r.RoomTypeID = 1
 group by rt.RoomTypeID
 
 select * from Booking b full outer join BookDetail bd
@@ -122,5 +122,14 @@ on rtd.BedTypeID = bt.BedTypeID where rtd.RoomTypeID = 2
 --select rooms according to customer's demand (recommend the cheapest room)
 --select * from RoomType where Adult * @roomnum <= @adult and Children * @roomnum <= @children
 --and Price = MIN(Price)
-select * from RoomType where Adult * 2 >= 5 and Children * 2 >= 4
-and Price = (select MIN(Price) from RoomType where Adult * 2 >= 5 and Children * 2 >= 4)
+
+select * from RoomType where Adult <= 6 and Children >= 1
+
+select * from RoomType where Adult >= 4 and Children >= 3
+
+select * from RoomType where 8 / Adult = 2 and Children >= 0 and RoomTypeID = 0
+
+
+select * from RoomType where 
+(select sum(Adult) from RoomType) <= 6 
+and (select sum(Children) from RoomType) <= 6

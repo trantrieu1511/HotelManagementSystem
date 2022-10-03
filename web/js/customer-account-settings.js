@@ -123,7 +123,7 @@ function editDeleteAcc(isEdit) {
 }
 function disableBtn(isDisable) {
     const collection = document.getElementsByClassName("btnEdit");
-    if (isDisable == true) {
+    if (isDisable === true) {
         collection[0].style.pointerEvents = "none";
         collection[1].style.pointerEvents = "none";
         collection[2].style.pointerEvents = "none";
@@ -152,7 +152,7 @@ function disableBtn(isDisable) {
     }
 }
 function showPassword(isShowPassword, type) {
-    if (type == 1) { //old password
+    if (type === 1) { //old password
         if (isShowPassword) {
             document.getElementById('btnShowPassword').hidden = true;
             document.getElementById('btnHidePassword').hidden = false;
@@ -163,7 +163,7 @@ function showPassword(isShowPassword, type) {
             document.getElementById('old_password').type = "password";
         }
     }
-    if (type == 2) { //new password
+    if (type === 2) { //new password
         if (isShowPassword) {
             document.getElementById('btnShowPassword2').hidden = true;
             document.getElementById('btnHidePassword2').hidden = false;
@@ -174,7 +174,7 @@ function showPassword(isShowPassword, type) {
             document.getElementById('new_password').type = "password";
         }
     }
-    if (type == 3) { //confirm password
+    if (type === 3) { //confirm password
         if (isShowPassword) {
             document.getElementById('btnShowPassword3').hidden = true;
             document.getElementById('btnHidePassword3').hidden = false;

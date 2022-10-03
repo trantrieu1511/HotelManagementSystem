@@ -475,8 +475,8 @@
 
         <style type="text/css">
             body{
-                background: #f7f7ff;
-                margin-top:20px;
+                /*background: #f7f7ff;*/
+                margin-top: 20px;
             }
             .card {
                 position: relative;

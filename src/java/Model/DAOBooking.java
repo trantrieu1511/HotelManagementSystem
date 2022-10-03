@@ -54,11 +54,49 @@ public class DAOBooking extends DBConnect {
         return list;
     }
 
+    public List<RoomType> listRecommendRoom(List<RoomType> listRecommendRooms, int RoomTypeID, int Adult, int Children, int Room) {
+        String sql = "select * from RoomType where ? / Adult = ? and Children >= ? and RoomTypeID = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setInt(1, Adult);
+            state.setInt(2, Room);
+            state.setInt(3, Children);
+            state.setInt(4, RoomTypeID);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                listRecommendRooms.add(new RoomType(
+                        rs.getInt("RoomTypeID"),
+                        rs.getString("Name"),
+                        rs.getDouble("Price"),
+                        rs.getString("Img"),
+                        rs.getString("Description"),
+                        rs.getInt("Adult"),
+                        rs.getInt("Children"))
+                );
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+//            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return listRecommendRooms;
+    }
+
+    static List<RoomType> listRcmd = new ArrayList<>();
+
     public static void main(String[] args) {
         DAOBooking daoB = new DAOBooking();
-        List<RoomType> list = daoB.listAvailableRoom();
-        for (RoomType roomType : list) {
-            System.out.println(roomType.getRoomTypeID() + ", " + roomType.getNoOfAvailableRoom());
+//        List<RoomType> list = daoB.listAvailableRoom();
+        listRcmd = daoB.listRecommendRoom(listRcmd, 1, 2, 0, 1);
+//        for (RoomType roomType : listRcmd) {
+//            System.out.println(roomType.getRoomTypeID() + ", " + roomType.getNoOfAvailableRoom());
+//        }
+        for (RoomType roomType : listRcmd) {
+            System.out.println(roomType);
         }
 //        System.out.println(daoB.getNoOfAvailableRoomOfARoomType(1));
     }
