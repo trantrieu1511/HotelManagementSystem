@@ -13,6 +13,7 @@
         <title>Display Rate Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
         <!-- FontAwesome JS-->
@@ -284,13 +285,50 @@
                     });
                 });
             }
-            function checkAmount(value) {
+
+            $(function () {
+                $("amount").on("", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var first_name = myArray[1];
+                    var last_name = myArray[2];
+                    var email = myArray[3];
+                    var phone_number = myArray[4];
+                    var hire_date = myArray[5];
+                    var username = myArray[6];
+                    var password = myArray[7];
+                    var reportto = myArray[8];
+                    var depart_id = myArray[9];
+                    var job_id = myArray[10];
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                    $(e.currentTarget).find('input[name="first_name"]').val(first_name);
+                    $(e.currentTarget).find('input[name="last_name"]').val(last_name);
+                    $(e.currentTarget).find('input[name="email"]').val(email);
+                    $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
+                    $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
+                    $(e.currentTarget).find('input[name="username"]').val(username);
+                    $(e.currentTarget).find('input[name="password"]').val(password);
+                    $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
+                    document.getElementById('department_id2').value = depart_id;
+                    document.getElementById('job_id2').value = job_id;
+                });
+            });
+        </script>
+        <script>
+//            function myFunc(value) {
+//                if (value === "") {
+//                    x = $("#text_test").detach();
+//                } else {
+//                    $("#prepend_here").append(x);
+//                }
+//            }
+            let count = 0;
+            function checkAmount(value, roomTypeID) {
+                var x;
                 const collection = document.getElementsByClassName("amount")
 //                var nodeList = document.querySelectorAll(".amount");
                 for (let i = 0; i < collection.length; i++) {
-                    if (value === "" && collection[i].value === "") {
-                        collection[i].required = true;
-                    }
                     if (value === "" && collection[i].value !== "") {
                         collection[i].required = false;
                     }
@@ -299,6 +337,35 @@
                     }
                     if (value !== "" && collection[i].value !== "") {
                         collection[i].required = false;
+                    }
+                }
+                if (collection[0].value === "" &&
+                        collection[1].value === "" &&
+                        collection[2].value === "" &&
+                        collection[3].value === "" &&
+                        collection[4].value === ""
+                        ) {
+                    collection[0].required = true;
+                    collection[1].required = true;
+                    collection[2].required = true;
+                    collection[3].required = true;
+                    collection[4].required = true;
+                }
+                if (value === "") {
+                    count = 0;
+                    document.getElementById(roomTypeID).remove();
+                } else {
+//                    alert(count);
+                    if (count === 0) {
+                        x = document.createElement("INPUT");
+                        x.setAttribute("type", "text");
+                        x.setAttribute("id", roomTypeID);
+                        x.setAttribute("name", "RoomTypeID");
+                        x.setAttribute("value", roomTypeID);
+                        document.getElementById('prepend_here').append(x);
+                        count++;
+                    } else {
+//                        alert(count);
                     }
                 }
             }
@@ -315,6 +382,15 @@
                     <!--                    <div style="margin-bottom: 5px;">
                                             <strong>2 rooms for 2 adults, 1 child</strong>
                                         </div>-->
+                    <form action="booking?do=proceedBooking" method="post">
+                        <!--                        <div>
+                                                    <input type="text" name="name" id="text_test" value="I'm a test text field">
+                                                </div>-->
+                        <div id="prepend_here">
+
+                        </div>
+                        <input type="submit" value="submit">
+                    </form>
                     <table id="rate-recommend-table" border="1">
                         <thead>
                             <tr>
@@ -468,8 +544,9 @@
                         </div>
                     </div>
                 </section>
-                <form action="booking" method="post">
+                <form id="roomTypeForm" action="booking" method="post">
                     <input type="hidden" name="do" value="proceedBooking">
+                    <input type="hidden" name="RoomTypeID" id="RoomTypeID" value="">
                     <section class="rate-table-full">
                         <table id="rate-table" border="1" style="border-color: #5bbaff; border-left: transparent;">
                             <thead>
@@ -531,8 +608,8 @@
                                             </div>
                                         </td>
                                         <td style="width: 5%; text-align: center; vertical-align: top; padding-top: 5px;">
-                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                            <select name="amount" id="amount" class="amount" style="width: 80%;" required="" onchange="checkAmount(this.value);">
+                                            <!--<div class="icon"><span class="ion-ios-arrow-down"></span></div>-->
+                                            <select name="amount" id="amount" class="amount" style="width: 80%;" required="" data="${rt.getRoomTypeID()}" onchange="checkAmount(this.value, ${rt.getRoomTypeID()});">
                                                 <option value="">0</option>
                                                 <c:forEach items="${listAvailableRooms}" var="list">
                                                     <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
@@ -542,6 +619,9 @@
                                                     </c:forEach>
                                                 </c:forEach>
                                             </select>
+                                            <!--                                            <div>
+                                                                                            <a href="#" data="">a here</a>
+                                                                                        </div>-->
                                         </td>
                                     </tr>
                                 </c:forEach>

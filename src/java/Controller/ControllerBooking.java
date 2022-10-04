@@ -73,8 +73,13 @@ public class ControllerBooking extends HttpServlet {
                 }
             }
             if (service.equals("proceedBooking")) {
-                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
-                dispatch.forward(request, response);
+//                String[] names = request.getParameterValues("Name");
+//                out.print(names[0] + " and " + names[1]);
+//                String name = request.getParameter("name");
+                String RoomTypeID = request.getParameter("RoomTypeID");
+                out.print(RoomTypeID);
+//                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
+//                dispatch.forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -151,7 +156,9 @@ public class ControllerBooking extends HttpServlet {
                     if (itemAr.getNoOfAvailableRoom() == 0) {
                         count_unavailableRoomType++;
                         if (count_unavailableRoomType == listAvailableRooms.size()) {
-                            notice = "There are currently no room left in our hotel this time period.";
+                            notice = "Sorry for the inconvenience, there are currently "
+                                    + "no room left in our hotel this time period. "
+                                    + "You can comeback again at another time!";
                         }
                         listRecommendRooms = daoB.listRecommendRoom(listRecommendRooms, 0, adult, children, room);
                     } else {
