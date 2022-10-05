@@ -25,17 +25,19 @@ public class DAOBooking extends DBConnect {
     Statement st = null;
     ResultSet rs = null;
 
-    public List<RoomType> listAvailableRoom() {
+    public List<RoomType> listAvailableRoom(String checkIn) {
         String sql = "select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer join BookDetail bd\n"
                 + "on b.BookID = bd.BookID full outer join Room r\n"
                 + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
-                + "where PaymentStatus = 1 or PaymentStatus is null\n"
+                + "where (select MAX(CheckOut) from BookDetail) <= ? \n"
+                + "or PaymentStatus = 1 or PaymentStatus is null\n"
                 + "group by rt.RoomTypeID";
         List<RoomType> list = new ArrayList<>();
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, checkIn);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new RoomType(
@@ -90,14 +92,14 @@ public class DAOBooking extends DBConnect {
 
     public static void main(String[] args) {
         DAOBooking daoB = new DAOBooking();
-//        List<RoomType> list = daoB.listAvailableRoom();
-        listRcmd = daoB.listRecommendRoom(listRcmd, 1, 2, 0, 1);
-//        for (RoomType roomType : listRcmd) {
-//            System.out.println(roomType.getRoomTypeID() + ", " + roomType.getNoOfAvailableRoom());
-//        }
-        for (RoomType roomType : listRcmd) {
-            System.out.println(roomType);
+        List<RoomType> list = daoB.listAvailableRoom("2022-10-05");
+//        listRcmd = daoB.listRecommendRoom(listRcmd, 1, 2, 0, 1);
+        for (RoomType roomType : list) {
+            System.out.println(roomType.getRoomTypeID() + ", " + roomType.getNoOfAvailableRoom());
         }
+//        for (RoomType roomType : listRcmd) {
+//            System.out.println(roomType);
+//        }
 //        System.out.println(daoB.getNoOfAvailableRoomOfARoomType(1));
     }
 }

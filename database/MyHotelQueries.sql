@@ -9,6 +9,10 @@ select * from Room
 select * from RoomTypeDetail
 select * from RoomType
 
+update Booking
+set BookDate = '2022-09-22 11:20'
+where BookID = 1
+
 --Employee Queries
 
 select * from Customer where Email = 'nguyenvana@gmail.com' and [Password] = 'nguyenvana'
@@ -71,11 +75,16 @@ where RoomID = 25
 
 --Booking Queries
 select * from Booking
+update Booking
+set 
+PaymentStatus = 1
+where BookID = 1
 
 --BookDetail Queries
 select * from BookDetail
 update BookDetail
-set Amount = 350000
+set 
+Amount = 350000
 where BD_ID = 1
 
 --display all RoomType in hotel
@@ -89,9 +98,25 @@ from Booking b full outer join BookDetail bd
 on b.BookID = bd.BookID full outer join Room r
 on bd.RoomID = r.RoomID full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
-where PaymentStatus = 1 or PaymentStatus is null
+where 
+PaymentStatus = 1 or PaymentStatus is null
+--bd.CheckIn >= '2022-10-05' and 
+--bd.CheckIn < '2022-10-07' and 
+--bd.CheckOut > '2022-10-07'
+--or bd.CheckIn is null and bd.CheckOut is null
 --and r.RoomTypeID = 1
-and rt.Adult >= 2 and rt.Children >= 2
+--and rt.Adult >= 2 and rt.Children >= 2
+
+select b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
+r.[Name], r.[Floor], r.[View], rt.RoomTypeID, rt.[Name], rt.Price,
+rt.Img, rt.[Description], rt.Adult, rt.Children
+from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID full outer join Room r
+on bd.RoomID = r.RoomID full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID 
+where 
+(select MAX(CheckOut) from BookDetail) <= '2022-09-29' or 
+PaymentStatus = 1 or PaymentStatus is null
 
 --count rooms that are available to some condition
 select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer join BookDetail bd

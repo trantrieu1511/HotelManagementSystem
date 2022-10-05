@@ -71,7 +71,7 @@ CREATE TABLE Room(
 CREATE TABLE Booking(
 	BookID int identity(1,1) primary key,
 	CusID nvarchar(4000) not null,
-	BookDate varchar(50) not null,
+	BookDate datetime not null,
 	PaymentStatus bit default 0 not null,
 	SpecialRequests nvarchar(MAX),
 	FOREIGN KEY (CusID) REFERENCES [Customer] (CusID)
@@ -81,8 +81,8 @@ CREATE TABLE BookDetail(
 	BD_ID int identity(1,1) primary key,
 	BookID int not null,
 	RoomID int not null,
-	CheckIn varchar(50) not null,
-	CheckOut varchar(50) not null,
+	CheckIn datetime not null,
+	CheckOut datetime not null,
 	Amount money not null,
 	foreign key (BookID) references Booking (BookID),
 	foreign key (RoomID) references Room (RoomID)

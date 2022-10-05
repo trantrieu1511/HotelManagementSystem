@@ -12,8 +12,10 @@ import Model.DAORoomType;
 import Model.DAORoomTypeDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,16 +52,20 @@ public class ControllerBooking extends HttpServlet {
             DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
             DAOBooking daoB = new DAOBooking();
 
-            int i = 0;
-            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+            String checkInDate_date = "";
+            String checkInDate = "";
+            String checkOutDate_date = "";
+            String checkOutDate = "";
             if (service.equals("checkAvailabiltyOfRoom")) {
                 String action = request.getParameter("action");
                 if (action == null) {
-                    String checkInDate_date = request.getParameter("checkInDate");
-                    String checkOutDate_date = request.getParameter("checkOutDate");
-                    String checkInDate = sdf2.format(sdf1.parse(checkInDate_date));
-                    String checkOutDate = sdf2.format(sdf1.parse(checkOutDate_date));
+                    checkInDate_date = request.getParameter("checkInDate");
+                    checkOutDate_date = request.getParameter("checkOutDate");
+                    Date checkOutDate_d = sdf3.parse(checkOutDate_date);
+                    checkOutDate_d.setHours(12);
+                    checkOutDate_d.setMinutes(00);
+                    checkOutDate = sdf2.format(checkOutDate_d);
+                    checkInDate = sdf2.format(sdf1.parse(checkInDate_date));
 //                    out.print(checkInDate);
 //                    out.print("<br>");
 //                    out.print(checkOutDate);
@@ -67,17 +73,27 @@ public class ControllerBooking extends HttpServlet {
                 } else {
                     String daterange = request.getParameter("daterange");
                     String split[] = daterange.split(" - ");
-                    String checkInDate = split[0];
-                    String checkOutDate = split[1];
+                    checkInDate_date = split[0];
+                    checkOutDate_date = split[1];
+                    checkInDate = sdf2.format(sdf4.parse(checkInDate_date));
+                    checkOutDate = sdf2.format(sdf4.parse(checkOutDate_date));
+                    out.print(checkInDate);
+                    out.print("<br>");
+                    out.print(checkOutDate);
                     checkAvailabiltyOfRoom(daoRt, daoRtd, daoB, checkInDate, checkOutDate, request, response);
                 }
             }
             if (service.equals("proceedBooking")) {
-//                String[] names = request.getParameterValues("Name");
-//                out.print(names[0] + " and " + names[1]);
-//                String name = request.getParameter("name");
-                String RoomTypeID = request.getParameter("RoomTypeID");
-                out.print(RoomTypeID);
+                String[] RoomTypeID = request.getParameterValues("RoomTypeID");
+                for (int i = 0; i < RoomTypeID.length; i++) {
+                    out.print(RoomTypeID[i]);
+                }
+                out.print("<br>");
+                String[] amount = request.getParameterValues("amount");
+                for (int i = 0; i < amount.length; i++) {
+                    out.print(amount[i]);
+                }
+
 //                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
 //                dispatch.forward(request, response);
             }
@@ -125,6 +141,10 @@ public class ControllerBooking extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf4 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     List<RoomType> listRecommendRooms = new ArrayList<>();
     String message = "";
     String notice = "";
@@ -134,13 +154,13 @@ public class ControllerBooking extends HttpServlet {
     int room = 0;
     int count_unavailableRoomType = 0;
 
-    public void checkAvailabiltyOfRoom(DAORoomType daoRt, DAORoomTypeDetail daoRtd, DAOBooking daoB, String checkInDate, String checkOutDate, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void checkAvailabiltyOfRoom(DAORoomType daoRt, DAORoomTypeDetail daoRtd, DAOBooking daoB, String checkInDate, String checkOutDate, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         adult = Integer.parseInt(request.getParameter("adult"));
         children = Integer.parseInt(request.getParameter("children"));
         room = Integer.parseInt(request.getParameter("room"));
         List<RoomType> listRt = daoRt.listRoomType();
         List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
-        List<RoomType> listAvailableRooms = daoB.listAvailableRoom();
+        List<RoomType> listAvailableRooms = daoB.listAvailableRoom(checkInDate);
 
         //recommend rooms
         listRecommendRooms.clear();
@@ -173,6 +193,24 @@ public class ControllerBooking extends HttpServlet {
         } else {
             message = "Choices we have for you: ";
         }
+
+        //date-diff
+        Date checkIn = sdf2.parse(checkInDate);
+        checkIn.setHours(0);
+        checkIn.setMinutes(0);
+        checkIn.setSeconds(0);
+        Date checkOut = sdf2.parse(checkOutDate);
+        checkOut.setHours(0);
+        checkOut.setMinutes(0);
+        checkOut.setSeconds(0);
+        long Difference_In_Time = checkOut.getTime() - checkIn.getTime();
+
+        // To calculate the no. of days between two dates
+        int Difference_In_Days = (int) (Difference_In_Time / (1000 * 3600 * 24));
+        if (Difference_In_Days < 0) {
+            Difference_In_Days = 0;
+        }
+
         request.setAttribute("listRoomType", listRt);
         request.setAttribute("listRoomTypeDetail", listRtd);
         request.setAttribute("listAvailableRooms", listAvailableRooms);
@@ -180,10 +218,13 @@ public class ControllerBooking extends HttpServlet {
         request.setAttribute("adult", adult);
         request.setAttribute("children", children);
         request.setAttribute("room", room);
-        request.setAttribute("checkInDate", checkInDate);
-        request.setAttribute("checkOutDate", checkOutDate);
+//        request.setAttribute("checkInDate_datediff", sdf3.format(sdf2.parse(checkInDate)));
+        request.setAttribute("checkInDate", sdf4.format(sdf2.parse(checkInDate)));
+//        request.setAttribute("checkOutDate_datediff", sdf3.format(sdf2.parse(checkOutDate)));
+        request.setAttribute("checkOutDate", sdf4.format(sdf2.parse(checkOutDate)));
         request.setAttribute("message", message);
         request.setAttribute("notice", notice);
+        request.setAttribute("dateDiff", Difference_In_Days);
         RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
         dispatch.forward(request, response);
     }

@@ -35,7 +35,7 @@
         <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript">
             window.onload = function () {
-                var today = new Date().toISOString().split('T')[0];
+                var today = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":"));
                 var tomorrow = new Date(); // The Date object returns today's timestamp
                 tomorrow.setDate(tomorrow.getDate() + 1);
 //                alert(today);
@@ -152,7 +152,7 @@
                                         <div class="form-group align-self-stretch d-flex align-items-end">
                                             <div class="wrap align-self-stretch py-3 px-4">
                                                 <label for="checkInDate">Check-in Date</label>
-                                                <input type="date" id="checkInDate" onchange="autoSelectCheckOutDate();" name="checkInDate" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date">
+                                                <input type="datetime-local" id="checkInDate" onchange="autoSelectCheckOutDate();" name="checkInDate" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date">
                                             </div>
                                         </div>
                                     </div>

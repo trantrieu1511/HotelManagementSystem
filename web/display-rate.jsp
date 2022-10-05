@@ -225,8 +225,12 @@
                             today.getFullYear();
                     $('input[name="daterange"]').daterangepicker({
                         "showDropdowns": true,
+                        timePicker: true,
+                        "timePicker24Hour": true,
+//                        startDate: moment().startOf('hour'),
+//                        endDate: moment().startOf('hour').add(32, 'hour'),
                         "locale": {
-                            "format": "DD/MM/YYYY",
+                            "format": "DD/MM/YYYY HH:mm",
                             "separator": " - ",
                             "applyLabel": "Apply",
                             "cancelLabel": "Cancel",
@@ -266,54 +270,56 @@
                     }, function (start, end, label) {
                         console.log('New date range selected: ' + start.format('DD/MM/YYYY') + ' to ' + end.format('DD/MM/YYYY') + ' (predefined range: ' + label + ')');
                     }).on('hide.daterangepicker', function (ev, picker) {
+                        var today;
+                        var tomorrow;
                         var startDate = picker.startDate.format('YYYY-MM-DD');
                         var endDate = picker.endDate.format('YYYY-MM-DD');
                         if (startDate === endDate) {
-                            var today = dates.convert(startDate);
-                            var tomorrow = dates.convert(endDate);
+                            today = dates.convert(picker.startDate.format('YYYY-MM-DD HH:mm'));
+                            tomorrow = dates.convert(picker.endDate.format('YYYY-MM-DD HH:mm'));
                             tomorrow.setDate(today.getDate() + 1);
-                            tomorrow = ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
-                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
-                                    tomorrow.getFullYear();
-                            today = ((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
-                                    ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
-                                    today.getFullYear();
+                            tomorrow.setHours(12);
+                            tomorrow.setMinutes(00);
+//                            tomorrow = ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
+//                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
+//                                    tomorrow.getFullYear();
+//                            today = ((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
+//                                    ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
+//                                    today.getFullYear();
 //                            alert('today: ' + today + ', tommorow: ' + tomorrow);
 
-                            $('input[name="daterange"]').val(today + " - " + tomorrow);
+                            $('input[name="daterange"]').val(((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
+                                    ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
+                                    today.getFullYear() + " " + today.toLocaleString([], {hour: '2-digit', minute: '2-digit'}) + " - "
+                                    + ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
+                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
+                                    tomorrow.getFullYear() + " " + tomorrow.toLocaleString([], {hour: '2-digit', minute: '2-digit'}));
+                        } else {
+                            today = dates.convert(picker.startDate.format('YYYY-MM-DD HH:mm'));
+                            tomorrow = dates.convert(picker.endDate.format('YYYY-MM-DD HH:mm'));
+                            tomorrow.setHours(12);
+                            tomorrow.setMinutes(00);
+                            $('input[name="daterange"]').val(((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
+                                    ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
+                                    today.getFullYear() + " " + today.toLocaleString([], {hour: '2-digit', minute: '2-digit'}) + " - "
+                                    + ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
+                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
+                                    tomorrow.getFullYear() + " " + tomorrow.toLocaleString([], {hour: '2-digit', minute: '2-digit'}));
                         }
                     });
                 });
-            }
 
-            $(function () {
-                $("amount").on("", function (e) {
-                    var text = $(e.relatedTarget).attr('data-id');
-                    const myArray = text.split(" ");
-                    var id = myArray[0];
-                    var first_name = myArray[1];
-                    var last_name = myArray[2];
-                    var email = myArray[3];
-                    var phone_number = myArray[4];
-                    var hire_date = myArray[5];
-                    var username = myArray[6];
-                    var password = myArray[7];
-                    var reportto = myArray[8];
-                    var depart_id = myArray[9];
-                    var job_id = myArray[10];
-                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
-                    $(e.currentTarget).find('input[name="first_name"]').val(first_name);
-                    $(e.currentTarget).find('input[name="last_name"]').val(last_name);
-                    $(e.currentTarget).find('input[name="email"]').val(email);
-                    $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
-                    $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
-                    $(e.currentTarget).find('input[name="username"]').val(username);
-                    $(e.currentTarget).find('input[name="password"]').val(password);
-                    $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
-                    document.getElementById('department_id2').value = depart_id;
-                    document.getElementById('job_id2').value = job_id;
-                });
-            });
+                var x;
+                const collection = document.getElementsByClassName("amount");
+                for (i = 1; i < collection.length + 1; i++) {
+                    x = document.createElement("INPUT");
+                    x.setAttribute("type", "text");
+                    x.setAttribute("id", "num" + i);
+                    x.setAttribute("name", "RoomTypeID");
+//                    x.setAttribute("value", i);
+                    document.getElementById('roomTypeForm').append(x);
+                }
+            };
         </script>
         <script>
 //            function myFunc(value) {
@@ -323,10 +329,13 @@
 //                    $("#prepend_here").append(x);
 //                }
 //            }
+//            window.onload = function () {
+//                
+//            }
+
             let count = 0;
             function checkAmount(value, roomTypeID) {
-                var x;
-                const collection = document.getElementsByClassName("amount")
+                const collection = document.getElementsByClassName("amount");
 //                var nodeList = document.querySelectorAll(".amount");
                 for (let i = 0; i < collection.length; i++) {
                     if (value === "" && collection[i].value !== "") {
@@ -339,6 +348,16 @@
                         collection[i].required = false;
                     }
                 }
+
+                var x = document.getElementById('num' + roomTypeID);
+                if (x.id === "num" + roomTypeID) {
+                    if (value === "") {
+                        x.setAttribute("value", "");
+                    } else {
+                        x.setAttribute("value", roomTypeID);
+                    }
+                }
+
                 if (collection[0].value === "" &&
                         collection[1].value === "" &&
                         collection[2].value === "" &&
@@ -350,23 +369,6 @@
                     collection[2].required = true;
                     collection[3].required = true;
                     collection[4].required = true;
-                }
-                if (value === "") {
-                    count = 0;
-                    document.getElementById(roomTypeID).remove();
-                } else {
-//                    alert(count);
-                    if (count === 0) {
-                        x = document.createElement("INPUT");
-                        x.setAttribute("type", "text");
-                        x.setAttribute("id", roomTypeID);
-                        x.setAttribute("name", "RoomTypeID");
-                        x.setAttribute("value", roomTypeID);
-                        document.getElementById('prepend_here').append(x);
-                        count++;
-                    } else {
-//                        alert(count);
-                    }
                 }
             }
         </script>
@@ -382,15 +384,15 @@
                     <!--                    <div style="margin-bottom: 5px;">
                                             <strong>2 rooms for 2 adults, 1 child</strong>
                                         </div>-->
-                    <form action="booking?do=proceedBooking" method="post">
-                        <!--                        <div>
-                                                    <input type="text" name="name" id="text_test" value="I'm a test text field">
-                                                </div>-->
-                        <div id="prepend_here">
-
-                        </div>
-                        <input type="submit" value="submit">
-                    </form>
+                    <!--                    <form action="booking?do=proceedBooking" method="post">
+                                                                    <div>
+                                                                        <input type="text" name="name" id="text_test" value="I'm a test text field">
+                                                                    </div>
+                                            <div id="prepend_here">
+                    
+                                            </div>
+                                            <input type="submit" value="submit">
+                                        </form>-->
                     <table id="rate-recommend-table" border="1">
                         <thead>
                             <tr>
@@ -433,7 +435,17 @@
                                     </c:if>
                                 </td>
                                 <td class="rate-recommend-table-td room-data">
-                                    <strong>VND ${room*list.getPrice()}</strong>
+                                    <c:if test="${dateDiff > 1}">
+                                        <div>
+                                            <strong>Price for: ${dateDiff} nights stay</strong>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${dateDiff == 1}">
+                                        <div>
+                                            <strong>Price for a night stay</strong>
+                                        </div>
+                                    </c:if>
+                                    <strong>VND ${dateDiff*room*list.getPrice()}</strong>
                                 </td>
                                 <!--                                <td style="text-align: center; border-top: 1px solid #e6e6e6;">
                                                                     <a href="#rate-table" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
@@ -553,13 +565,14 @@
                                 <tr>
                                     <th>Accommodation</th>
                                     <th>Sleep</th>
-                                    <th>Today's price</th>
-                                    <th>Your choices</th>
-                                    <th>Select amount</th>
-                                    <!--<th></th>-->
-                                </tr>
-                            </thead>
-                            <tbody>
+                                    <c:if test="${dateDiff > 1}"><th>Price for ${dateDiff} days</th></c:if>
+                                    <c:if test="${dateDiff == 1}"><th>Today's price</th></c:if>
+                                        <th>Your choices</th>
+                                        <th>Select amount</th>
+                                        <!--<th></th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
                                 <c:forEach items="${listRoomType}" var="rt">
                                     <tr>
                                         <td class="room-data">
@@ -595,7 +608,7 @@
                                             </div>
                                         </td>
                                         <td class="room-data">
-                                            <div><strong>VND ${rt.getPrice()}</strong></div>
+                                            <div><strong>VND ${dateDiff*rt.getPrice()}</strong></div>
                                         </td>
                                         <td class="room-data" style="width: 25%">
                                             <div style="color: green;">
@@ -609,12 +622,12 @@
                                         </td>
                                         <td style="width: 5%; text-align: center; vertical-align: top; padding-top: 5px;">
                                             <!--<div class="icon"><span class="ion-ios-arrow-down"></span></div>-->
-                                            <select name="amount" id="amount" class="amount" style="width: 80%;" required="" data="${rt.getRoomTypeID()}" onchange="checkAmount(this.value, ${rt.getRoomTypeID()});">
+                                            <select name="amount" id="${rt.getRoomTypeID()}" class="amount" style="width: 80%;" required="" onchange="checkAmount(this.value, ${rt.getRoomTypeID()});">
                                                 <option value="">0</option>
                                                 <c:forEach items="${listAvailableRooms}" var="list">
                                                     <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
                                                         <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
-                                                            <option value="${j}">${j} (VND ${j*rt.getPrice()})</option>
+                                                            <option value="${j}">${j} (VND ${dateDiff*j*rt.getPrice()})</option>
                                                         </c:if>
                                                     </c:forEach>
                                                 </c:forEach>
