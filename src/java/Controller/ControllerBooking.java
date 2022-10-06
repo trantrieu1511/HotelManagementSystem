@@ -85,15 +85,28 @@ public class ControllerBooking extends HttpServlet {
             }
             if (service.equals("proceedBooking")) {
                 String[] RoomTypeID = request.getParameterValues("RoomTypeID");
+                String[] amount = request.getParameterValues("amount");
+                String dateDiff = request.getParameter("dateDiff");
+                checkInDate = request.getParameter("checkInDate");
+                checkOutDate = request.getParameter("checkOutDate");
                 for (int i = 0; i < RoomTypeID.length; i++) {
-                    out.print(RoomTypeID[i]);
+                    if (!RoomTypeID[i].equals("")) {
+                        out.print("RoomTypeID: " + RoomTypeID[i] + " ");
+                    }
                 }
                 out.print("<br>");
-                String[] amount = request.getParameterValues("amount");
                 for (int i = 0; i < amount.length; i++) {
-                    out.print(amount[i]);
+                    if (!amount[i].equals("")) {
+                        out.print("Amount: " + amount[i] + " ");
+                    }
                 }
-
+                out.print("<br>");
+                out.print("DateDiff: " + dateDiff);
+                out.print("<br>");
+                out.print("checkInDate: " + checkInDate.split(" ")[0]);
+                out.print("<br>");
+                out.print("checkOutDate: " + checkOutDate.split(" ")[0]);
+//                request.setAttribute("roomTypeID", rt);
 //                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
 //                dispatch.forward(request, response);
             }

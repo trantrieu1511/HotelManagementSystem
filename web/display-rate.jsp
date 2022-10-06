@@ -140,6 +140,26 @@
                 border: transparent;
                 border-radius: 3px;
             }
+            .adult-child-room{
+                /*width: 100%;*/
+            }
+            .form-group{
+                margin-bottom: 0px;
+            }
+            .change-search{
+                outline: 3px solid orange;
+                border-radius: 3px;
+            }
+
+            @media only screen and (min-width: 690px) {
+                .date-range{
+                    width: 290px;
+                }
+                .change-search{
+                    width: 1080px;
+                }
+            }
+
             @media only screen and (min-width: 1200px) {
                 .rate-table-full{
                     width: 100%; 
@@ -318,23 +338,18 @@
                     x.setAttribute("name", "RoomTypeID");
 //                    x.setAttribute("value", i);
                     document.getElementById('roomTypeForm').append(x);
+                    collection[i].value = "";
                 }
             };
         </script>
         <script>
-//            function myFunc(value) {
-//                if (value === "") {
-//                    x = $("#text_test").detach();
-//                } else {
-//                    $("#prepend_here").append(x);
-//                }
-//            }
-//            window.onload = function () {
-//                
-//            }
 
+            var sum_price = 0;
+            var prev_val = 0;
+            var prev_price = 0;
+            var prev_roomTypeID = 1;
             let count = 0;
-            function checkAmount(value, roomTypeID) {
+            function checkAmount(value, roomTypeID, price) {
                 const collection = document.getElementsByClassName("amount");
 //                var nodeList = document.querySelectorAll(".amount");
                 for (let i = 0; i < collection.length; i++) {
@@ -350,13 +365,57 @@
                 }
 
                 var x = document.getElementById('num' + roomTypeID);
-                if (x.id === "num" + roomTypeID) {
-                    if (value === "") {
-                        x.setAttribute("value", "");
-                    } else {
-                        x.setAttribute("value", roomTypeID);
-                    }
+                if (value === "") {
+                    x.setAttribute("value", "");
+                } else {
+                    x.setAttribute("value", roomTypeID);
                 }
+
+//                if (prev_roomTypeID !== roomTypeID) {
+////                        alert('khac' + prev_roomTypeID);
+//                    sum_price = prev_price;
+//                    sum_price += price;
+//                    document.getElementById("total-price-fake-table").innerHTML = sum_price;
+//                    prev_price = price;
+//                    if (value === "") {
+//                        sum_price -= prev_price;
+////                    prev_price = price;
+//                    } else {
+//                        sum_price += price;
+//                        document.getElementById("total-price-fake-table").innerHTML = sum_price;
+//                    }
+//                } else {
+////                        alert('giong' + prev_roomTypeID);
+//                    prev_price = price;
+////                        alert('prev_price: ' + prev_price);
+////                        sum_price = prev_price;
+////                        document.getElementById("total-price-fake-table").innerHTML = price;
+//                    if (value === "") {
+//                        sum_price -= prev_price;
+////                    prev_price = price;
+//                    } else {
+//                        sum_price += price;
+//                        document.getElementById("total-price-fake-table").innerHTML = sum_price;
+//                    }
+////                    }
+//                }
+//
+//                prev_roomTypeID = roomTypeID;
+
+//                cur_val = value;
+//                if (value < cur_val) {
+//                    sum_price -= price;
+////                        values = value;
+////                        document.getElementById("total-price-fake-table").innerHTML = values;
+//                    document.getElementById("total-price-fake-table").innerHTML = sum_price;
+//                } else {
+//                    sum_price += price;
+////                        values = value;
+////                        document.getElementById("total-price-fake-table").innerHTML = values;
+//                    document.getElementById("total-price-fake-table").innerHTML = sum_price;
+//                }
+
+
 
                 if (collection[0].value === "" &&
                         collection[1].value === "" &&
@@ -370,6 +429,14 @@
                     collection[3].required = true;
                     collection[4].required = true;
                 }
+            }
+            function focusOnRoomType(number, room) {
+                var rt = document.getElementById('roomtype' + number);
+//                alert(number);
+                rt.style.backgroundColor = "#ebf3ff";
+                document.getElementById('select' + number).value = room;
+                document.getElementById('select' + number).setAttribute("value", room);
+                rt.addEventListener("onchange", checkAmount(null, number, null));
             }
         </script>
     </head>
@@ -406,14 +473,14 @@
                                     ${notice}
                                 </th>
                             </c:if>
-                            <!--<th class="rate-recommend-table-th"></th>-->
+                            <th class="rate-recommend-table-th"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${listRecommendRooms}" var="list">
                             <tr>
                                 <td class="rate-recommend-table-td room-data">
-                                    <div>${room} × ${list.getName()}</div>
+                                    <div><a href="#roomtype${list.getRoomTypeID()}" onclick="focusOnRoomType(${list.getRoomTypeID()}, ${room});">${room} × ${list.getName()}</a></div>
                                     <div>
                                         <strong>Price for: ${list.getAdult()} adults + ${list.getChildren()} child</strong>
                                     </div>
@@ -434,7 +501,7 @@
                                         </div>
                                     </c:if>
                                 </td>
-                                <td class="rate-recommend-table-td room-data">
+                                <td class="rate-recommend-table-td room-data" style="border-right: 0px;">
                                     <c:if test="${dateDiff > 1}">
                                         <div>
                                             <strong>Price for: ${dateDiff} nights stay</strong>
@@ -468,12 +535,12 @@
                                 <form action="booking" class="booking-form aside-stretch" method="post">
                                     <input type="hidden" name="do" value="checkAvailabiltyOfRoom">
                                     <input type="hidden" name="action" value="changeSearch">
-                                    <div class="row">
+                                    <div class="row change-search">
                                         <div class="col-md d-flex py-md-4">
                                             <div class="form-group align-self-stretch d-flex align-items-end">
                                                 <div class="wrap align-self-stretch py-3 px-4">
                                                     <!--<label for="checkInDate">Check-in Date</label>-->
-                                                    <input type="text" id="checkInDate" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date"
+                                                    <input type="text" id="checkInDate" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control date-range" placeholder="Check-in date"
                                                            value="${checkInDate==null? "01/01/1990":checkInDate} - ${checkOutDate==null? "01/01/1990":checkOutDate}">
                                                 </div>
                                             </div>
@@ -493,7 +560,7 @@
                                                     <div class="form-field">
                                                         <div class="select-wrap">
                                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="adult" id="adult" class="form-control">
+                                                            <select name="adult" id="adult" class="form-control adult-child-room">
                                                                 <option value="1" ${adult == 1 ? "selected":""}>1 Adult</option>
                                                                 <c:forEach var="i" begin="2" end="10">
                                                                     <option value="${i}" ${adult == i ? "selected":""}>${i} Adults</option>
@@ -511,7 +578,7 @@
                                                     <div class="form-field">
                                                         <div class="select-wrap">
                                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="children" id="children" class="form-control">
+                                                            <select name="children" id="children" class="form-control adult-child-room">
                                                                 <option value="0" ${children == 0 ? "selected":""}>0 Child</option>
                                                                 <option value="1" ${children == 1 ? "selected":""}>1 Child</option>
                                                                 <c:forEach var="i" begin="2" end="6">
@@ -534,7 +601,7 @@
                                                     <div class="form-field">
                                                         <div class="select-wrap">
                                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="room" id="room" class="form-control">
+                                                            <select name="room" id="room" class="form-control adult-child-room">
                                                                 <option value="1">1 room</option>
                                                                 <c:forEach var="i" begin="2" end="6">
                                                                     <option value="${i}" ${room == i ? "selected":""}>${i} Rooms</option>
@@ -558,7 +625,12 @@
                 </section>
                 <form id="roomTypeForm" action="booking" method="post">
                     <input type="hidden" name="do" value="proceedBooking">
-                    <input type="hidden" name="RoomTypeID" id="RoomTypeID" value="">
+                    <!--<input type="hidden" name="RoomTypeID" id="RoomTypeID" value="">-->
+                    <input type="hidden" name="dateDiff" value="${dateDiff}">
+                    <!--                    <input type="hidden" name="Name" id="roomTypeName" value="">
+                                        <input type="hidden" name="Price" id="roomTypePrice" value="">-->
+                    <input type="hidden" name="checkInDate" value="${checkInDate}">
+                    <input type="hidden" name="checkOutDate" value="${checkOutDate}">
                     <section class="rate-table-full">
                         <table id="rate-table" border="1" style="border-color: #5bbaff; border-left: transparent;">
                             <thead>
@@ -574,7 +646,7 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${listRoomType}" var="rt">
-                                    <tr>
+                                    <tr id="roomtype${rt.getRoomTypeID()}">
                                         <td class="room-data">
                                             <a class="view-room" href="#"><div>
                                                     <h4>${rt.getName()}</h4>
@@ -622,7 +694,7 @@
                                         </td>
                                         <td style="width: 5%; text-align: center; vertical-align: top; padding-top: 5px;">
                                             <!--<div class="icon"><span class="ion-ios-arrow-down"></span></div>-->
-                                            <select name="amount" id="${rt.getRoomTypeID()}" class="amount" style="width: 80%;" required="" onchange="checkAmount(this.value, ${rt.getRoomTypeID()});">
+                                            <select name="amount" id="select${rt.getRoomTypeID()}" class="amount" style="width: 80%;" required="" onchange="checkAmount(this.value, ${rt.getRoomTypeID()}, this.value * ${dateDiff*rt.getPrice()});">
                                                 <option value="">0</option>
                                                 <c:forEach items="${listAvailableRooms}" var="list">
                                                     <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
@@ -650,6 +722,9 @@
                                         width: 100%; padding: 10px 0px;">
                                     I'll Reserve
                                 </button>
+                                <div id="total-price-fake-table">
+
+                                </div>
                                 <div>
                                     <ul class="fake-table-body-ul">
                                         <li class="">

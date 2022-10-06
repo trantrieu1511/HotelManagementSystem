@@ -107,7 +107,7 @@ PaymentStatus = 1 or PaymentStatus is null
 --and r.RoomTypeID = 1
 --and rt.Adult >= 2 and rt.Children >= 2
 
-select b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
+select top 3 b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
 r.[Name], r.[Floor], r.[View], rt.RoomTypeID, rt.[Name], rt.Price,
 rt.Img, rt.[Description], rt.Adult, rt.Children
 from Booking b full outer join BookDetail bd
@@ -116,7 +116,9 @@ on bd.RoomID = r.RoomID full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
 where 
 (select MAX(CheckOut) from BookDetail) <= '2022-09-29' or 
-PaymentStatus = 1 or PaymentStatus is null
+PaymentStatus = 1 or PaymentStatus is null and
+rt.RoomTypeID = 1
+order by r.RoomID asc
 
 --count rooms that are available to some condition
 select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer join BookDetail bd
