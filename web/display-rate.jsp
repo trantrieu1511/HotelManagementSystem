@@ -341,9 +341,15 @@
                     collection[i].value = "";
                 }
             };
+
         </script>
         <script>
 
+
+            var dict = {};
+            <c:forEach items="${listRoomType}" var="list">
+            dict[${list.getRoomTypeID()}] = ${list.getRoomTypeID()};
+            </c:forEach>
             var sum_price = 0;
             var prev_val = 0;
             var prev_price = 0;
@@ -415,6 +421,27 @@
 //                    document.getElementById("total-price-fake-table").innerHTML = sum_price;
 //                }
 
+
+//                alert(Object.keys(dict));
+//                dict[roomTypeID] = price;
+                for (var key in dict) {
+                    if (dict[key] === roomTypeID) {
+//                        // Remove item
+//                        delete dict[roomTypeID];
+//                        alert(dict[key]);
+//                        alert(roomTypeID);
+                        sum_price -= prev_price;
+                        sum_price += price;
+                        document.getElementById("total-price-fake-table").innerHTML = sum_price;
+                        prev_price = price;
+                    } else {
+//                        prev_price = price;
+//                        sum_price -= prev_price;
+//                        sum_price += price;
+//                        document.getElementById("total-price-fake-table").innerHTML = sum_price
+//                        alert('oops!');
+                    }
+                }
 
 
                 if (collection[0].value === "" &&

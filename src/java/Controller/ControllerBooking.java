@@ -84,14 +84,14 @@ public class ControllerBooking extends HttpServlet {
                 }
             }
             if (service.equals("proceedBooking")) {
-                String[] RoomTypeID = request.getParameterValues("RoomTypeID");
+                String[] roomTypeID = request.getParameterValues("RoomTypeID");
                 String[] amount = request.getParameterValues("amount");
                 String dateDiff = request.getParameter("dateDiff");
                 checkInDate = request.getParameter("checkInDate");
                 checkOutDate = request.getParameter("checkOutDate");
-                for (int i = 0; i < RoomTypeID.length; i++) {
-                    if (!RoomTypeID[i].equals("")) {
-                        out.print("RoomTypeID: " + RoomTypeID[i] + " ");
+                for (int i = 0; i < roomTypeID.length; i++) {
+                    if (!roomTypeID[i].equals("")) {
+                        out.print("RoomTypeID: " + roomTypeID[i] + " ");
                     }
                 }
                 out.print("<br>");
@@ -106,9 +106,13 @@ public class ControllerBooking extends HttpServlet {
                 out.print("checkInDate: " + checkInDate.split(" ")[0]);
                 out.print("<br>");
                 out.print("checkOutDate: " + checkOutDate.split(" ")[0]);
-//                request.setAttribute("roomTypeID", rt);
-//                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
-//                dispatch.forward(request, response);
+                request.setAttribute("roomTypeID", roomTypeID);
+                request.setAttribute("amount", amount);
+                request.setAttribute("dateDiff", dateDiff);
+                request.setAttribute("checkInDate", checkInDate);
+                request.setAttribute("checkOutDate", checkOutDate);
+                RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
+                dispatch.forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
