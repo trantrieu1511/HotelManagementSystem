@@ -28,9 +28,9 @@ insert into BedType values('Triple Bed')
 insert into RoomType
 values('Family Room', 350000, 'images/room-1.jpg', 'Family room of 40-45m2, each room has 2 to 3 beds, with luxurious furniture, full facilities. Family Room up to 5 people per room. This is the perfect choice for families or small groups of friends to go out together. Some rooms are equipped with windows, family bath tubs and warm decoration, but also full of novelty and comfort to bring airy space, comfort, friendly and convenient for you to enjoy. Get the best holiday with family or close friends.',2,2)
 insert into RoomType
-values('Deluxe Room', 1025000, 'images/room-5.jpg', 'Deluxe rooms with harmonious design, luxurious interior with full modern facilities. Area of about 60-65m2 each room is equipped with windows and balcony to bring the cool air, the most comfortable for you. The rooms are luxuriously furnished with high quality wood floor, spacious space, with windows and balconies overlooking the sea, you can easily watch the sunset or sunrise in your room.',3,2)
+values('Deluxe Room', 1025000, 'images/room-5.jpg', 'Deluxe rooms with harmonious design, luxurious interior with full modern facilities. Area of about 60-65m2 each room is equipped with windows and balcony to bring the cool air, the most comfortable for you. The rooms are luxuriously furnished with high quality wood floor, spacious space, with windows and balconies overlooking the sea, you can easily watch the sunset or sunrise in your room.',4,3)
 insert into RoomType 
-values('Superior Room', 850000, 'images/room-6.jpg', 'Superior rooms are about 20m2 are designed in harmony with luxury furniture and full of modern facilities and to the comfort and convenience for you. The standard room consists of 2 small beds or 1 large bed suitable for couples traveling on vacation. Rooms may have a small window with sea view or view of the campus to help you look at the beautiful surroundings.',4,3)
+values('Superior Room', 850000, 'images/room-6.jpg', 'Superior rooms are about 20m2 are designed in harmony with luxury furniture and full of modern facilities and to the comfort and convenience for you. The standard room consists of 2 small beds or 1 large bed suitable for couples traveling on vacation. Rooms may have a small window with sea view or view of the campus to help you look at the beautiful surroundings.',3,2)
 insert into RoomType 
 values('Luxury Room', 1520000, 'images/room-4.jpg', 'Luxury rooms with harmonious design, luxurious interior with full modern facilities. Area of about 60-65m2 each room is equipped with windows and balcony to bring the cool air, the most comfortable for you. The rooms are luxuriously furnished with high quality wood floor, spacious space, with windows and balconies overlooking the sea, you can easily watch the sunset or sunrise in your room.',5,4)
 insert into RoomType 
@@ -88,7 +88,7 @@ insert into Room values('503', 5, 5, 'Beautiful Beach view')
 --select * from Booking
 insert into Booking(CusID, BookDate) values('CUS00001', '2022-09-22')
 insert into Booking(CusID, BookDate) values('CUS00002', '2022-09-28')
-
+insert into Booking(CusID, BookDate, SpecialRequests) values('CUS00002', GETDATE(), 'I need more bath towels')
 --insert BookDetail
 --select * from BookDetail
 --select * from Booking

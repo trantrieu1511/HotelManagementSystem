@@ -51,6 +51,12 @@ Adult = 4,
 Children = 3
 where RoomTypeID = 2
 
+update RoomType
+set 
+Adult = 3, 
+Children = 2
+where RoomTypeID = 3
+
 --RoomTypeDetail Queries
 --select r.RoomID, r.[Name], r.[Floor], r.[View], rt.* from Room r join RoomType rt on r.RoomTypeID = rt.RoomTypeID 
 --order by r.[Name]

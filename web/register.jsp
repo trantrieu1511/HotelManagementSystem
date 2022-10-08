@@ -72,6 +72,7 @@
                 padding: 0px;
             }
             #formContent{
+                box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
                 max-width: 600px;
                 text-align: left;
             }

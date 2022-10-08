@@ -92,7 +92,7 @@
                 width: 1000px; 
                 height: 8rem;
             }
-            .fake-table{
+            #fake-table{
                 border: 1px solid #5bbaff;
                 border-right: white;
                 border-left: white;
@@ -150,7 +150,21 @@
                 outline: 3px solid orange;
                 border-radius: 3px;
             }
+            #total-rooms{
+                font-size: large;
+            }
+            #total-price-fake-table{
+                font-size: x-large;
+            }
 
+            @media only screen and (max-width: 350px) {
+                .date-range{
+                    width: 290px;
+                }
+                .change-search{
+                    width: 290px;
+                }
+            }
             @media only screen and (min-width: 690px) {
                 .date-range{
                     width: 290px;
@@ -338,34 +352,36 @@
                     x.setAttribute("name", "RoomTypeID");
 //                    x.setAttribute("value", i);
                     document.getElementById('roomTypeForm').append(x);
-                    collection[i].value = "";
+                    collection[i - 1].value = "";
                 }
             };
 
         </script>
         <script>
-
-
             var dict = {};
+            var dict_length = 0;
+            var price_num = [];
+            var room_num = [];
             <c:forEach items="${listRoomType}" var="list">
             dict[${list.getRoomTypeID()}] = ${list.getRoomTypeID()};
             </c:forEach>
             var sum_price = 0;
-            var prev_val = 0;
-            var prev_price = 0;
-            var prev_roomTypeID = 1;
+            var sum_room = 0;
             let count = 0;
+            for (var item in dict) {
+                dict_length++;
+            }
+            for (i = 1; i <= dict_length; ++i) {
+                price_num[i] = 0;
+                room_num[i] = 0;
+                console.log("price_num" + i + " = " + price_num[i]);
+                console.log("room_num" + i + " = " + room_num[i]);
+            }
             function checkAmount(value, roomTypeID, price) {
                 const collection = document.getElementsByClassName("amount");
 //                var nodeList = document.querySelectorAll(".amount");
                 for (let i = 0; i < collection.length; i++) {
-                    if (value === "" && collection[i].value !== "") {
-                        collection[i].required = false;
-                    }
-                    if (value !== "" && collection[i].value === "") {
-                        collection[i].required = false;
-                    }
-                    if (value !== "" && collection[i].value !== "") {
+                    if (value !== "") {
                         collection[i].required = false;
                     }
                 }
@@ -376,73 +392,39 @@
                 } else {
                     x.setAttribute("value", roomTypeID);
                 }
-
-//                if (prev_roomTypeID !== roomTypeID) {
-////                        alert('khac' + prev_roomTypeID);
-//                    sum_price = prev_price;
-//                    sum_price += price;
-//                    document.getElementById("total-price-fake-table").innerHTML = sum_price;
-//                    prev_price = price;
-//                    if (value === "") {
-//                        sum_price -= prev_price;
-////                    prev_price = price;
-//                    } else {
-//                        sum_price += price;
-//                        document.getElementById("total-price-fake-table").innerHTML = sum_price;
-//                    }
-//                } else {
-////                        alert('giong' + prev_roomTypeID);
-//                    prev_price = price;
-////                        alert('prev_price: ' + prev_price);
-////                        sum_price = prev_price;
-////                        document.getElementById("total-price-fake-table").innerHTML = price;
-//                    if (value === "") {
-//                        sum_price -= prev_price;
-////                    prev_price = price;
-//                    } else {
-//                        sum_price += price;
-//                        document.getElementById("total-price-fake-table").innerHTML = sum_price;
-//                    }
-////                    }
-//                }
-//
-//                prev_roomTypeID = roomTypeID;
-
-//                cur_val = value;
-//                if (value < cur_val) {
-//                    sum_price -= price;
-////                        values = value;
-////                        document.getElementById("total-price-fake-table").innerHTML = values;
-//                    document.getElementById("total-price-fake-table").innerHTML = sum_price;
-//                } else {
-//                    sum_price += price;
-////                        values = value;
-////                        document.getElementById("total-price-fake-table").innerHTML = values;
-//                    document.getElementById("total-price-fake-table").innerHTML = sum_price;
-//                }
-
-
-//                alert(Object.keys(dict));
-//                dict[roomTypeID] = price;
-                for (var key in dict) {
-                    if (dict[key] === roomTypeID) {
-//                        // Remove item
-//                        delete dict[roomTypeID];
-//                        alert(dict[key]);
-//                        alert(roomTypeID);
-                        sum_price -= prev_price;
-                        sum_price += price;
-                        document.getElementById("total-price-fake-table").innerHTML = sum_price;
-                        prev_price = price;
-                    } else {
-//                        prev_price = price;
-//                        sum_price -= prev_price;
-//                        sum_price += price;
-//                        document.getElementById("total-price-fake-table").innerHTML = sum_price
-//                        alert('oops!');
-                    }
+                if (value === "") {
+                    value = "0";
                 }
-
+                if (dict.hasOwnProperty(roomTypeID)) {
+                    sum_price -= price_num[roomTypeID];
+                    sum_room -= room_num[roomTypeID];
+                    price_num[roomTypeID] = price;
+                    room_num[roomTypeID] = parseInt(value);
+                }
+//                alert("price_num" + roomTypeID + " = " + price_num[roomTypeID]);
+                sum_price = 0;
+                sum_room = 0;
+                for (i = 1; i <= dict_length; ++i) {
+                    sum_price += price_num[i];
+                    sum_room += room_num[i];
+                    console.log("price_num" + i + " = " + price_num[i]);
+                    console.log("room_num" + i + " = " + room_num[i]);
+                }
+                if (sum_room !== 0) {
+                    document.getElementById("total-price-fake-table").innerHTML = "VND " + sum_price;
+                    document.getElementById("roomTypePrice").value = sum_price;
+                    (sum_room > 1 ? document.getElementById("total-rooms").innerHTML = sum_room + " rooms for: "
+                            :
+                            document.getElementById("total-rooms").innerHTML = sum_room + " room for: "
+                            );
+                    document.getElementById("fake-table").style.backgroundColor = "rgb(235, 243, 255)";
+                    document.getElementById("btn-reserve").innerHTML = "Reserve";
+                } else {
+                    document.getElementById("total-price-fake-table").innerHTML = "";
+                    document.getElementById("total-rooms").innerHTML = "";
+                    document.getElementById("fake-table").style.backgroundColor = "";
+                    document.getElementById("btn-reserve").innerHTML = "I'll reserve";
+                }
 
                 if (collection[0].value === "" &&
                         collection[1].value === "" &&
@@ -457,13 +439,13 @@
                     collection[4].required = true;
                 }
             }
-            function focusOnRoomType(number, room) {
+            function focusOnRoomType(number, room, price) {
                 var rt = document.getElementById('roomtype' + number);
 //                alert(number);
                 rt.style.backgroundColor = "#ebf3ff";
                 document.getElementById('select' + number).value = room;
                 document.getElementById('select' + number).setAttribute("value", room);
-                rt.addEventListener("onchange", checkAmount(null, number, null));
+                rt.addEventListener("onchange", checkAmount(room, number, price));
             }
         </script>
     </head>
@@ -507,7 +489,7 @@
                         <c:forEach items="${listRecommendRooms}" var="list">
                             <tr>
                                 <td class="rate-recommend-table-td room-data">
-                                    <div><a href="#roomtype${list.getRoomTypeID()}" onclick="focusOnRoomType(${list.getRoomTypeID()}, ${room});">${room} × ${list.getName()}</a></div>
+                                    <div><a href="#roomtype${list.getRoomTypeID()}" onclick="focusOnRoomType(${list.getRoomTypeID()}, ${room}, ${dateDiff*room*list.getPrice()});">${room} × ${list.getName()}</a></div>
                                     <div>
                                         <strong>Price for: ${list.getAdult()} adults + ${list.getChildren()} child</strong>
                                     </div>
@@ -523,7 +505,7 @@
                                         </c:forEach>
                                     </div>
                                     <c:if test="${listRecommendRooms.size()-1!=listRecommendRooms.lastIndexOf(list)}">
-                                        <div>
+                                        <div style="font-weight: bold">
                                             Or:
                                         </div>
                                     </c:if>
@@ -629,7 +611,7 @@
                                                         <div class="select-wrap">
                                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                             <select name="room" id="room" class="form-control adult-child-room">
-                                                                <option value="1">1 room</option>
+                                                                <option value="1">1 Room</option>
                                                                 <c:forEach var="i" begin="2" end="6">
                                                                     <option value="${i}" ${room == i ? "selected":""}>${i} Rooms</option>
                                                                 </c:forEach>
@@ -654,8 +636,8 @@
                     <input type="hidden" name="do" value="proceedBooking">
                     <!--<input type="hidden" name="RoomTypeID" id="RoomTypeID" value="">-->
                     <input type="hidden" name="dateDiff" value="${dateDiff}">
-                    <!--                    <input type="hidden" name="Name" id="roomTypeName" value="">
-                                        <input type="hidden" name="Price" id="roomTypePrice" value="">-->
+                    <!--<input type="hidden" name="Name" id="roomTypeName" value="">-->
+                    <input type="hidden" name="totalPrice" id="roomTypePrice" value="">
                     <input type="hidden" name="checkInDate" value="${checkInDate}">
                     <input type="hidden" name="checkOutDate" value="${checkOutDate}">
                     <section class="rate-table-full">
@@ -712,7 +694,7 @@
                                         <td class="room-data" style="width: 25%">
                                             <div style="color: green;">
                                                 <svg class="bk-icon -streamline-checkmark_fill" fill="#008009" height="16" width="16" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M56.33 102a6 6 0 0 1-4.24-1.75L19.27 67.54A6.014 6.014 0 1 1 27.74 59l27.94 27.88 44-58.49a6 6 0 1 1 9.58 7.22l-48.17 64a5.998 5.998 0 0 1-4.34 2.39z"></path></svg>
-                                                <strong>Free cancellation</strong>
+                                                <strong>Free cancellation</strong> - until 18:00 ${checkOutDate.split(" ")[0]}
                                             </div>
                                             <div style="color: green;">
                                                 <svg class="bk-icon -streamline-checkmark_fill" fill="#008009" height="16" width="16" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M56.33 102a6 6 0 0 1-4.24-1.75L19.27 67.54A6.014 6.014 0 1 1 27.74 59l27.94 27.88 44-58.49a6 6 0 1 1 9.58 7.22l-48.17 64a5.998 5.998 0 0 1-4.34 2.39z"></path></svg>
@@ -739,25 +721,28 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-                        <div class="fake-table">
+                        <div id="fake-table">
                             <div class="fake-table-head">
 
                             </div>
                             <div class="fake-table-body">
-                                <button class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
-                                        margin-top: 5%; width: 70%;
-                                        width: 100%; padding: 10px 0px;">
-                                    I'll Reserve
-                                </button>
+                                <div id="total-rooms">
+
+                                </div>
                                 <div id="total-price-fake-table">
 
                                 </div>
+                                <button class="btn btn-primary" id="btn-reserve" style="
+                                        margin-top: 5%; width: 70%;
+                                        width: 100%; padding: 10px 0px;">
+                                    I'll reserve
+                                </button>
                                 <div>
                                     <ul class="fake-table-body-ul">
-                                        <li class="">
+                                        <li>
                                             It only takes 2 minutes
                                         </li>
-                                        <li >
+                                        <li>
                                             Confirmation is immediate
                                         </li>
                                         <li class="fake-table-body-li">

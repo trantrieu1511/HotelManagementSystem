@@ -84,9 +84,11 @@ public class ControllerBooking extends HttpServlet {
                 }
             }
             if (service.equals("proceedBooking")) {
+                listRt = daoRt.listRoomType();
                 String[] roomTypeID = request.getParameterValues("RoomTypeID");
                 String[] amount = request.getParameterValues("amount");
                 String dateDiff = request.getParameter("dateDiff");
+                String totalPrice = request.getParameter("totalPrice");
                 checkInDate = request.getParameter("checkInDate");
                 checkOutDate = request.getParameter("checkOutDate");
                 for (int i = 0; i < roomTypeID.length; i++) {
@@ -108,9 +110,11 @@ public class ControllerBooking extends HttpServlet {
                 out.print("checkOutDate: " + checkOutDate.split(" ")[0]);
                 request.setAttribute("roomTypeID", roomTypeID);
                 request.setAttribute("amount", amount);
+                request.setAttribute("totalPrice", totalPrice);
                 request.setAttribute("dateDiff", dateDiff);
                 request.setAttribute("checkInDate", checkInDate);
                 request.setAttribute("checkOutDate", checkOutDate);
+                request.setAttribute("listRoomType", listRt);
                 RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
                 dispatch.forward(request, response);
             }
@@ -170,12 +174,13 @@ public class ControllerBooking extends HttpServlet {
     int children = 0;
     int room = 0;
     int count_unavailableRoomType = 0;
+    List<RoomType> listRt = new ArrayList<>();
 
     public void checkAvailabiltyOfRoom(DAORoomType daoRt, DAORoomTypeDetail daoRtd, DAOBooking daoB, String checkInDate, String checkOutDate, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         adult = Integer.parseInt(request.getParameter("adult"));
         children = Integer.parseInt(request.getParameter("children"));
         room = Integer.parseInt(request.getParameter("room"));
-        List<RoomType> listRt = daoRt.listRoomType();
+        listRt = daoRt.listRoomType();
         List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
         List<RoomType> listAvailableRooms = daoB.listAvailableRoom(checkInDate);
 
