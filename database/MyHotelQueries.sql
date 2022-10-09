@@ -114,7 +114,7 @@ PaymentStatus = 1 or PaymentStatus is null
 --and rt.Adult >= 2 and rt.Children >= 2
 
 select top 3 b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
-r.[Name], r.[Floor], r.[View], rt.RoomTypeID, rt.[Name], rt.Price,
+r.[Name] as RoomName, r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, rt.Price,
 rt.Img, rt.[Description], rt.Adult, rt.Children
 from Booking b full outer join BookDetail bd
 on b.BookID = bd.BookID full outer join Room r

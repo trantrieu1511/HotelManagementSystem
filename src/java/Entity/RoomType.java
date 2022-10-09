@@ -33,10 +33,18 @@ public class RoomType {
         this.Children = Children;
     }
 
-    //constructor for available rooms
+    //constructor for counting number of available rooms
     public RoomType(int RoomTypeID, int NoOfAvailableRoom) {
         this.RoomTypeID = RoomTypeID;
         this.NoOfAvailableRoom = NoOfAvailableRoom;
+    }
+
+    //constructor for get available rooms
+    public RoomType(int RoomTypeID, String Name, int Adult, int Children) {
+        this.RoomTypeID = RoomTypeID;
+        this.Name = Name;
+        this.Adult = Adult;
+        this.Children = Children;
     }
 
     public int getRoomTypeID() {

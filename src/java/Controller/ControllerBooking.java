@@ -6,10 +6,12 @@
 package Controller;
 
 import Entity.Customer;
+import Entity.Room;
 import Entity.RoomType;
 import Entity.RoomTypeDetail;
 import Model.DAOBooking;
 import Model.DAOCustomer;
+import Model.DAORoom;
 import Model.DAORoomType;
 import Model.DAORoomTypeDetail;
 import java.io.IOException;
@@ -34,6 +36,24 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ControllerBooking", urlPatterns = {"/booking"})
 public class ControllerBooking extends HttpServlet {
 
+    List<Room> listRooms = new ArrayList<>();
+
+    RoomType rt = new RoomType();
+    RoomTypeDetail rtd = new RoomTypeDetail();
+    Customer cus = new Customer();
+
+    DAOCustomer daoCus = new DAOCustomer();
+    DAORoom daoR = new DAORoom();
+    DAORoomType daoRt = new DAORoomType();
+    DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
+    DAOBooking daoB = new DAOBooking();
+
+    boolean statusAdd = false;
+    String checkInDate_date = "";
+    String checkInDate = "";
+    String checkOutDate_date = "";
+    String checkOutDate = "";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,20 +69,6 @@ public class ControllerBooking extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
             HttpSession session = request.getSession();
-
-            RoomType rt = new RoomType();
-            RoomTypeDetail rtd = new RoomTypeDetail();
-            Customer cus = new Customer();
-
-            DAOCustomer daoCus = new DAOCustomer();
-            DAORoomType daoRt = new DAORoomType();
-            DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
-            DAOBooking daoB = new DAOBooking();
-
-            String checkInDate_date = "";
-            String checkInDate = "";
-            String checkOutDate_date = "";
-            String checkOutDate = "";
             if (service.equals("checkAvailabiltyOfRoom")) {
                 String action = request.getParameter("action");
                 if (action == null) {
@@ -98,23 +104,16 @@ public class ControllerBooking extends HttpServlet {
                 String totalPrice = request.getParameter("totalPrice");
                 checkInDate = request.getParameter("checkInDate");
                 checkOutDate = request.getParameter("checkOutDate");
-//                for (int i = 0; i < roomTypeID.length; i++) {
-//                    if (!roomTypeID[i].equals("")) {
-//                        out.print("RoomTypeID: " + roomTypeID[i] + " ");
-//                    }
-//                }
-//                out.print("<br>");
-//                for (int i = 0; i < amount.length; i++) {
-//                    if (!amount[i].equals("")) {
-//                        out.print("Amount: " + amount[i] + " ");
-//                    }
-//                }
-//                out.print("<br>");
-//                out.print("DateDiff: " + dateDiff);
-//                out.print("<br>");
-//                out.print("checkInDate: " + checkInDate.split(" ")[0]);
-//                out.print("<br>");
-//                out.print("checkOutDate: " + checkOutDate.split(" ")[0]);
+
+                //get available Rooms
+                for (int i = 0; i < roomTypeID.length; i++) {
+                    if (roomTypeID[i] != "") {
+                        daoR.listAvailableRooms(roomTypeID[i], amount[i]).forEach((Room room) -> {
+                            listRooms.add(room);
+                        });
+                    }
+                }
+
                 request.setAttribute("roomTypeID", roomTypeID);
                 request.setAttribute("amount", amount);
                 request.setAttribute("totalPrice", totalPrice);
@@ -122,6 +121,7 @@ public class ControllerBooking extends HttpServlet {
                 request.setAttribute("checkInDate", checkInDate);
                 request.setAttribute("checkOutDate", checkOutDate);
                 request.setAttribute("listRoomType", listRt);
+                request.setAttribute("listRoom", listRooms);
                 RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
                 dispatch.forward(request, response);
             }
@@ -130,7 +130,7 @@ public class ControllerBooking extends HttpServlet {
                 if (cus != null) {
 
                 } else {
-
+//                    statusAdd = daoCus.addCustomer();
                 }
             }
 
@@ -219,7 +219,6 @@ public class ControllerBooking extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
