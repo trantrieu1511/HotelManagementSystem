@@ -70,7 +70,7 @@ public class ControllerAuthentication extends HttpServlet {
                     dispatch.forward(request, response);
                 } else {
                     session.setAttribute("Customer", cus);
-                    RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                    RequestDispatcher dispatch = request.getRequestDispatcher("home?do=homeView");
                     dispatch.forward(request, response);
                 }
             }
@@ -120,7 +120,7 @@ public class ControllerAuthentication extends HttpServlet {
                         session.removeAttribute(key);
                     }
                 }
-                response.sendRedirect("home.jsp");
+                response.sendRedirect("home");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

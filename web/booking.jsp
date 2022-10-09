@@ -243,6 +243,45 @@
 //                    progressNext.disabled = false;
 //                }
 //            };
+            function checkEmailOrPhone() {
+                var emailOrPhone = document.getElementById('login');
+                if (emailOrPhone.value.toString().includes("@")) { //email
+                    emailOrPhone.pattern = "[a-zA-Z0-9]{1,18}[@][a-z]{1,8}[.][a-z]{1,8}";
+                    emailOrPhone.title = "Email must not contain: Unicode characters, special character e.g: !@#$%^&,. etc.. and whitespaces; \n\
+        Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25";
+                } else {
+                    emailOrPhone.pattern = "[0-9]{10}";
+                    emailOrPhone.title = "Phone number must be 10-digit number or please enter your email";
+                }
+            }
+            $(function () {
+                $("#sign-in").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data');
+                    const myArray = text.split(" ");
+            <c:forEach begin="1" end="${fn:length(roomTypeID)}" var="i">
+                    var roomTypeID${i} = $(e.relatedTarget).attr('data-roomTypeID${i}');
+            </c:forEach>
+            <c:forEach begin="1" end="${fn:length(amount)}" var="i">
+                    var amount${i} = $(e.relatedTarget).attr('data-amount${i}');
+            </c:forEach>
+                    var totalPrice = myArray[0];
+                    var dateDiff = myArray[1];
+                    var checkInDate = $(e.relatedTarget).attr('data-checkInDate');
+                    var checkOutDate = $(e.relatedTarget).attr('data-checkOutDate');
+            <c:forEach begin="1" end="${fn:length(roomTypeID)}" var="i">
+                    document.getElementById('roomTypeID${i}').value = roomTypeID${i};
+            </c:forEach>
+            <c:forEach begin="1" end="${fn:length(amount)}" var="i">
+                    document.getElementById('amount${i}').value = amount${i};
+            </c:forEach>
+//                    $(e.currentTarget).find('input[name="roomTypeID"]').val(roomTypeID);
+//                    $(e.currentTarget).find('input[name="amount"]').val(amount);
+                    $(e.currentTarget).find('input[name="totalPrice"]').val(totalPrice);
+                    $(e.currentTarget).find('input[name="dateDiff"]').val(dateDiff);
+                    $(e.currentTarget).find('input[name="checkInDate"]').val(checkInDate);
+                    $(e.currentTarget).find('input[name="checkOutDate"]').val(checkOutDate);
+                });
+            });
         </script>
     </head>
     <body>
@@ -252,7 +291,6 @@
                     <ul class="progressbar">
                         <li class="complete"><strong>Your selection</strong></li>
                         <li class="active"><strong>Your details</strong></li>
-                        <li class="">Final step</li>
                     </ul>
                     <!--                    <div id="progress">
                                             <div id="progress-bar"></div>
@@ -298,9 +336,9 @@
                                 <hr>
                                 <div class="details">You selected:</div>
                                 <c:forEach items="${listRoomType}" var="listRt">
-                                    <c:forEach begin="1" end="${fn:length(roomTypeID)}" var="i">
+                                    <c:forEach begin="0" end="${fn:length(roomTypeID)}" var="i">
                                         <c:if test="${listRt.getRoomTypeID()==roomTypeID[i]}">
-                                            <div class="text-secondary">x${amount[i]} ${listRt.getName()}</div>
+                                            <div class="text-secondary">${amount[i]} x ${listRt.getName()}</div>
                                         </c:if>
                                     </c:forEach>
                                 </c:forEach>
@@ -353,7 +391,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-body">
@@ -376,7 +413,17 @@
                                         Save time! Sign in to book with your saved details.
                                     </div>
                                     <div>
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#sign-in">Sign in</button>
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#sign-in" 
+                                                <c:forEach begin="0" end="${fn:length(roomTypeID)-1}" var="i">
+                                                    data-roomTypeID${i+1}="${roomTypeID[i]}"
+                                                </c:forEach>
+                                                <c:forEach begin="0" end="${fn:length(amount)-1}" var="i">
+                                                    data-amount${i+1}="${amount[i]}"
+                                                </c:forEach>
+                                                data="${totalPrice} ${dateDiff}"
+                                                data-checkInDate="${checkInDate}"
+                                                data-checkOutDate="${checkOutDate}"
+                                                >Sign in</button>
                                     </div>
                                 </div>
                             </div>
@@ -392,45 +439,53 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="authentication" method="post" accept-charset="utf-8">
-                                            <input type="hidden" name="do" value="login">
+                                        <form action="booking" method="post">
+                                            <input type="hidden" name="do" value="customerLogin">
+                                            <!--<input type="hidden" name="isBooking" value="true">-->
+                                            <c:forEach begin="1" end="${fn:length(roomTypeID)}" var="i">
+                                                <input type="text" id="roomTypeID${i}" name="roomTypeID" value="">
+                                            </c:forEach>
+                                            <c:forEach begin="1" end="${fn:length(amount)}" var="i">
+                                                <input type="text" id="amount${i}" name="amount" value="">
+                                            </c:forEach>
+                                            <input type="hidden" name="totalPrice" value="">
+                                            <input type="hidden" name="dateDiff" value="">
+                                            <input type="hidden" name="checkInDate" value="">
+                                            <input type="hidden" name="checkOutDate" value="">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="email" id="email" placeholder="Watch out for typos" required pattern="[a-zA-Z0-9]{1,12}[@][a-z]{1,6}[.][a-z]{1,6}"
-                                                               title="Email not allow: Unicode characters, 
-                                                               special character other than @ and . and spacing characters;
-                                                               allow uppercase, lowercase letters and numeric characters (0-9);
-                                                               maximum length of parts of email: 
-                                                               username: 20, mail server: 12, domain: 12; 
-                                                               max length: 46">
+                                                        <input type="text" id="login" class="" name="EmailOrPhone" required="" placeholder="enter email or phone number"
+                                                               onkeyup="checkEmailOrPhone()">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label class="col-form-label">Password <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="password" name="password" id="password" 
-                                                               required pattern="[a-zA-Z0-9]{1,12}"
-                                                               title="Password not contain: Unicode characters, 
-                                                               special character e.g: !@#$%^&,. etc.. and spacing characters; 
-                                                               allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
+                                                        <input type="password" id="password" class="" name="Password" required="" placeholder="enter password" pattern="[a-zA-Z0-9]{1,25}"
+                                                               title="Password must not contain: Unicode characters, 
+                                                               special character e.g: !@#$%^&,. etc.. and whitespaces; 
+                                                               Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
                                                     </div>
-                                                    <span id="wrong_pass_alert"></span>
                                                 </div>
                                             </div>
                                             <div class="submit-section">
-                                                <input type="submit" class="btn btn-primary submit-btn" id="create" value="submit">
+                                                <input type="submit" class="btn btn-primary" value="submit">
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- /Add Employee Modal -->
+                        <!-- /Sign in Modal -->
 
-                        <form class="col-sm-12" id="customerDetailForm" action="customer">
-                            <input type="hidden" name="do" value="finishReserve">
+                        <form class="col-sm-12" id="customerDetailForm" action="booking">
+                            <input type="text" name="do" value="finishReserve">
+                            <input type="text" name="totalPrice" value="${totalPrice}">
+                            <input type="text" name="dateDiff" value="${dateDiff}">
+                            <input type="text" name="checkInDate" value="${checkInDate}">
+                            <input type="text" name="checkOutDate" value="${checkOutDate}">
                             <div class="card" style="background: #ebf3ff;">
                                 <div class="card-body">
                                     <h4>Enter your details</h4>
@@ -469,6 +524,767 @@
                                                        username: 20, mail server: 12, domain: 12; 
                                                        max length: 46"
                                                        value="${Customer.getEmail()}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="Country">Country <span class="text-danger">*</span></label>
+                                                <select class="form-control" name="Country" id="Country" required>
+                                                    <option value="">
+                                                        --
+                                                        -- Select country/region --
+                                                        --
+                                                    </option>
+                                                    <option value="af" data-prefix="">
+                                                        Afghanistan
+                                                    </option>
+                                                    <option value="al" data-prefix="">
+                                                        Albania
+                                                    </option>
+                                                    <option value="dz" data-prefix="">
+                                                        Algeria
+                                                    </option>
+                                                    <option value="as" data-prefix="">
+                                                        American Samoa
+                                                    </option>
+                                                    <option value="ad" data-prefix="">
+                                                        Andorra
+                                                    </option>
+                                                    <option value="ao" data-prefix="">
+                                                        Angola
+                                                    </option>
+                                                    <option value="ai" data-prefix="">
+                                                        Anguilla
+                                                    </option>
+                                                    <option value="aq" data-prefix="">
+                                                        Antarctica
+                                                    </option>
+                                                    <option value="ag" data-prefix="">
+                                                        Antigua &amp; Barbuda
+                                                    </option>
+                                                    <option value="ar" data-prefix="">
+                                                        Argentina
+                                                    </option>
+                                                    <option value="am" data-prefix="">
+                                                        Armenia
+                                                    </option>
+                                                    <option value="aw" data-prefix="">
+                                                        Aruba
+                                                    </option>
+                                                    <option value="au" data-prefix="">
+                                                        Australia
+                                                    </option>
+                                                    <option value="at" data-prefix="">
+                                                        Austria
+                                                    </option>
+                                                    <option value="az" data-prefix="">
+                                                        Azerbaijan
+                                                    </option>
+                                                    <option value="bs" data-prefix="">
+                                                        Bahamas
+                                                    </option>
+                                                    <option value="bh" data-prefix="">
+                                                        Bahrain
+                                                    </option>
+                                                    <option value="bd" data-prefix="">
+                                                        Bangladesh
+                                                    </option>
+                                                    <option value="bb" data-prefix="">
+                                                        Barbados
+                                                    </option>
+                                                    <option value="by" data-prefix="">
+                                                        Belarus
+                                                    </option>
+                                                    <option value="be" data-prefix="">
+                                                        Belgium
+                                                    </option>
+                                                    <option value="bz" data-prefix="">
+                                                        Belize
+                                                    </option>
+                                                    <option value="bj" data-prefix="">
+                                                        Benin
+                                                    </option>
+                                                    <option value="bm" data-prefix="">
+                                                        Bermuda
+                                                    </option>
+                                                    <option value="bt" data-prefix="">
+                                                        Bhutan
+                                                    </option>
+                                                    <option value="bo" data-prefix="">
+                                                        Bolivia
+                                                    </option>
+                                                    <option value="bq" data-prefix="">
+                                                        Bonaire St Eustatius and Saba
+                                                    </option>
+                                                    <option value="ba" data-prefix="">
+                                                        Bosnia and Herzegovina
+                                                    </option>
+                                                    <option value="bw" data-prefix="">
+                                                        Botswana
+                                                    </option>
+                                                    <option value="bv" data-prefix="">
+                                                        Bouvet Island
+                                                    </option>
+                                                    <option value="br" data-prefix="">
+                                                        Brazil
+                                                    </option>
+                                                    <option value="io" data-prefix="">
+                                                        British Indian Ocean Territory
+                                                    </option>
+                                                    <option value="bn" data-prefix="">
+                                                        Brunei Darussalam
+                                                    </option>
+                                                    <option value="bg" data-prefix="">
+                                                        Bulgaria
+                                                    </option>
+                                                    <option value="bf" data-prefix="">
+                                                        Burkina Faso
+                                                    </option>
+                                                    <option value="bi" data-prefix="">
+                                                        Burundi
+                                                    </option>
+                                                    <option value="kh" data-prefix="">
+                                                        Cambodia
+                                                    </option>
+                                                    <option value="cm" data-prefix="">
+                                                        Cameroon
+                                                    </option>
+                                                    <option value="ca" data-prefix="">
+                                                        Canada
+                                                    </option>
+                                                    <option value="cv" data-prefix="">
+                                                        Cape Verde
+                                                    </option>
+                                                    <option value="ky" data-prefix="">
+                                                        Cayman Islands
+                                                    </option>
+                                                    <option value="cf" data-prefix="">
+                                                        Central Africa Republic
+                                                    </option>
+                                                    <option value="td" data-prefix="">
+                                                        Chad
+                                                    </option>
+                                                    <option value="cl" data-prefix="">
+                                                        Chile
+                                                    </option>
+                                                    <option value="cn" data-prefix="">
+                                                        China
+                                                    </option>
+                                                    <option value="cx" data-prefix="">
+                                                        Christmas Island
+                                                    </option>
+                                                    <option value="cc" data-prefix="">
+                                                        Cocos (K) I.
+                                                    </option>
+                                                    <option value="co" data-prefix="">
+                                                        Colombia
+                                                    </option>
+                                                    <option value="km" data-prefix="">
+                                                        Comoros
+                                                    </option>
+                                                    <option value="cg" data-prefix="">
+                                                        Congo
+                                                    </option>
+                                                    <option value="ck" data-prefix="">
+                                                        Cook Islands
+                                                    </option>
+                                                    <option value="cr" data-prefix="">
+                                                        Costa Rica
+                                                    </option>
+                                                    <option value="xc" data-prefix="">
+                                                        Crimea
+                                                    </option>
+                                                    <option value="hr" data-prefix="">
+                                                        Croatia
+                                                    </option>
+                                                    <option value="cw" data-prefix="">
+                                                        Curaçao
+                                                    </option>
+                                                    <option value="cy" data-prefix="">
+                                                        Cyprus
+                                                    </option>
+                                                    <option value="cz" data-prefix="">
+                                                        Czech Republic
+                                                    </option>
+                                                    <option value="ci" data-prefix="">
+                                                        Côte d'Ivoire
+                                                    </option>
+                                                    <option value="cd" data-prefix="">
+                                                        Democratic Republic of Congo
+                                                    </option>
+                                                    <option value="dk" data-prefix="">
+                                                        Denmark
+                                                    </option>
+                                                    <option value="dj" data-prefix="">
+                                                        Djibouti
+                                                    </option>
+                                                    <option value="dm" data-prefix="">
+                                                        Dominica
+                                                    </option>
+                                                    <option value="do" data-prefix="">
+                                                        Dominican Republic
+                                                    </option>
+                                                    <option value="tl" data-prefix="">
+                                                        East Timor
+                                                    </option>
+                                                    <option value="ec" data-prefix="">
+                                                        Ecuador
+                                                    </option>
+                                                    <option value="eg" data-prefix="">
+                                                        Egypt
+                                                    </option>
+                                                    <option value="sv" data-prefix="">
+                                                        El Salvador
+                                                    </option>
+                                                    <option value="gq" data-prefix="">
+                                                        Equatorial Guinea
+                                                    </option>
+                                                    <option value="er" data-prefix="">
+                                                        Eritrea
+                                                    </option>
+                                                    <option value="ee" data-prefix="">
+                                                        Estonia
+                                                    </option>
+                                                    <option value="et" data-prefix="">
+                                                        Ethiopia
+                                                    </option>
+                                                    <option value="fk" data-prefix="">
+                                                        Falkland Islands (Malvinas)
+                                                    </option>
+                                                    <option value="fo" data-prefix="">
+                                                        Faroe Islands
+                                                    </option>
+                                                    <option value="fj" data-prefix="">
+                                                        Fiji
+                                                    </option>
+                                                    <option value="fi" data-prefix="">
+                                                        Finland
+                                                    </option>
+                                                    <option value="fr" data-prefix="">
+                                                        France
+                                                    </option>
+                                                    <option value="gf" data-prefix="">
+                                                        French Guiana
+                                                    </option>
+                                                    <option value="pf" data-prefix="">
+                                                        French Polynesia
+                                                    </option>
+                                                    <option value="tf" data-prefix="">
+                                                        French Southern Territories
+                                                    </option>
+                                                    <option value="ga" data-prefix="">
+                                                        Gabon
+                                                    </option>
+                                                    <option value="gm" data-prefix="">
+                                                        Gambia
+                                                    </option>
+                                                    <option value="ge" data-prefix="">
+                                                        Georgia
+                                                    </option>
+                                                    <option value="de" data-prefix="">
+                                                        Germany
+                                                    </option>
+                                                    <option value="gh" data-prefix="">
+                                                        Ghana
+                                                    </option>
+                                                    <option value="gi" data-prefix="">
+                                                        Gibraltar
+                                                    </option>
+                                                    <option value="gr" data-prefix="">
+                                                        Greece
+                                                    </option>
+                                                    <option value="gl" data-prefix="">
+                                                        Greenland
+                                                    </option>
+                                                    <option value="gd" data-prefix="">
+                                                        Grenada
+                                                    </option>
+                                                    <option value="gp" data-prefix="">
+                                                        Guadeloupe
+                                                    </option>
+                                                    <option value="gu" data-prefix="">
+                                                        Guam
+                                                    </option>
+                                                    <option value="gt" data-prefix="">
+                                                        Guatemala
+                                                    </option>
+                                                    <option value="gg" data-prefix="">
+                                                        Guernsey
+                                                    </option>
+                                                    <option value="gn" data-prefix="">
+                                                        Guinea
+                                                    </option>
+                                                    <option value="gw" data-prefix="">
+                                                        Guinea-Bissau
+                                                    </option>
+                                                    <option value="gy" data-prefix="">
+                                                        Guyana
+                                                    </option>
+                                                    <option value="ht" data-prefix="">
+                                                        Haiti
+                                                    </option>
+                                                    <option value="hm" data-prefix="">
+                                                        Heard and McDonald Islands
+                                                    </option>
+                                                    <option value="hn" data-prefix="">
+                                                        Honduras
+                                                    </option>
+                                                    <option value="hk" data-prefix="">
+                                                        Hong Kong
+                                                    </option>
+                                                    <option value="hu" data-prefix="">
+                                                        Hungary
+                                                    </option>
+                                                    <option value="is" data-prefix="">
+                                                        Iceland
+                                                    </option>
+                                                    <option value="in" data-prefix="">
+                                                        India
+                                                    </option>
+                                                    <option value="id" data-prefix="">
+                                                        Indonesia
+                                                    </option>
+                                                    <option value="ir" data-prefix="">
+                                                        Iran
+                                                    </option>
+                                                    <option value="iq" data-prefix="">
+                                                        Iraq
+                                                    </option>
+                                                    <option value="ie" data-prefix="">
+                                                        Ireland
+                                                    </option>
+                                                    <option value="im" data-prefix="">
+                                                        Isle of Man
+                                                    </option>
+                                                    <option value="il" data-prefix="">
+                                                        Israel
+                                                    </option>
+                                                    <option value="it" data-prefix="">
+                                                        Italy
+                                                    </option>
+                                                    <option value="jm" data-prefix="">
+                                                        Jamaica
+                                                    </option>
+                                                    <option value="jp" data-prefix="">
+                                                        Japan
+                                                    </option>
+                                                    <option value="je" data-prefix="">
+                                                        Jersey
+                                                    </option>
+                                                    <option value="jo" data-prefix="">
+                                                        Jordan
+                                                    </option>
+                                                    <option value="kz" data-prefix="">
+                                                        Kazakhstan
+                                                    </option>
+                                                    <option value="ke" data-prefix="">
+                                                        Kenya
+                                                    </option>
+                                                    <option value="ki" data-prefix="">
+                                                        Kiribati
+                                                    </option>
+                                                    <option value="xk" data-prefix="">
+                                                        Kosovo
+                                                    </option>
+                                                    <option value="kw" data-prefix="">
+                                                        Kuwait
+                                                    </option>
+                                                    <option value="kg" data-prefix="">
+                                                        Kyrgyzstan
+                                                    </option>
+                                                    <option value="la" data-prefix="">
+                                                        Laos
+                                                    </option>
+                                                    <option value="lv" data-prefix="">
+                                                        Latvia
+                                                    </option>
+                                                    <option value="lb" data-prefix="">
+                                                        Lebanon
+                                                    </option>
+                                                    <option value="ls" data-prefix="">
+                                                        Lesotho
+                                                    </option>
+                                                    <option value="lr" data-prefix="">
+                                                        Liberia
+                                                    </option>
+                                                    <option value="ly" data-prefix="">
+                                                        Libya
+                                                    </option>
+                                                    <option value="li" data-prefix="">
+                                                        Liechtenstein
+                                                    </option>
+                                                    <option value="lt" data-prefix="">
+                                                        Lithuania
+                                                    </option>
+                                                    <option value="lu" data-prefix="">
+                                                        Luxembourg
+                                                    </option>
+                                                    <option value="mo" data-prefix="">
+                                                        Macao
+                                                    </option>
+                                                    <option value="mg" data-prefix="">
+                                                        Madagascar
+                                                    </option>
+                                                    <option value="mw" data-prefix="">
+                                                        Malawi
+                                                    </option>
+                                                    <option value="my" data-prefix="">
+                                                        Malaysia
+                                                    </option>
+                                                    <option value="mv" data-prefix="">
+                                                        Maldives
+                                                    </option>
+                                                    <option value="ml" data-prefix="">
+                                                        Mali
+                                                    </option>
+                                                    <option value="mt" data-prefix="">
+                                                        Malta
+                                                    </option>
+                                                    <option value="mh" data-prefix="">
+                                                        Marshall Islands
+                                                    </option>
+                                                    <option value="mq" data-prefix="">
+                                                        Martinique
+                                                    </option>
+                                                    <option value="mr" data-prefix="">
+                                                        Mauritania
+                                                    </option>
+                                                    <option value="mu" data-prefix="">
+                                                        Mauritius
+                                                    </option>
+                                                    <option value="yt" data-prefix="">
+                                                        Mayotte
+                                                    </option>
+                                                    <option value="mx" data-prefix="">
+                                                        Mexico
+                                                    </option>
+                                                    <option value="fm" data-prefix="">
+                                                        Micronesia
+                                                    </option>
+                                                    <option value="md" data-prefix="">
+                                                        Moldova
+                                                    </option>
+                                                    <option value="mc" data-prefix="">
+                                                        Monaco
+                                                    </option>
+                                                    <option value="mn" data-prefix="">
+                                                        Mongolia
+                                                    </option>
+                                                    <option value="me" data-prefix="">
+                                                        Montenegro
+                                                    </option>
+                                                    <option value="ms" data-prefix="">
+                                                        Montserrat
+                                                    </option>
+                                                    <option value="ma" data-prefix="">
+                                                        Morocco
+                                                    </option>
+                                                    <option value="mz" data-prefix="">
+                                                        Mozambique
+                                                    </option>
+                                                    <option value="mm" data-prefix="">
+                                                        Myanmar
+                                                    </option>
+                                                    <option value="na" data-prefix="">
+                                                        Namibia
+                                                    </option>
+                                                    <option value="nr" data-prefix="">
+                                                        Nauru
+                                                    </option>
+                                                    <option value="np" data-prefix="">
+                                                        Nepal
+                                                    </option>
+                                                    <option value="nl" data-prefix="">
+                                                        Netherlands
+                                                    </option>
+                                                    <option value="nc" data-prefix="">
+                                                        New Caledonia
+                                                    </option>
+                                                    <option value="nz" data-prefix="">
+                                                        New Zealand
+                                                    </option>
+                                                    <option value="ni" data-prefix="">
+                                                        Nicaragua
+                                                    </option>
+                                                    <option value="ne" data-prefix="">
+                                                        Niger
+                                                    </option>
+                                                    <option value="ng" data-prefix="">
+                                                        Nigeria
+                                                    </option>
+                                                    <option value="nu" data-prefix="">
+                                                        Niue
+                                                    </option>
+                                                    <option value="nf" data-prefix="">
+                                                        Norfolk Island
+                                                    </option>
+                                                    <option value="kp" data-prefix="">
+                                                        North Korea
+                                                    </option>
+                                                    <option value="mk" data-prefix="">
+                                                        North Macedonia
+                                                    </option>
+                                                    <option value="xy" data-prefix="">
+                                                        Northern Cyprus
+                                                    </option>
+                                                    <option value="mp" data-prefix="">
+                                                        Northern Mariana Islands
+                                                    </option>
+                                                    <option value="no" data-prefix="">
+                                                        Norway
+                                                    </option>
+                                                    <option value="om" data-prefix="">
+                                                        Oman
+                                                    </option>
+                                                    <option value="pk" data-prefix="">
+                                                        Pakistan
+                                                    </option>
+                                                    <option value="pw" data-prefix="">
+                                                        Palau
+                                                    </option>
+                                                    <option value="ps" data-prefix="">
+                                                        Palestinian Territory
+                                                    </option>
+                                                    <option value="pa" data-prefix="">
+                                                        Panama
+                                                    </option>
+                                                    <option value="pg" data-prefix="">
+                                                        Papua New Guinea
+                                                    </option>
+                                                    <option value="py" data-prefix="">
+                                                        Paraguay
+                                                    </option>
+                                                    <option value="pe" data-prefix="">
+                                                        Peru
+                                                    </option>
+                                                    <option value="ph" data-prefix="">
+                                                        Philippines
+                                                    </option>
+                                                    <option value="pn" data-prefix="">
+                                                        Pitcairn
+                                                    </option>
+                                                    <option value="pl" data-prefix="">
+                                                        Poland
+                                                    </option>
+                                                    <option value="pt" data-prefix="">
+                                                        Portugal
+                                                    </option>
+                                                    <option value="pr" data-prefix="">
+                                                        Puerto Rico
+                                                    </option>
+                                                    <option value="qa" data-prefix="">
+                                                        Qatar
+                                                    </option>
+                                                    <option value="re" data-prefix="">
+                                                        Reunion
+                                                    </option>
+                                                    <option value="ro" data-prefix="">
+                                                        Romania
+                                                    </option>
+                                                    <option value="ru" data-prefix="">
+                                                        Russia
+                                                    </option>
+                                                    <option value="rw" data-prefix="">
+                                                        Rwanda
+                                                    </option>
+                                                    <option value="bl" data-prefix="">
+                                                        Saint Barthelemy
+                                                    </option>
+                                                    <option value="kn" data-prefix="">
+                                                        Saint Kitts and Nevis
+                                                    </option>
+                                                    <option value="lc" data-prefix="">
+                                                        Saint Lucia
+                                                    </option>
+                                                    <option value="mf" data-prefix="">
+                                                        Saint Martin
+                                                    </option>
+                                                    <option value="vc" data-prefix="">
+                                                        Saint Vincent &amp; Grenadines
+                                                    </option>
+                                                    <option value="ws" data-prefix="">
+                                                        Samoa
+                                                    </option>
+                                                    <option value="sm" data-prefix="">
+                                                        San Marino
+                                                    </option>
+                                                    <option value="sa" data-prefix="">
+                                                        Saudi Arabia
+                                                    </option>
+                                                    <option value="sn" data-prefix="">
+                                                        Senegal
+                                                    </option>
+                                                    <option value="rs" data-prefix="">
+                                                        Serbia
+                                                    </option>
+                                                    <option value="sc" data-prefix="">
+                                                        Seychelles
+                                                    </option>
+                                                    <option value="sl" data-prefix="">
+                                                        Sierra Leone
+                                                    </option>
+                                                    <option value="sg" data-prefix="">
+                                                        Singapore
+                                                    </option>
+                                                    <option value="sx" data-prefix="">
+                                                        Sint Maarten
+                                                    </option>
+                                                    <option value="sk" data-prefix="">
+                                                        Slovakia
+                                                    </option>
+                                                    <option value="si" data-prefix="">
+                                                        Slovenia
+                                                    </option>
+                                                    <option value="sb" data-prefix="">
+                                                        Solomon Islands
+                                                    </option>
+                                                    <option value="so" data-prefix="">
+                                                        Somalia
+                                                    </option>
+                                                    <option value="za" data-prefix="">
+                                                        South Africa
+                                                    </option>
+                                                    <option value="gs" data-prefix="">
+                                                        South Georgia and the South Sandwi&amp;hellip;
+                                                    </option>
+                                                    <option value="kr" data-prefix="">
+                                                        South Korea
+                                                    </option>
+                                                    <option value="ss" data-prefix="">
+                                                        South Sudan
+                                                    </option>
+                                                    <option value="es" data-prefix="">
+                                                        Spain
+                                                    </option>
+                                                    <option value="lk" data-prefix="">
+                                                        Sri Lanka
+                                                    </option>
+                                                    <option value="sh" data-prefix="">
+                                                        St Helena
+                                                    </option>
+                                                    <option value="pm" data-prefix="">
+                                                        St Pierre and Miquelon
+                                                    </option>
+                                                    <option value="sd" data-prefix="">
+                                                        Sudan
+                                                    </option>
+                                                    <option value="sr" data-prefix="">
+                                                        Suriname
+                                                    </option>
+                                                    <option value="sj" data-prefix="">
+                                                        Svalbard &amp; Jan Mayen
+                                                    </option>
+                                                    <option value="sz" data-prefix="">
+                                                        Swaziland
+                                                    </option>
+                                                    <option value="se" data-prefix="">
+                                                        Sweden
+                                                    </option>
+                                                    <option value="ch" data-prefix="">
+                                                        Switzerland
+                                                    </option>
+                                                    <option value="sy" data-prefix="">
+                                                        Syria
+                                                    </option>
+                                                    <option value="st" data-prefix="">
+                                                        São Tomé and Príncipe
+                                                    </option>
+                                                    <option value="tw" data-prefix="">
+                                                        Taiwan
+                                                    </option>
+                                                    <option value="tj" data-prefix="">
+                                                        Tajikistan
+                                                    </option>
+                                                    <option value="tz" data-prefix="">
+                                                        Tanzania
+                                                    </option>
+                                                    <option value="th" data-prefix="">
+                                                        Thailand
+                                                    </option>
+                                                    <option value="tg" data-prefix="">
+                                                        Togo
+                                                    </option>
+                                                    <option value="tk" data-prefix="">
+                                                        Tokelau
+                                                    </option>
+                                                    <option value="to" data-prefix="">
+                                                        Tonga
+                                                    </option>
+                                                    <option value="tt" data-prefix="">
+                                                        Trinidad and Tobago
+                                                    </option>
+                                                    <option value="tn" data-prefix="">
+                                                        Tunisia
+                                                    </option>
+                                                    <option value="tr" data-prefix="">
+                                                        Turkey
+                                                    </option>
+                                                    <option value="tm" data-prefix="">
+                                                        Turkmenistan
+                                                    </option>
+                                                    <option value="tc" data-prefix="">
+                                                        Turks &amp; Caicos Islands
+                                                    </option>
+                                                    <option value="tv" data-prefix="">
+                                                        Tuvalu
+                                                    </option>
+                                                    <option value="vg" data-prefix="">
+                                                        UK Virgin Islands
+                                                    </option>
+                                                    <option value="vi" data-prefix="">
+                                                        US Virgin Islands
+                                                    </option>
+                                                    <option value="ug" data-prefix="">
+                                                        Uganda
+                                                    </option>
+                                                    <option value="ua" data-prefix="">
+                                                        Ukraine
+                                                    </option>
+                                                    <option value="ae" data-prefix="">
+                                                        United Arab Emirates
+                                                    </option>
+                                                    <option value="gb" data-prefix="">
+                                                        United Kingdom
+                                                    </option>
+                                                    <option value="us" data-prefix="">
+                                                        United States
+                                                    </option>
+                                                    <option value="um" data-prefix="">
+                                                        United States Minor Outlying Islan&amp;hellip;
+                                                    </option>
+                                                    <option value="uy" data-prefix="">
+                                                        Uruguay
+                                                    </option>
+                                                    <option value="uz" data-prefix="">
+                                                        Uzbekistan
+                                                    </option>
+                                                    <option value="vu" data-prefix="">
+                                                        Vanuatu
+                                                    </option>
+                                                    <option value="va" data-prefix="">
+                                                        Vatican City
+                                                    </option>
+                                                    <option value="ve" data-prefix="">
+                                                        Venezuela
+                                                    </option>
+                                                    <option value="vn" data-prefix="" selected="selected">
+                                                        Vietnam
+                                                    </option>
+                                                    <option value="wf" data-prefix="">
+                                                        Wallis and Futuna
+                                                    </option>
+                                                    <option value="ye" data-prefix="">
+                                                        Yemen
+                                                    </option>
+                                                    <option value="zm" data-prefix="">
+                                                        Zambia
+                                                    </option>
+                                                    <option value="zw" data-prefix="">
+                                                        Zimbabwe
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -543,11 +1359,87 @@
                                     </div>
                                 </div>
                             </div>
+                            <div style="text-align: right; font-weight: 500; margin-bottom: 10px;">
+                                Pressing this button will finish your booking details:
+                            </div>
                             <div style="text-align: right; margin-bottom: 3rem;">
-                                <button class="btn btn-primary" style="padding-left: 3rem; padding-right: 3rem; border-right: 0px;
-                                        padding-top: 12px; padding-bottom: 12px;">Final details ></button>
+                                <a class="btn btn-light" data-toggle="modal" data-target="#check-booking" style="padding-left: 20px; padding-right: 20px; border-right: 0px;
+                                   padding-top: 12px; padding-bottom: 12px;">
+                                    <span>
+                                        Check your booking
+                                    </span>
+                                </a>
+                                <button class="btn btn-primary" style="padding-left: 20px; padding-right: 20px; border-right: 0px;
+                                        padding-top: 12px; padding-bottom: 12px;">
+                                    <span style="color: white;">
+                                        <svg class="bk-icon -streamline-lock_closed" height="24" role="presentation" width="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.5 16.5v5.25a.75.75 0 0 1-.75.75H5.25a.75.75 0 0 1-.75-.75v-10.5a.75.75 0 0 1 .75-.75h13.5a.75.75 0 0 1 .75.75v5.25zm1.5 0v-5.25A2.25 2.25 0 0 0 18.75 9H5.25A2.25 2.25 0 0 0 3 11.25v10.5A2.25 2.25 0 0 0 5.25 24h13.5A2.25 2.25 0 0 0 21 21.75V16.5zM7.5 9.75V6a4.5 4.5 0 0 1 9 0v3.75a.75.75 0 0 0 1.5 0V6A6 6 0 0 0 6 6v3.75a.75.75 0 0 0 1.5 0zM12 15a1.125 1.125 0 1 0 .004 0h-.006a.75.75 0 0 0 .004 1.5H12a.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5z"></path></svg>
+                                    </span>
+                                    <span>
+                                        Complete booking
+                                    </span>
+                                </button>
                             </div>
                         </form>
+                        <div id="check-booking" class="modal custom-modal fade" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Your booking details</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="details" style="margin-top: 1rem;">Total length of stay:</div>
+                                        <c:if test="${dateDiff==1}">
+                                            <div class="important-details">${dateDiff} night</div>
+                                        </c:if>
+                                        <c:if test="${dateDiff!=1}">
+                                            <div class="important-details">${dateDiff} night</div>
+                                        </c:if>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 col-md-6 left">
+                                                <div class="details">CheckIn</div>
+                                                <span class="important-details">${checkInDate}</span>
+                                                <div class="text-secondary">14:00 – 00:00</div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                                <div class="details">CheckOut</div>
+                                                <span class="important-details">${checkOutDate.split(" ")[0]}</span>
+                                                <div class="text-secondary">01:00 – 12:00</div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                                <div class="details">You selected:</div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                                <c:forEach items="${listRoomType}" var="listRt">
+                                                    <c:forEach begin="0" end="${fn:length(roomTypeID)}" var="i">
+                                                        <c:if test="${listRt.getRoomTypeID()==roomTypeID[i]}">
+                                                            <div class="text-secondary">${amount[i]} x ${listRt.getName()} <div style="color: green;">Free cancellation</div></div>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:forEach>
+                                            </div>
+                                        </div><hr>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                                <h6 style="margin-bottom: 0px;">Price</h6>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                                <h6 style="margin-bottom: 0px;">VND ${totalPrice}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="text-secondary" style="font-size: small;">
+                                            (for ${dateDiff} nights & all guests)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Check Booking Modal -->
                     </div>
                 </div>
             </div>

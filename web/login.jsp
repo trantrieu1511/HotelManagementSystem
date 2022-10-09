@@ -4,6 +4,7 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -67,7 +68,12 @@
                     <hr>
 
                     <!-- Login Form -->
+                <c:if test="${empty param.action}">
                     <form action="authentication" method="POST">
+                    </c:if>
+                    <c:if test="${param.action == 'isBooking'}">
+                        <form action="booking" method="POST">
+                        </c:if>
                         <input type="hidden" name="do" value="customerLogin">
                         <div style="text-align: left; margin-left: 35px;
                              ">Email: <span class="text-danger">*</span></div>
@@ -82,19 +88,19 @@
                                Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25">
                         <br>
                         <span class="text-danger">${mess}</span>
-                    <input type="submit" class="" value="Log In" style="
-                           margin-top: 2rem;
-                           padding-left: 168px;
-                           padding-right: 168px;
-                           box-shadow: none;
-                           ">
-                </form>
+                        <input type="submit" class="" value="Log In" style="
+                               margin-top: 2rem;
+                               padding-left: 168px;
+                               padding-right: 168px;
+                               box-shadow: none;
+                               ">
+                    </form>
 
-                <!-- Remind Password -->
-                <div id="formFooter">
-                    <a class="underlineHover" href="#">Forgot Password?</a><br>
-                    Don't have an account? Register <a class="underlineHover" href="register.jsp">here</a>
-                </div>
+                    <!-- Remind Password -->
+                    <div id="formFooter">
+                        <a class="underlineHover" href="#">Forgot Password?</a><br>
+                        Don't have an account? Register <a class="underlineHover" href="register.jsp">here</a>
+                    </div>
 
             </div>
         </div>

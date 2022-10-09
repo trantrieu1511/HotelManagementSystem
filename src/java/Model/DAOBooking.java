@@ -57,14 +57,14 @@ public class DAOBooking extends DBConnect {
     }
 
     public List<RoomType> listRecommendRoom(List<RoomType> listRecommendRooms, int RoomTypeID, int Adult, int Children, int Room) {
-        String sql = "select * from RoomType where ? / Adult = ? and Children >= ? and RoomTypeID = ?";
+        String sql = "select * from RoomType where ? / Adult = ? and RoomTypeID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setInt(1, Adult);
             state.setInt(2, Room);
-            state.setInt(3, Children);
-            state.setInt(4, RoomTypeID);
+//            state.setInt(3, Children);
+            state.setInt(3, RoomTypeID);
             rs = state.executeQuery();
             while (rs.next()) {
                 listRecommendRooms.add(new RoomType(

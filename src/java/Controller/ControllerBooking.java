@@ -5,9 +5,11 @@
  */
 package Controller;
 
+import Entity.Customer;
 import Entity.RoomType;
 import Entity.RoomTypeDetail;
 import Model.DAOBooking;
+import Model.DAOCustomer;
 import Model.DAORoomType;
 import Model.DAORoomTypeDetail;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,9 +48,13 @@ public class ControllerBooking extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
+            HttpSession session = request.getSession();
+
             RoomType rt = new RoomType();
             RoomTypeDetail rtd = new RoomTypeDetail();
+            Customer cus = new Customer();
 
+            DAOCustomer daoCus = new DAOCustomer();
             DAORoomType daoRt = new DAORoomType();
             DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
             DAOBooking daoB = new DAOBooking();
@@ -91,23 +98,23 @@ public class ControllerBooking extends HttpServlet {
                 String totalPrice = request.getParameter("totalPrice");
                 checkInDate = request.getParameter("checkInDate");
                 checkOutDate = request.getParameter("checkOutDate");
-                for (int i = 0; i < roomTypeID.length; i++) {
-                    if (!roomTypeID[i].equals("")) {
-                        out.print("RoomTypeID: " + roomTypeID[i] + " ");
-                    }
-                }
-                out.print("<br>");
-                for (int i = 0; i < amount.length; i++) {
-                    if (!amount[i].equals("")) {
-                        out.print("Amount: " + amount[i] + " ");
-                    }
-                }
-                out.print("<br>");
-                out.print("DateDiff: " + dateDiff);
-                out.print("<br>");
-                out.print("checkInDate: " + checkInDate.split(" ")[0]);
-                out.print("<br>");
-                out.print("checkOutDate: " + checkOutDate.split(" ")[0]);
+//                for (int i = 0; i < roomTypeID.length; i++) {
+//                    if (!roomTypeID[i].equals("")) {
+//                        out.print("RoomTypeID: " + roomTypeID[i] + " ");
+//                    }
+//                }
+//                out.print("<br>");
+//                for (int i = 0; i < amount.length; i++) {
+//                    if (!amount[i].equals("")) {
+//                        out.print("Amount: " + amount[i] + " ");
+//                    }
+//                }
+//                out.print("<br>");
+//                out.print("DateDiff: " + dateDiff);
+//                out.print("<br>");
+//                out.print("checkInDate: " + checkInDate.split(" ")[0]);
+//                out.print("<br>");
+//                out.print("checkOutDate: " + checkOutDate.split(" ")[0]);
                 request.setAttribute("roomTypeID", roomTypeID);
                 request.setAttribute("amount", amount);
                 request.setAttribute("totalPrice", totalPrice);
@@ -117,6 +124,57 @@ public class ControllerBooking extends HttpServlet {
                 request.setAttribute("listRoomType", listRt);
                 RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
                 dispatch.forward(request, response);
+            }
+            if (service.equals("finishReserve")) {
+                cus = (Customer) session.getAttribute("Customer");
+                if (cus != null) {
+
+                } else {
+
+                }
+            }
+
+            if (service.equals("customerLogin")) {
+                String email = "";
+                String phone = "";
+                String password = request.getParameter("Password");
+
+                if (request.getParameter("EmailOrPhone").contains("@")) {
+                    email = request.getParameter("EmailOrPhone");
+                    cus = daoCus.loginUsingEmail(email, password);
+                } else {
+                    phone = request.getParameter("EmailOrPhone");
+                    cus = daoCus.loginUsingPhone(phone, password);
+                }
+                if (cus == null) {
+                    if (email == "") {
+                        request.setAttribute("mess", "Phone or Password is incorrect! "
+                                + "Please try again!");
+                    } else {
+                        request.setAttribute("mess", "Email or Password is incorrect! "
+                                + "Please try again!");
+                    }
+                    RequestDispatcher dispatch = request.getRequestDispatcher("login.jsp?action=isBooking");
+                    dispatch.forward(request, response);
+                } else {
+                    session.setAttribute("Customer", cus);
+                    List<RoomType> listRt = daoRt.listRoomType();
+                    String[] roomTypeID = request.getParameterValues("roomTypeID");
+                    String[] amount = request.getParameterValues("amount");
+                    String dateDiff = request.getParameter("dateDiff");
+                    String totalPrice = request.getParameter("totalPrice");
+                    checkInDate = request.getParameter("checkInDate");
+                    checkOutDate = request.getParameter("checkOutDate");
+                    request.setAttribute("roomTypeID", roomTypeID);
+                    request.setAttribute("amount", amount);
+                    request.setAttribute("totalPrice", totalPrice);
+                    request.setAttribute("dateDiff", dateDiff);
+                    request.setAttribute("checkInDate", checkInDate);
+                    request.setAttribute("checkOutDate", checkOutDate);
+                    request.setAttribute("listRoomType", listRt);
+                    RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
+                    dispatch.forward(request, response);
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
