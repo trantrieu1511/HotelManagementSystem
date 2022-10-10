@@ -358,4 +358,26 @@ public class DAOCustomer extends DBConnect {
         }
         return true;
     }
+
+    public boolean addCustomer(Customer customer) {
+        String sql = "insert into Customer(FirstName,LastName,Address,Email,PhoneNumber) "
+                + "values("
+                + "N'" + customer.getFirstName() + "', N'" + customer.getLastName() + "', ?, ?, ?)";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, customer.getAddress());
+            state.setString(2, customer.getEmail());
+            state.setString(3, customer.getPhoneNumber());
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
 }

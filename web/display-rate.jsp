@@ -87,6 +87,7 @@
                 border: transparent;
                 border-radius: 3px;
                 box-shadow: 0 1px 8px 0 rgba(0,0,0,0.12),0 2px 3px -1px rgba(0,0,0,0.2);
+                margin-top: 3rem;
             }
             #rate-table{
                 width: 1000px; 
@@ -155,8 +156,12 @@
             }
             #total-price-fake-table{
                 font-size: x-large;
+                font-weight: 500;
             }
-
+            .room-data ul{
+                list-style: none;
+                padding-left: 0px;
+            }
             @media only screen and (max-width: 350px) {
                 .date-range{
                     width: 290px;
@@ -347,7 +352,7 @@
                 const collection = document.getElementsByClassName("amount");
                 for (i = 1; i < collection.length + 1; i++) {
                     x = document.createElement("INPUT");
-                    x.setAttribute("type", "text");
+                    x.setAttribute("type", "hidden");
                     x.setAttribute("id", "num" + i);
                     x.setAttribute("name", "RoomTypeID");
 //                    x.setAttribute("value", i);
@@ -498,7 +503,7 @@
                                             <c:if test="${rtd.getRoomTypeID()==list.getRoomTypeID()}">
                                                 <div>
                                                     <!--<li>-->
-                                                    ${rtd.getName()} x ${rtd.getBedAmount()}
+                                                    ${rtd.getBedAmount()} x ${rtd.getName()}
                                                     <!--</li>-->
                                                 </div>
                                             </c:if>
@@ -670,8 +675,7 @@
                                             </div>
                                             <c:forEach items="${listRoomTypeDetail}" var="rtd">
                                                 <c:if test="${rt.getRoomTypeID()==rtd.getRoomTypeID()}">
-                                                    <ul style="margin-bottom: 0%;
-                                                        padding-left: 20px;">
+                                                    <ul style="margin-bottom: 0%;">
                                                         <li>
                                                             ${rtd.getName()} x ${rtd.getBedAmount()}
                                                         </li>

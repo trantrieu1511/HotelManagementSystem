@@ -9,7 +9,7 @@ package Entity;
  *
  * @author DELL
  */
-public class BookDetail {
+public class BookDetail extends Booking {
 
     int BD_ID, BookID, RoomID;
     String CheckIn, CheckOut;
@@ -25,6 +25,14 @@ public class BookDetail {
         this.CheckIn = CheckIn;
         this.CheckOut = CheckOut;
         this.Amount = Amount;
+    }
+
+    //add BookDetail constructor
+    public BookDetail(int BookID, int RoomID, String CheckIn, String CheckOut) {
+        this.BookID = BookID;
+        this.RoomID = RoomID;
+        this.CheckIn = CheckIn;
+        this.CheckOut = CheckOut;
     }
 
     public int getBD_ID() {

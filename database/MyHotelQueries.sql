@@ -29,6 +29,11 @@ where Id = '1'
 
 delete from Customer where Id = '2'
 
+--get latest Customer by their email
+select top 1 * from Customer
+where Email = 'nguyenvana@gmail.com'
+order by CusID desc
+
 --BedType Queries
 select * from BedType
 
@@ -84,7 +89,11 @@ select * from Booking
 update Booking
 set 
 PaymentStatus = 1
-where BookID = 1
+where BookID = 3
+
+--select lastest booking by CusID
+select top 1 * from Booking where CusID = 'CUS00001'
+order by BookID desc
 
 --BookDetail Queries
 select * from BookDetail
@@ -113,7 +122,7 @@ PaymentStatus = 1 or PaymentStatus is null
 --and r.RoomTypeID = 1
 --and rt.Adult >= 2 and rt.Children >= 2
 
-select top 3 b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
+select distinct top 3 b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
 r.[Name] as RoomName, r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, rt.Price,
 rt.Img, rt.[Description], rt.Adult, rt.Children
 from Booking b full outer join BookDetail bd
@@ -121,8 +130,25 @@ on b.BookID = bd.BookID full outer join Room r
 on bd.RoomID = r.RoomID full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
 where 
-(select MAX(CheckOut) from BookDetail) <= '2022-09-29' or 
-PaymentStatus = 1 or PaymentStatus is null and
+(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and 
+b.PaymentStatus = 1 and
+rt.RoomTypeID = 1 or 
+b.PaymentStatus is null and
+rt.RoomTypeID = 1
+order by r.RoomID asc
+
+select distinct top 3 r.RoomID, r.[Name] as RoomName, 
+r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, 
+rt.Adult, rt.Children, rt.Price
+from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID full outer join Room r
+on bd.RoomID = r.RoomID full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID 
+where 
+(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and
+b.PaymentStatus = 1 and
+rt.RoomTypeID = 1 or 
+b.PaymentStatus is null and
 rt.RoomTypeID = 1
 order by r.RoomID asc
 

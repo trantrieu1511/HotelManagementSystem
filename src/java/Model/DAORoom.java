@@ -26,16 +26,18 @@ public class DAORoom extends DBConnect {
     ResultSet rs = null;
 
     public List<Room> listAvailableRooms(String roomTypeID, String amount) {
-        String sql = "select top " + amount + " b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,\n"
-                + "r.[Name] as RoomName, r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, rt.Price,\n"
-                + "rt.Img, rt.[Description], rt.Adult, rt.Children\n"
+        String sql = "select distinct top " + amount + " r.RoomID, r.[Name] as RoomName, \n"
+                + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
+                + "rt.Adult, rt.Children, rt.Price\n"
                 + "from Booking b full outer join BookDetail bd\n"
                 + "on b.BookID = bd.BookID full outer join Room r\n"
                 + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
                 + "where \n"
-                + "(select MAX(CheckOut) from BookDetail) <= '2022-09-29' and \n"
-                + "PaymentStatus = 1 or PaymentStatus is null and\n"
+                + "(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and\n"
+                + "b.PaymentStatus = 1 and\n"
+                + "rt.RoomTypeID = " + roomTypeID + " or \n"
+                + "b.PaymentStatus is null and\n"
                 + "rt.RoomTypeID = " + roomTypeID + "\n"
                 + "order by r.RoomID asc";
         List<Room> list = new ArrayList<>();
@@ -52,7 +54,8 @@ public class DAORoom extends DBConnect {
                         rs.getInt("RoomTypeID"),
                         rs.getString("RoomTypeName"),
                         rs.getInt("Adult"),
-                        rs.getInt("Children")
+                        rs.getInt("Children"),
+                        rs.getDouble("Price")
                 ));
             }
         } catch (SQLException ex) {
@@ -81,8 +84,13 @@ public class DAORoom extends DBConnect {
         }
 
         listRooms.forEach((room) -> {
-            System.out.println(room);
-        });
+            System.out.println(room.getRoomID() + " " + room.getRoomName() + " " + room.getFloor() + " " + room.getView()
+                    + " " + room.getRoomTypeID() + " " + room.getName() + " " + room.getAdult() + " " + room.getChildren()
+                    + " " + room.getPrice()
+            );
+//            System.out.println(room);
+        }
+        );
 //        list.forEach((room) -> {
 //            System.out.println(room);
 //        });

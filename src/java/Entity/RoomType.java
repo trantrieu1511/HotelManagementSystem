@@ -40,11 +40,12 @@ public class RoomType {
     }
 
     //constructor for get available rooms
-    public RoomType(int RoomTypeID, String Name, int Adult, int Children) {
+    public RoomType(int RoomTypeID, String Name, int Adult, int Children, double Price) {
         this.RoomTypeID = RoomTypeID;
         this.Name = Name;
         this.Adult = Adult;
         this.Children = Children;
+        this.Price = Price;
     }
 
     public int getRoomTypeID() {

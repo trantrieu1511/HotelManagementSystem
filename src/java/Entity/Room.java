@@ -27,8 +27,8 @@ public class Room extends RoomType {
         this.View = View;
     }
 
-    public Room(int RoomID, String RoomName, int Floor, String View, int RoomTypeID, String RoomTypeName, int Adult, int Children) {
-        super(RoomTypeID, RoomTypeName, Adult, Children);
+    public Room(int RoomID, String RoomName, int Floor, String View, int RoomTypeID, String RoomTypeName, int Adult, int Children, double Price) {
+        super(RoomTypeID, RoomTypeName, Adult, Children, Price);
         this.RoomID = RoomID;
         this.Name = RoomName;
         this.Floor = Floor;
@@ -69,20 +69,22 @@ public class Room extends RoomType {
 
     @Override
     public int getRoomTypeID() {
-        return RoomTypeID;
+        return super.RoomTypeID;
     }
 
     @Override
     public void setRoomTypeID(int RoomTypeID) {
-        this.RoomTypeID = RoomTypeID;
+        super.RoomTypeID = RoomTypeID;
     }
 
-    public String getRoomTypeName() {
-        return Name;
+    @Override
+    public String getName() {
+        return super.Name;
     }
 
-    public void setRoomTypeName(String Name) {
-        this.Name = Name;
+    @Override
+    public void setName(String Name) {
+        super.Name = Name;
     }
 
     @Override
@@ -107,7 +109,7 @@ public class Room extends RoomType {
 
     @Override
     public String toString() {
-        return "Room{" + "RoomID=" + RoomID + ", Name=" + Name + ", RoomTypeID=" + RoomTypeID + ", Floor=" + Floor + ", View=" + View + '}' + super.toString();
+        return "Room{" + "RoomID=" + RoomID + ", Name=" + Name + ", RoomTypeID=" + RoomTypeID + ", Floor=" + Floor + ", View=" + View + '}' + " " + super.toString();
     }
 
 }
