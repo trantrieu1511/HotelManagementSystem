@@ -498,8 +498,22 @@
                                         Save time! Sign in to book with your saved details.
                                     </div>
                                     <div>
-                                        <a class="btn btn-primary" href="#btn-sign-in"
-                                           onclick="document.getElementById('btn-sign-in').style.backgroundColor = 'cadetblue'">
+                                        <!--                                        <a class="btn btn-primary" href="#"
+                                                                                   onclick="document.getElementById('btn-sign-in').style.backgroundColor = 'cadetblue'">
+                                                                                    Sign in
+                                                                                </a>-->
+                                        <a class="btn btn-primary" href="#"
+                                           data-toggle="modal" data-target="#sign-in"
+                                           <c:forEach begin="0" end="${fn:length(roomTypeID)-1}" var="i">
+                                               data-roomTypeID${i+1}="${roomTypeID[i]}"
+                                           </c:forEach>
+                                           <c:forEach begin="0" end="${fn:length(amount)-1}" var="i">
+                                               data-amount${i+1}="${amount[i]}"
+                                           </c:forEach>
+                                           data="${totalPrice} ${dateDiff}"
+                                           data-checkInDate="${checkInDate}"
+                                           data-checkOutDate="${checkOutDate}"
+                                           >
                                             Sign in
                                         </a>
                                     </div>

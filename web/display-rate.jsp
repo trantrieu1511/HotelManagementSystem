@@ -352,9 +352,9 @@
                 const collection = document.getElementsByClassName("amount");
                 for (i = 1; i < collection.length + 1; i++) {
                     x = document.createElement("INPUT");
-                    x.setAttribute("type", "hidden");
+                    x.setAttribute("type", "text");
                     x.setAttribute("id", "num" + i);
-                    x.setAttribute("name", "RoomTypeID");
+                    x.setAttribute("name", "roomTypeID");
 //                    x.setAttribute("value", i);
                     document.getElementById('roomTypeForm').append(x);
                     collection[i - 1].value = "";

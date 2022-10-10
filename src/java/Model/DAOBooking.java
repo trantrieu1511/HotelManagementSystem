@@ -31,8 +31,10 @@ public class DAOBooking extends DBConnect {
                 + "on b.BookID = bd.BookID full outer join Room r\n"
                 + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
-                + "where (select MAX(CheckOut) from BookDetail) <= ? \n"
-                + "or PaymentStatus = 1 or PaymentStatus is null\n"
+                + "where \n"
+                + "(select MAX(CheckOut) from BookDetail) <= ? and\n"
+                + "b.PaymentStatus = 1 or \n"
+                + "b.PaymentStatus is null \n"
                 + "group by rt.RoomTypeID";
         List<RoomType> list = new ArrayList<>();
         try {

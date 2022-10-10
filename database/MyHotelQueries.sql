@@ -157,8 +157,10 @@ select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer 
 on b.BookID = bd.BookID full outer join Room r
 on bd.RoomID = r.RoomID full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
-where PaymentStatus = 1 or PaymentStatus is null
-and r.RoomTypeID = 1
+where 
+(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and
+b.PaymentStatus = 1 or 
+b.PaymentStatus is null 
 group by rt.RoomTypeID
 
 select * from Booking b full outer join BookDetail bd

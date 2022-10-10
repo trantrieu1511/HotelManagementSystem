@@ -38,6 +38,15 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ControllerBooking", urlPatterns = {"/booking"})
 public class ControllerBooking extends HttpServlet {
 
+    List<Room> listRooms = new ArrayList<>();
+
+    DAOCustomer daoCus = new DAOCustomer();
+    DAORoom daoR = new DAORoom();
+    DAORoomType daoRt = new DAORoomType();
+    DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
+    DAOBooking daoB = new DAOBooking();
+    DAOBookingDetail daoBd = new DAOBookingDetail();
+
     boolean statusAdd = false;
     String checkInDate_date = "";
     String checkInDate = "";
@@ -68,18 +77,10 @@ public class ControllerBooking extends HttpServlet {
             String service = request.getParameter("do");
             HttpSession session = request.getSession();
 
-            List<Room> listRooms = new ArrayList<>();
-
+//            List<Room> listRooms = new ArrayList<>();
             RoomType rt = new RoomType();
             RoomTypeDetail rtd = new RoomTypeDetail();
             Customer cus = new Customer();
-
-            DAOCustomer daoCus = new DAOCustomer();
-            DAORoom daoR = new DAORoom();
-            DAORoomType daoRt = new DAORoomType();
-            DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
-            DAOBooking daoB = new DAOBooking();
-            DAOBookingDetail daoBd = new DAOBookingDetail();
 
             if (service.equals("checkAvailabiltyOfRoom")) {
                 String action = request.getParameter("action");
@@ -94,7 +95,7 @@ public class ControllerBooking extends HttpServlet {
 //                    out.print(checkInDate);
 //                    out.print("<br>");
 //                    out.print(checkOutDate);
-                    checkAvailabiltyOfRoom(daoRt, daoRtd, daoB, checkInDate, checkOutDate, request, response);
+                    checkAvailabiltyOfRoom(request, response);
                 } else {
                     String daterange = request.getParameter("daterange");
                     String split[] = daterange.split(" - ");
@@ -105,35 +106,11 @@ public class ControllerBooking extends HttpServlet {
                     out.print(checkInDate);
                     out.print("<br>");
                     out.print(checkOutDate);
-                    checkAvailabiltyOfRoom(daoRt, daoRtd, daoB, checkInDate, checkOutDate, request, response);
+                    checkAvailabiltyOfRoom(request, response);
                 }
             }
             if (service.equals("proceedBooking")) {
-                listRt = daoRt.listRoomType();
-                roomTypeID = request.getParameterValues("RoomTypeID");
-                amount = request.getParameterValues("amount");
-                dateDiff = request.getParameter("dateDiff");
-                totalPrice = request.getParameter("totalPrice");
-                checkInDate = request.getParameter("checkInDate");
-                checkOutDate = request.getParameter("checkOutDate");
-
-                //get available Rooms
-                for (int i = 0; i < roomTypeID.length; i++) {
-                    if (!"".equals(roomTypeID[i])) {
-                        daoR.listAvailableRooms(roomTypeID[i], amount[i]).forEach((Room room) -> {
-                            listRooms.add(room);
-                        });
-                    }
-                }
-
-                request.setAttribute("roomTypeID", roomTypeID);
-                request.setAttribute("amount", amount);
-                request.setAttribute("totalPrice", totalPrice);
-                request.setAttribute("dateDiff", dateDiff);
-                request.setAttribute("checkInDate", checkInDate);
-                request.setAttribute("checkOutDate", checkOutDate);
-                request.setAttribute("listRoomType", listRt);
-                request.setAttribute("listRoom", listRooms);
+                getCurrentBookingDetail(request, response);
                 RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
                 dispatch.forward(request, response);
             }
@@ -161,9 +138,9 @@ public class ControllerBooking extends HttpServlet {
                             statusAdd = daoBd.addBookingDetail(new BookDetail(daoB.getLatestBookIDByCusID(cus.getCusID()),
                                     Integer.parseInt(roomID[i]), checkInDate, checkOutDate), dateDiff);
                             if (statusAdd) {
-                                System.out.println("Add BookDetal Successfully x " + i + 1);
+                                System.out.println("Add BookDetal Successfully x " + (i + 1));
                             } else {
-                                System.out.println("Add BookDetail Failed x " + i + 1);
+                                System.out.println("Add BookDetail Failed x " + (i + 1));
                             }
                         }
                     } else {//Add Failed
@@ -221,30 +198,7 @@ public class ControllerBooking extends HttpServlet {
                     dispatch.forward(request, response);
                 } else {
                     session.setAttribute("Customer", cus);
-                    listRt = daoRt.listRoomType();
-                    roomTypeID = request.getParameterValues("roomTypeID");
-                    amount = request.getParameterValues("amount");
-                    dateDiff = request.getParameter("dateDiff");
-                    totalPrice = request.getParameter("totalPrice");
-                    checkInDate = request.getParameter("checkInDate");
-                    checkOutDate = request.getParameter("checkOutDate");
-
-                    //get available Rooms
-                    for (int i = 0; i < roomTypeID.length; i++) {
-                        if (!"".equals(roomTypeID[i])) {
-                            daoR.listAvailableRooms(roomTypeID[i], amount[i]).forEach((Room room) -> {
-                                listRooms.add(room);
-                            });
-                        }
-                    }
-                    request.setAttribute("roomTypeID", roomTypeID);
-                    request.setAttribute("amount", amount);
-                    request.setAttribute("totalPrice", totalPrice);
-                    request.setAttribute("dateDiff", dateDiff);
-                    request.setAttribute("checkInDate", checkInDate);
-                    request.setAttribute("checkOutDate", checkOutDate);
-                    request.setAttribute("listRoomType", listRt);
-                    request.setAttribute("listRoom", listRooms);
+                    getCurrentBookingDetail(request, response);
                     RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
                     dispatch.forward(request, response);
                 }
@@ -257,30 +211,7 @@ public class ControllerBooking extends HttpServlet {
                         session.removeAttribute(key);
                     }
                 }
-                listRt = daoRt.listRoomType();
-                roomTypeID = request.getParameterValues("roomTypeID");
-                amount = request.getParameterValues("amount");
-                dateDiff = request.getParameter("dateDiff");
-                totalPrice = request.getParameter("totalPrice");
-                checkInDate = request.getParameter("checkInDate");
-                checkOutDate = request.getParameter("checkOutDate");
-
-                //get available Rooms
-                for (int i = 0; i < roomTypeID.length; i++) {
-                    if (!"".equals(roomTypeID[i])) {
-                        daoR.listAvailableRooms(roomTypeID[i], amount[i]).forEach((Room room) -> {
-                            listRooms.add(room);
-                        });
-                    }
-                }
-                request.setAttribute("roomTypeID", roomTypeID);
-                request.setAttribute("amount", amount);
-                request.setAttribute("totalPrice", totalPrice);
-                request.setAttribute("dateDiff", dateDiff);
-                request.setAttribute("checkInDate", checkInDate);
-                request.setAttribute("checkOutDate", checkOutDate);
-                request.setAttribute("listRoomType", listRt);
-                request.setAttribute("listRoom", listRooms);
+                getCurrentBookingDetail(request, response);
                 RequestDispatcher dispatch = request.getRequestDispatcher("booking.jsp");
                 dispatch.forward(request, response);
             }
@@ -341,7 +272,7 @@ public class ControllerBooking extends HttpServlet {
     int count_unavailableRoomType = 0;
     List<RoomType> listRt = new ArrayList<>();
 
-    public void checkAvailabiltyOfRoom(DAORoomType daoRt, DAORoomTypeDetail daoRtd, DAOBooking daoB, String checkInDate, String checkOutDate, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
+    public void checkAvailabiltyOfRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         adult = Integer.parseInt(request.getParameter("adult"));
         children = Integer.parseInt(request.getParameter("children"));
         room = Integer.parseInt(request.getParameter("room"));
@@ -414,5 +345,34 @@ public class ControllerBooking extends HttpServlet {
         request.setAttribute("dateDiff", Difference_In_Days);
         RequestDispatcher dispatch = request.getRequestDispatcher("display-rate.jsp");
         dispatch.forward(request, response);
+    }
+
+    private void getCurrentBookingDetail(HttpServletRequest request, HttpServletResponse response) {
+        listRooms.clear();
+        listRt.clear();
+        listRt = daoRt.listRoomType();
+        roomTypeID = request.getParameterValues("roomTypeID");
+        amount = request.getParameterValues("amount");
+        dateDiff = request.getParameter("dateDiff");
+        totalPrice = request.getParameter("totalPrice");
+        checkInDate = request.getParameter("checkInDate");
+        checkOutDate = request.getParameter("checkOutDate");
+
+        //get available Rooms
+        for (int i = 0; i < roomTypeID.length; i++) {
+            if (!"".equals(roomTypeID[i])) {
+                daoR.listAvailableRooms(roomTypeID[i], amount[i]).forEach((Room room) -> {
+                    listRooms.add(room);
+                });
+            }
+        }
+        request.setAttribute("roomTypeID", roomTypeID);
+        request.setAttribute("amount", amount);
+        request.setAttribute("totalPrice", totalPrice);
+        request.setAttribute("dateDiff", dateDiff);
+        request.setAttribute("checkInDate", checkInDate);
+        request.setAttribute("checkOutDate", checkOutDate);
+        request.setAttribute("listRoomType", listRt);
+        request.setAttribute("listRoom", listRooms);
     }
 }
