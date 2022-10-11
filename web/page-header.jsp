@@ -51,8 +51,9 @@
                             <c:if test="${sessionScope.Customer!=null}">
                             <li class="nav-item dropdown has-arrow main-drop">
                                 <a href="profile.jsp" class="dropdown-toggle nav-link" data-toggle="dropdown">${sessionScope.Customer.getLastName()} ${sessionScope.Customer.getFirstName()}</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="customer">Manage Account</a>
+                                <div class="dropdown-menu fadeIn">
+                                    <a class="dropdown-item" href="customer">Manage account</a>
+                                    <a class="dropdown-item" href="booking">Your booking</a>
                                     <!--<a class="dropdown-item" href="settings.html">Settings</a>-->
                                     <a class="dropdown-item" href="authentication?do=logout">Logout</a>
                                 </div>

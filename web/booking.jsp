@@ -1462,7 +1462,7 @@
                                 </div>
                             </div>
                             <div style="text-align: right; font-weight: 500; margin-bottom: 10px;">
-                                Pressing this button will finish your booking details:
+                                Pressing the button on the right will finish your booking details: 
                             </div>
                             <div style="text-align: right; margin-bottom: 3rem;">
                                 <a class="btn btn-light" data-toggle="modal" data-target="#check-booking" style="padding-left: 20px; padding-right: 20px; border-right: 0px;

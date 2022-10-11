@@ -130,50 +130,56 @@ public class ControllerBooking extends HttpServlet {
 //                for (int i = 0; i < roomID.length; i++) {
 //                    out.print(roomID[i] + " ");
 //                }
-                if (cus != null) {//Customer has signed in
-                    statusAdd = daoB.addBooking(cus.getCusID(), Remarks);
-                    if (statusAdd) {//Add succeeded
-                        System.out.println("Add Booking Successfully!");
-                        for (int i = 0; i < roomID.length; i++) {
-                            statusAdd = daoBd.addBookingDetail(new BookDetail(daoB.getLatestBookIDByCusID(cus.getCusID()),
-                                    Integer.parseInt(roomID[i]), checkInDate, checkOutDate), dateDiff);
-                            if (statusAdd) {
-                                System.out.println("Add BookDetal Successfully x " + (i + 1));
-                            } else {
-                                System.out.println("Add BookDetail Failed x " + (i + 1));
-                            }
-                        }
-                    } else {//Add Failed
-                        System.out.println("Add Booking Failed!");
-                    }
-                } else { //Customer has not yet signed in
-                    statusAdd = daoCus.addCustomer(new Customer(
-                            FirstName, LastName, Country, Email,
-                            Phone, ""));
-                    if (statusAdd) {//Add succeeded
-                        System.out.println("Add Customer Successfully!");
-                        cusID = daoB.getLatestCusIDByEmail(Email);
-                        statusAdd = daoB.addBooking(cusID, Remarks);
-                        if (statusAdd) {//Add succeeded
-                            System.out.println("Add Booking Successfully!");
-                            for (int i = 0; i < roomID.length; i++) {
-                                statusAdd = daoBd.addBookingDetail(new BookDetail(daoB.getLatestBookIDByCusID(cusID),
-                                        Integer.parseInt(roomID[i]), checkInDate, checkOutDate), dateDiff);
-                                if (statusAdd) {
-                                    System.out.println("Add BookDetal Successfully x " + (i + 1));
-                                } else {
-                                    System.out.println("Add BookDetail Failed x " + (i + 1));
-                                }
-                            }
-                        } else {//Add Failed
-                            System.out.println("Add Booking Failed!");
-                        }
-                    } else {//Add Failed
-                        System.out.println("Add Customer Failed!");
-                    }
-                }
+//                if (cus != null) {//Customer has signed in
+//                    statusAdd = daoB.addBooking(cus.getCusID(), Remarks);
+//                    if (statusAdd) {//Add succeeded
+//                        System.out.println("Add Booking Successfully!");
+//                        for (int i = 0; i < roomID.length; i++) {
+//                            statusAdd = daoBd.addBookingDetail(new BookDetail(daoB.getLatestBookIDByCusID(cus.getCusID()),
+//                                    Integer.parseInt(roomID[i]), checkInDate, checkOutDate), dateDiff);
+//                            if (statusAdd) {
+//                                System.out.println("Add BookDetal Successfully x " + (i + 1));
+//                                response.sendRedirect("booking-confirmed.jsp");
+//                            } else {
+//                                System.out.println("Add BookDetail Failed x " + (i + 1));
+//                                response.sendRedirect("error404.jsp");
+//                            }
+//                        }
+//                    } else {//Add Failed
+//                        System.out.println("Add Booking Failed!");
+//                    }
+//                } else { //Customer has not yet signed in
+//                    statusAdd = daoCus.addCustomer(new Customer(
+//                            FirstName, LastName, Country, Email,
+//                            Phone, ""));
+//                    if (statusAdd) {//Add succeeded
+//                        System.out.println("Add Customer Successfully!");
+//                        cusID = daoB.getLatestCusIDByEmail(Email);
+//                        statusAdd = daoB.addBooking(cusID, Remarks);
+//                        if (statusAdd) {//Add succeeded
+//                            System.out.println("Add Booking Successfully!");
+//                            for (int i = 0; i < roomID.length; i++) {
+//                                statusAdd = daoBd.addBookingDetail(new BookDetail(daoB.getLatestBookIDByCusID(cusID),
+//                                        Integer.parseInt(roomID[i]), checkInDate, checkOutDate), dateDiff);
+//                                if (statusAdd) {
+//                                    System.out.println("Add BookDetal Successfully x " + (i + 1));
+//                                    response.sendRedirect("booking-confirmed.jsp");
+//                                } else {
+//                                    System.out.println("Add BookDetail Failed x " + (i + 1));
+//                                    response.sendRedirect("error404.jsp");
+//                                }
+//                            }
+//                        } else {//Add Failed
+//                            System.out.println("Add Booking Failed!");
+//                        }
+//                    } else {//Add Failed
+//                        System.out.println("Add Customer Failed!");
+//                    }
+//                }
+//                response.sendRedirect("booking-confirmed.jsp");
+                RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed.jsp");
+                dispatch.forward(request, response);
             }
-
             if (service.equals("customerLogin")) {
                 String email = "";
                 String phone = "";
@@ -276,6 +282,7 @@ public class ControllerBooking extends HttpServlet {
         adult = Integer.parseInt(request.getParameter("adult"));
         children = Integer.parseInt(request.getParameter("children"));
         room = Integer.parseInt(request.getParameter("room"));
+        listRt.clear();
         listRt = daoRt.listRoomType();
         List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
         List<RoomType> listAvailableRooms = daoB.listAvailableRoom(checkInDate);
