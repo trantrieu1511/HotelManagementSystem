@@ -264,6 +264,7 @@ public class ControllerBooking extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
@@ -277,6 +278,8 @@ public class ControllerBooking extends HttpServlet {
     int room = 0;
     int count_unavailableRoomType = 0;
     List<RoomType> listRt = new ArrayList<>();
+    List<RoomTypeDetail> listRtd = new ArrayList<>();
+    List<RoomType> listAvailableRooms = new ArrayList<>();
 
     public void checkAvailabiltyOfRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         adult = Integer.parseInt(request.getParameter("adult"));
@@ -284,8 +287,10 @@ public class ControllerBooking extends HttpServlet {
         room = Integer.parseInt(request.getParameter("room"));
         listRt.clear();
         listRt = daoRt.listRoomType();
-        List<RoomTypeDetail> listRtd = daoRtd.listRoomTypeDetail();
-        List<RoomType> listAvailableRooms = daoB.listAvailableRoom(checkInDate);
+        listRtd.clear();
+        listRtd = daoRtd.listRoomTypeDetail();
+        listAvailableRooms.clear();
+        listAvailableRooms = daoB.listAvailableRoom(checkInDate);
 
         //recommend rooms
         listRecommendRooms.clear();

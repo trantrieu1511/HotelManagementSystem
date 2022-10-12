@@ -13,16 +13,17 @@ public class Booking {
 
     int BookID;
     String CusID, BookDate;
-    boolean PaymentStatus;
+    boolean PaymentStatus, isCancelled;
 
     public Booking() {
     }
 
-    public Booking(int BookID, String CusID, String BookDate, boolean PaymentStatus) {
+    public Booking(int BookID, String CusID, String BookDate, boolean PaymentStatus, boolean isCancelled) {
         this.BookID = BookID;
         this.CusID = CusID;
         this.BookDate = BookDate;
         this.PaymentStatus = PaymentStatus;
+        this.isCancelled = isCancelled;
     }
 
     public int getBookID() {
@@ -57,9 +58,17 @@ public class Booking {
         this.PaymentStatus = PaymentStatus;
     }
 
+    public boolean isIsCancelled() {
+        return isCancelled;
+    }
+
+    public void setIsCancelled(boolean isCancelled) {
+        this.isCancelled = isCancelled;
+    }
+
     @Override
     public String toString() {
-        return "Booking{" + "BookID=" + BookID + ", CusID=" + CusID + ", BookDate=" + BookDate + ", PaymentStatus=" + PaymentStatus + '}';
+        return "Booking{" + "BookID=" + BookID + ", CusID=" + CusID + ", BookDate=" + BookDate + ", PaymentStatus=" + PaymentStatus + ", isCancelled=" + isCancelled + '}';
     }
 
 }

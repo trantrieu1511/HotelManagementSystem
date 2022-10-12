@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Booking Info Page</title>
+        <title>Booking Confirmed Page</title>
         <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
         <!--  All snippets are MIT license http://bootdey.com/license -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -207,6 +207,9 @@
             /*            .card{
                             border-radius: 0px;
                         }*/
+            .svg-checkmark{
+                fill: green;
+            }
         </style>
         <script type="text/javascript">
 
@@ -221,18 +224,18 @@
                             <div class="row">
                                 <div class="col-lg-8">
                                     <h6 style="margin-bottom: 15px">Thanks someone</h6>
-                                <h5 style="margin-bottom: 15px">Your booking at our Hotel is confirmed</h5>
-                                <div style="margin-bottom: 15px">
+                                    <h5 style="margin-bottom: 15px">Your booking at our Hotel is confirmed</h5>
+                                    <div style="margin-bottom: 15px; margin-left: 5px;">
                                     <%--<c:if test="${Date().getTime()>0}">--%>
                                     <!--ok?-->
                                     <%--</c:if>--%>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
-<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 11.386l1.17-1.206c1.951.522 5.313 1.731 8.33 3.597 3.175-4.177 9.582-9.398 13.456-11.777l1.044 1.073-14 18.927-10-10.614z"/></svg>-->
+                                    <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
+                                    <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 11.386l1.17-1.206c1.951.522 5.313 1.731 8.33 3.597 3.175-4.177 9.582-9.398 13.456-11.777l1.044 1.073-14 18.927-10-10.614z"/></svg>-->
                                     <!--<svg class="bk-icon -streamline-checkmark_selected" fill="#008009" height="18" role="presentation" width="18" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path d="M56.62 93.54a4 4 0 0 1-2.83-1.18L28.4 67a4 4 0 1 1 5.65-5.65l22.13 22.1 33-44a4 4 0 1 1 6.4 4.8L59.82 91.94a4.06 4.06 0 0 1-2.92 1.59zM128 64c0-35.346-28.654-64-64-64C28.654 0 0 28.654 0 64c0 35.346 28.654 64 64 64 35.33-.039 63.961-28.67 64-64zm-8 0c0 30.928-25.072 56-56 56S8 94.928 8 64 33.072 8 64 8c30.914.033 55.967 25.086 56 56z"></path></svg>-->
                                     <span style="margin-left: 10px;">You can now modify or cancel your booking until check-in</span>
                                 </div>
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
+                                <div style="margin-left: 5px;">
+                                    <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
                                     <!--<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 11.386l1.17-1.206c1.951.522 5.313 1.731 8.33 3.597 3.175-4.177 9.582-9.398 13.456-11.777l1.044 1.073-14 18.927-10-10.614z"/></svg>-->
                                     <!--<svg class="bk-icon -streamline-checkmark_selected" fill="#008009" height="18" role="presentation" width="18" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path d="M56.62 93.54a4 4 0 0 1-2.83-1.18L28.4 67a4 4 0 1 1 5.65-5.65l22.13 22.1 33-44a4 4 0 1 1 6.4 4.8L59.82 91.94a4.06 4.06 0 0 1-2.92 1.59zM128 64c0-35.346-28.654-64-64-64C28.654 0 0 28.654 0 64c0 35.346 28.654 64 64 64 35.33-.039 63.961-28.67 64-64zm-8 0c0 30.928-25.072 56-56 56S8 94.928 8 64 33.072 8 64 8c30.914.033 55.967 25.086 56 56z"></path></svg>-->
                                     <span style="margin-left: 10px;">Your <strong>payment</strong> will be handled by our Hotel. The '<strong>Price</strong>' section below has more details</span>
@@ -441,26 +444,29 @@
                         </div>
                     </div>
                     <div class="col-lg-3" style="padding-left: 3px;">
-                        <div class="card" style="background: transparent; border: 1px solid white; border-radius: 0px; height: 100%;">
+                        <div class="card" style="background: transparent; border: 1px solid white; border-radius: 0px; height: 95.5%;">
                             <div class="card-body">
-                                <h6 style="margin-bottom: 5px;">Is everything correct?</h6>
-                                <small>
-                                    You can always view or change your booking online - no registration required.
-                                </small>
-                                <div style="margin-top: 1rem;">
-                                    <strong>
-                                        <a href="#" style="text-decoration: underline;">
-                                            <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
-                                            Cancel your booking
-                                        </a>
-                                    </strong>
+                                <div style="top: 0;
+                                     position: sticky;">
+                                    <h6 style="margin-bottom: 5px;">Is everything correct?</h6>
+                                    <small>
+                                        You can always view or change your booking online - no registration required.
+                                    </small>
+                                    <div style="margin-top: 1rem;">
+                                        <strong>
+                                            <a href="booking-cancelled.jsp" style="text-decoration: underline;">
+                                                <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
+                                                Cancel your booking
+                                            </a>
+                                        </strong>
+                                    </div>
+                                    <div style="margin-top: 2rem;">
+                                        <button class="btn btn-primary" style="width: 100%;">View booking</button>
+                                    </div>
+                                    <small>
+                                        Tip: You can make changes to this booking at anytime
+                                    </small>
                                 </div>
-                                <div style="margin-top: 2rem;">
-                                    <button class="btn btn-primary" style="width: 100%;">View booking</button>
-                                </div>
-                                <small>
-                                    Tip: You can make changes to this booking at anytime
-                                </small>
                             </div>
                         </div>
                     </div>
