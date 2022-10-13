@@ -578,10 +578,18 @@
 
                         <form class="col-sm-12" id="customerDetailForm" action="booking">
                             <input type="text" name="do" value="finishReserve">
+                            <input type="text" name="adult" value="${adult}">
+                            <input type="text" name="children" value="${children}">
                             <input type="text" name="totalPrice" value="${totalPrice}">
                             <input type="text" name="dateDiff" value="${dateDiff}">
                             <input type="text" name="checkInDate" value="${checkInDate}">
                             <input type="text" name="checkOutDate" value="${checkOutDate}">
+                            <c:forEach items="${roomTypeID}" var="roomTypeID">
+                                <input type="text" name="roomTypeID" value="${roomTypeID}">
+                            </c:forEach>
+                            <c:forEach items="${amount}" var="amount">
+                                <input type="text" name="amount" value="${amount}">
+                            </c:forEach>
                             <div class="card" style="background: #ebf3ff;">
                                 <div class="card-body">
                                     <h4>Enter your details</h4>
@@ -594,6 +602,7 @@
                                                        title="FirstName not contain: 
                                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
                                                        allow uppercase and lowercase letters, max length: 12"
+                                                       onkeydown="event.preventDefault()"
                                                        value="${Customer.getFirstName()}">
                                             </div>
                                         </div>
@@ -619,6 +628,7 @@
                                                        maximum length of parts of email: 
                                                        username: 20, mail server: 12, domain: 12; 
                                                        max length: 46"
+                                                       placeholder="Watch out for typos"
                                                        value="${Customer.getEmail()}">
                                             </div>
                                         </div>

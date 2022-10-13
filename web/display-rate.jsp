@@ -56,7 +56,7 @@
                 /*margin-bottom: 1rem;*/
                 margin-top: 1rem;
             }
-            #adult, #children, #room, #checkInDate, #checkOutDate{
+            #adult, #children, #room, #daterange, #checkOutDate{
                 border-radius: 0px;
                 box-shadow: none;
             }
@@ -257,8 +257,8 @@
                                 );
                     }
                 }
+                var today = new Date(); // The Date object returns today's timestamp
                 $(function () {
-                    var today = new Date(); // The Date object returns today's timestamp
                     today = ((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
                             ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
                             today.getFullYear();
@@ -309,16 +309,17 @@
                     }, function (start, end, label) {
                         console.log('New date range selected: ' + start.format('DD/MM/YYYY') + ' to ' + end.format('DD/MM/YYYY') + ' (predefined range: ' + label + ')');
                     }).on('hide.daterangepicker', function (ev, picker) {
-                        var today;
                         var tomorrow;
                         var startDate = picker.startDate.format('YYYY-MM-DD');
                         var endDate = picker.endDate.format('YYYY-MM-DD');
+                        today = dates.convert(picker.startDate.format('YYYY-MM-DD HH:mm'));
+                        tomorrow = dates.convert(picker.endDate.format('YYYY-MM-DD HH:mm'));
+                        today.setHours(new Date().getHours());
+                        today.setMinutes(new Date().getMinutes());
+                        tomorrow.setHours(12);
+                        tomorrow.setMinutes(00);
                         if (startDate === endDate) {
-                            today = dates.convert(picker.startDate.format('YYYY-MM-DD HH:mm'));
-                            tomorrow = dates.convert(picker.endDate.format('YYYY-MM-DD HH:mm'));
                             tomorrow.setDate(today.getDate() + 1);
-                            tomorrow.setHours(12);
-                            tomorrow.setMinutes(00);
 //                            tomorrow = ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
 //                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
 //                                    tomorrow.getFullYear();
@@ -327,24 +328,13 @@
 //                                    today.getFullYear();
 //                            alert('today: ' + today + ', tommorow: ' + tomorrow);
 
-                            $('input[name="daterange"]').val(((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
-                                    ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
-                                    today.getFullYear() + " " + today.toLocaleString([], {hour: '2-digit', minute: '2-digit'}) + " - "
-                                    + ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
-                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
-                                    tomorrow.getFullYear() + " " + tomorrow.toLocaleString([], {hour: '2-digit', minute: '2-digit'}));
-                        } else {
-                            today = dates.convert(picker.startDate.format('YYYY-MM-DD HH:mm'));
-                            tomorrow = dates.convert(picker.endDate.format('YYYY-MM-DD HH:mm'));
-                            tomorrow.setHours(12);
-                            tomorrow.setMinutes(00);
-                            $('input[name="daterange"]').val(((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
-                                    ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
-                                    today.getFullYear() + " " + today.toLocaleString([], {hour: '2-digit', minute: '2-digit'}) + " - "
-                                    + ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
-                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
-                                    tomorrow.getFullYear() + " " + tomorrow.toLocaleString([], {hour: '2-digit', minute: '2-digit'}));
                         }
+                        $('input[name="daterange"]').val(((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
+                                ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
+                                today.getFullYear() + " " + today.toLocaleString([], {hour: '2-digit', minute: '2-digit'}) + " - "
+                                + ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
+                                ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
+                                tomorrow.getFullYear() + " " + tomorrow.toLocaleString([], {hour: '2-digit', minute: '2-digit'}));
                     });
                 });
 
@@ -554,7 +544,7 @@
                                             <div class="form-group align-self-stretch d-flex align-items-end">
                                                 <div class="wrap align-self-stretch py-3 px-4">
                                                     <!--<label for="checkInDate">Check-in Date</label>-->
-                                                    <input type="text" id="checkInDate" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control date-range" placeholder="Check-in date"
+                                                    <input type="text" id="daterange" name="daterange" required="" onkeydown="event.preventDefault()" class="form-control date-range" placeholder="Check-in date"
                                                            value="${checkInDate==null? "01/01/1990":checkInDate} - ${checkOutDate==null? "01/01/1990":checkOutDate}">
                                                 </div>
                                             </div>
@@ -639,6 +629,8 @@
                 </section>
                 <form id="roomTypeForm" action="booking" method="post">
                     <input type="hidden" name="do" value="proceedBooking">
+                    <input type="hidden" name="adult" value="${adult}">
+                    <input type="hidden" name="children" value="${children}">
                     <!--<input type="hidden" name="RoomTypeID" id="RoomTypeID" value="">-->
                     <input type="hidden" name="dateDiff" value="${dateDiff}">
                     <!--<input type="hidden" name="Name" id="roomTypeName" value="">-->
@@ -709,7 +701,7 @@
                                             <!--<div class="icon"><span class="ion-ios-arrow-down"></span></div>-->
                                             <select name="amount" id="select${rt.getRoomTypeID()}" class="amount" style="width: 80%;" required="" onchange="checkAmount(this.value, ${rt.getRoomTypeID()}, this.value * ${dateDiff*rt.getPrice()});">
                                                 <option value="">0</option>
-                                                <c:forEach items="${listAvailableRooms}" var="list">
+                                                <c:forEach items="${listCountAvailableRooms}" var="list">
                                                     <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
                                                         <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
                                                             <option value="${j}">${j} (VND ${dateDiff*j*rt.getPrice()})</option>
@@ -789,7 +781,7 @@
                                                 <li>
                                                     <label for="amount">Select amount <span class="text-danger">*</span></label>
                                                     <select name="amount" id="amount" class="" style="width: 80%;">
-                <c:forEach items="${listAvailableRooms}" var="list">
+                <c:forEach items="${listCountAvailableRooms}" var="list">
                     <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
                         <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
                             <option value="${j}">${j} (${j*rt.getPrice()})</option>
@@ -817,7 +809,7 @@
                                                 <div class="col-md-3">
                                                     <label for="amount">Select amount <span class="text-danger">*</span></label>
                                                     <select name="amount" id="amount" class="" style="width: 80%;">
-                <c:forEach items="${listAvailableRooms}" var="list">
+                <c:forEach items="${listCountAvailableRooms}" var="list">
                     <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
                         <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
                             <option value="${j}">${j} (${j*rt.getPrice()})</option>

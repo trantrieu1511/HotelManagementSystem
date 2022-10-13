@@ -179,7 +179,7 @@ public class ControllerCustomer extends HttpServlet {
                         session.setAttribute("Customer", cus);
                         request.setAttribute("message", "Account has been successfully deleted!");
                         request.setAttribute("deleteSucceed", true);
-                        RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
+                        RequestDispatcher dispatch = request.getRequestDispatcher("customer-acc-deleted.jsp");
                         dispatch.forward(request, response);
                     } else {
                         cus = daoCus.getCustomerDetails(cus.getId());
@@ -187,7 +187,7 @@ public class ControllerCustomer extends HttpServlet {
                         request.setAttribute("message", "Edit Failed! For dev, please "
                                 + "check the system for specific error!");
                         request.setAttribute("deleteSucceed", false);
-                        RequestDispatcher dispatch = request.getRequestDispatcher("after-delete.jsp");
+                        RequestDispatcher dispatch = request.getRequestDispatcher("customer-acc-deleted.jsp");
                         dispatch.forward(request, response);
                     }
                 }

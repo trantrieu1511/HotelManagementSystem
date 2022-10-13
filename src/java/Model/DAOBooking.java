@@ -26,7 +26,7 @@ public class DAOBooking extends DBConnect {
     Statement st = null;
     ResultSet rs = null;
 
-    public List<RoomType> listAvailableRoom(String checkIn) {
+    public List<RoomType> countAvailableRoomAsList(String checkIn) {
         String sql = "select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer join BookDetail bd\n"
                 + "on b.BookID = bd.BookID full outer join Room r\n"
                 + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"

@@ -223,16 +223,19 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <h6 style="margin-bottom: 15px">Thanks someone</h6>
-                                    <h5 style="margin-bottom: 15px">Your booking at our Hotel is confirmed</h5>
-                                    <div style="margin-bottom: 15px; margin-left: 5px;">
+                                    <h6 style="margin-bottom: 15px">Thanks ${FirstName}</h6>
+                                <h5 style="margin-bottom: 15px">Your booking at our Hotel is confirmed</h5>
+                                <div style="margin-bottom: 15px; margin-left: 5px;">
                                     <%--<c:if test="${Date().getTime()>0}">--%>
                                     <!--ok?-->
                                     <%--</c:if>--%>
                                     <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
                                     <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 11.386l1.17-1.206c1.951.522 5.313 1.731 8.33 3.597 3.175-4.177 9.582-9.398 13.456-11.777l1.044 1.073-14 18.927-10-10.614z"/></svg>-->
                                     <!--<svg class="bk-icon -streamline-checkmark_selected" fill="#008009" height="18" role="presentation" width="18" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path d="M56.62 93.54a4 4 0 0 1-2.83-1.18L28.4 67a4 4 0 1 1 5.65-5.65l22.13 22.1 33-44a4 4 0 1 1 6.4 4.8L59.82 91.94a4.06 4.06 0 0 1-2.92 1.59zM128 64c0-35.346-28.654-64-64-64C28.654 0 0 28.654 0 64c0 35.346 28.654 64 64 64 35.33-.039 63.961-28.67 64-64zm-8 0c0 30.928-25.072 56-56 56S8 94.928 8 64 33.072 8 64 8c30.914.033 55.967 25.086 56 56z"></path></svg>-->
-                                    <span style="margin-left: 10px;">You can now modify or cancel your booking until check-in</span>
+                                    <span style="margin-left: 10px;">You can now 
+                                        <a href="#" 
+                                           onclick="document.getElementById('action-section').style.backgroundColor = 'aliceblue';">modify or cancel</a> 
+                                        your booking until check-in</span>
                                 </div>
                                 <div style="margin-left: 5px;">
                                     <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
@@ -265,7 +268,7 @@
                                         <h6>Booking details</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        1 night, 1 room
+                                        ${dateDiff} night, ${fn.length(listRoom)} room
                                     </div>
                                 </div>
                                 <div class="row">
@@ -273,7 +276,19 @@
                                         <h6>You book for</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        2 adults
+                                        <c:if test="${adult>1}">
+                                            ${adult} adults
+                                        </c:if>
+                                        <c:if test="${adult==1}">
+                                            ${adult} adult
+                                        </c:if>
+                                        ,&nbsp;
+                                        <c:if test="${children>1}">
+                                            ${children} children
+                                        </c:if>
+                                        <c:if test="${children==1}">
+                                            ${children} child
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -281,7 +296,7 @@
                                         <h6>Check-in</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        11/10/2022
+                                        ${checkInDate}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -289,7 +304,7 @@
                                         <h6>Check-out</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        12/10/2022
+                                        ${checkOutDate}
                                     </div>
                                 </div>
                                 <div class="card" style="border: 1px solid #ebf3ff; box-shadow: none; background: aliceblue">
@@ -300,7 +315,7 @@
                                                     Price
                                                 </div>
                                                 <div style="font-size: x-large">
-                                                    VND 1000000
+                                                    VND ${totalPrice}
                                                 </div>
                                             </div>
                                         </div>
@@ -352,7 +367,7 @@
                                         <h6>Address</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        MyHotel address
+                                        abc streets, abc state, abc district, abc country
                                     </div>
                                 </div>
                                 <div class="row">
@@ -364,67 +379,72 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h6>2 x Standard Room</h6>
-                                        <div class="text-secondary">
-                                            This room has a balcony, oven and microwave.
+                                <c:forEach items="${listRoom}" var="list">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h5>${list.getName()}</h5>
+                                            <div class="text-secondary">
+                                                This room has a balcony, oven and microwave.
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h6>Your stay includes:</h6>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6>Your stay includes:</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">
+                                            (non-smoking preference)<br>
+                                            (other services and conveniences/ room features...)
+                                        </div>
                                     </div>
-                                    <div class="col-sm-8 text-secondary">
-                                        (non-smoking preference)<br>
-                                        (other services and conveniences/ room features...)
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h6>Maximum capacity</h6>
-                                    </div>
-                                    <div class="col-sm-8 text-secondary">
-                                        2 guest maximum, of which 2 adults maximum.
-                                        2 children maximum, ...
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6>Maximum capacity</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">
+                                            ${list.getAdult()+list.getChildren()} guest maximum, of which ${list.getAdult()} adults maximum.
+                                            ${list.getChildren()} children maximum, ...
 
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h6>Prepayment</h6>
-                                    </div>
-                                    <div class="col-sm-8 text-secondary">
-                                        No prepayment is needed.
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h6>Cancellation cost</h6>
-                                    </div>
-                                    <div class="col-sm-8 text-secondary">
-                                        <small style="color: green;">Free cancellation</small>
-                                        VND 0
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h6>Children and beds</h6>
-                                    </div>
-                                    <div class="col-sm-8 text-secondary">
-                                        <div style="font-weight: 500;">
-                                            Child policies
                                         </div>
-                                        Children of any age are welcome.<br>
-                                        Children aged 18 years and above are considered adults at this property.
-                                        <div style="font-weight: 500;">
-                                            Cot and extra bed policies
-                                        </div>
-                                        No cots and extra beds are available.
                                     </div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6>Prepayment</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">
+                                            No prepayment is needed.
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6>Cancellation cost</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">
+                                            <small style="color: green;">Free cancellation</small>
+                                            VND 0
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6>Children and beds</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">
+                                            <div style="font-weight: 500; margin-bottom: 10px;">
+                                                Child policies
+                                            </div>
+                                            <div style="margin-bottom: 10px;">
+                                                Children of any age are welcome.<br>
+                                                Children aged 18 years and above are considered adults at this property.
+                                            </div>
+                                            <div style="font-weight: 500; margin-bottom: 10px;">
+                                                Cot and extra bed policies
+                                            </div>
+                                            No cots and extra beds are available.
+                                        </div>
+                                    </div>
+                                    <br>
+                                </c:forEach>
                             </div>
                         </div>
                         <div class="card" style="border-radius: 0px;">
@@ -438,13 +458,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="text-align: right; font-weight: 500;">
+                        <div style="text-align: right; font-weight: 500; margin-bottom: 1rem;">
                             Look forward to your stay!<br>
                             MyHotel.com Manager
                         </div>
                     </div>
                     <div class="col-lg-3" style="padding-left: 3px;">
-                        <div class="card" style="background: transparent; border: 1px solid white; border-radius: 0px; height: 95.5%;">
+                        <div class="card" onmouseover="this.style.backgroundColor = 'transparent';" id="action-section" style="background: transparent; border: 1px solid white; border-radius: 0px; height: 100%;">
                             <div class="card-body">
                                 <div style="top: 0;
                                      position: sticky;">
@@ -461,7 +481,7 @@
                                         </strong>
                                     </div>
                                     <div style="margin-top: 2rem;">
-                                        <button class="btn btn-primary" style="width: 100%;">View booking</button>
+                                        <a class="btn btn-primary" href="customer-booking.jsp" style="width: 100%;">View booking</a>
                                     </div>
                                     <small>
                                         Tip: You can make changes to this booking at anytime

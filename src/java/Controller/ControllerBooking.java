@@ -115,9 +115,7 @@ public class ControllerBooking extends HttpServlet {
                 dispatch.forward(request, response);
             }
             if (service.equals("finishReserve")) {
-                checkInDate = request.getParameter("checkInDate");
-                checkOutDate = request.getParameter("checkOutDate");
-                dateDiff = request.getParameter("dateDiff");
+                getCurrentBookingDetail(request, response);
                 String FirstName = request.getParameter("FirstName");
                 String LastName = request.getParameter("LastName");
                 String Email = request.getParameter("Email");
@@ -177,6 +175,7 @@ public class ControllerBooking extends HttpServlet {
 //                    }
 //                }
 //                response.sendRedirect("booking-confirmed.jsp");
+                request.setAttribute("FirstName", FirstName);
                 RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed.jsp");
                 dispatch.forward(request, response);
             }
@@ -279,7 +278,7 @@ public class ControllerBooking extends HttpServlet {
     int count_unavailableRoomType = 0;
     List<RoomType> listRt = new ArrayList<>();
     List<RoomTypeDetail> listRtd = new ArrayList<>();
-    List<RoomType> listAvailableRooms = new ArrayList<>();
+    List<RoomType> listCountAvailableRooms = new ArrayList<>();
 
     public void checkAvailabiltyOfRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         adult = Integer.parseInt(request.getParameter("adult"));
@@ -289,8 +288,8 @@ public class ControllerBooking extends HttpServlet {
         listRt = daoRt.listRoomType();
         listRtd.clear();
         listRtd = daoRtd.listRoomTypeDetail();
-        listAvailableRooms.clear();
-        listAvailableRooms = daoB.listAvailableRoom(checkInDate);
+        listCountAvailableRooms.clear();
+        listCountAvailableRooms = daoB.countAvailableRoomAsList(checkInDate);
 
         //recommend rooms
         listRecommendRooms.clear();
@@ -301,11 +300,11 @@ public class ControllerBooking extends HttpServlet {
             listRecommendRooms = daoB.listRecommendRoom(listRecommendRooms, 0, adult, children, room);
         }
         listRt.forEach(itemRt -> {
-            listAvailableRooms.forEach(itemAr -> {
+            listCountAvailableRooms.forEach(itemAr -> {
                 if (itemRt.getRoomTypeID() == itemAr.getRoomTypeID()) {
                     if (itemAr.getNoOfAvailableRoom() == 0) {
                         count_unavailableRoomType++;
-                        if (count_unavailableRoomType == listAvailableRooms.size()) {
+                        if (count_unavailableRoomType == listCountAvailableRooms.size()) {
                             notice = "Sorry for the inconvenience, there are currently "
                                     + "no room left in our hotel this time period. "
                                     + "You can comeback again at another time!";
@@ -343,7 +342,7 @@ public class ControllerBooking extends HttpServlet {
 
         request.setAttribute("listRoomType", listRt);
         request.setAttribute("listRoomTypeDetail", listRtd);
-        request.setAttribute("listAvailableRooms", listAvailableRooms);
+        request.setAttribute("listCountAvailableRooms", listCountAvailableRooms);
         request.setAttribute("listRecommendRooms", listRecommendRooms);
         request.setAttribute("adult", adult);
         request.setAttribute("children", children);
@@ -360,6 +359,8 @@ public class ControllerBooking extends HttpServlet {
     }
 
     private void getCurrentBookingDetail(HttpServletRequest request, HttpServletResponse response) {
+        adult = Integer.parseInt(request.getParameter("adult"));
+        children = Integer.parseInt(request.getParameter("children"));
         listRooms.clear();
         listRt.clear();
         listRt = daoRt.listRoomType();
@@ -378,6 +379,8 @@ public class ControllerBooking extends HttpServlet {
                 });
             }
         }
+        request.setAttribute("adult", adult);
+        request.setAttribute("children", children);
         request.setAttribute("roomTypeID", roomTypeID);
         request.setAttribute("amount", amount);
         request.setAttribute("totalPrice", totalPrice);
