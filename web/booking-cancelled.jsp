@@ -148,67 +148,78 @@
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
-        <div class="container" style="margin-top: 2rem">
-            <div class="main-body">
-                <div class="row">
-                    <div class="col-lg-7">
-                        <h3 style="margin-bottom: 15px">Your booking was <span style="color: green;">cancelled for FREE</span></h3>
-                        <div>
-                            <ul style="list-style: none; padding-left: 20px;">
-                                <li class="cancelled-content">
-                                    <svg style="fill: green; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
-                                    <strong>Your booking was successfully cancelled</strong> - you don't have to do anything else!
-                                </li>
-                                <li class="cancelled-content">
-                                    <svg style="fill: green; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
-                                    You may have already been charged for all or parts of your stay by our Hotel - 
-                                    <strong>this is perfectly normal.</strong> Refunds typically take 10-15 business days, 
-                                    though you can also contact us on +84868342491 for more information.
-                                </li>
-                            </ul>
+            <div class="container" style="margin-top: 2rem">
+                <div class="main-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <h3 style="margin-bottom: 15px">Your booking was <span style="color: green;">cancelled for FREE</span></h3>
+                            <div>
+                                <ul style="list-style: none; padding-left: 20px;">
+                                    <li class="cancelled-content">
+                                        <svg style="fill: green; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
+                                        <strong>Your booking was successfully cancelled</strong> - you don't have to do anything else!
+                                    </li>
+                                    <li class="cancelled-content">
+                                        <svg style="fill: green; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M9 22l-10-10.598 2.798-2.859 7.149 7.473 13.144-14.016 2.909 2.806z"/></svg>
+                                        You may have already been charged for all or parts of your stay by our Hotel - 
+                                        <strong>this is perfectly normal.</strong> Refunds typically take 10-15 business days, 
+                                        though you can also contact us on +84868342491 for more information.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div style="margin-top: 2rem;">
+                                <a class="btn btn-primary" href="home">
+                                    Book again
+                                </a>
+                            </div>
                         </div>
-                        <div style="margin-top: 2rem;">
-                            <button class="btn btn-primary">
-                                Book again
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <div style="
-                                     margin-bottom: 10px;
-                                     margin-right: -20px;
-                                     margin-left: -20px;
-                                     margin-top: -20px;
-                                     border-radius: 4px 4px 0px 0px;
-                                     padding: 13px 20px;
-                                     font-weight: bold;
-                                     background: #e6e6e6;
-                                     ">
-                                    Cancellation summary
-                                </div>
-                                <div style="font-size: large; margin-bottom: 10px;">
-                                    MyHotel
-                                </div>
-                                <div class="text-secondary">
-                                    Check-in
-                                </div>
-                                <div>
-                                    11/10/2022
+                        <div class="col-lg-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div style="
+                                         margin-bottom: 10px;
+                                         margin-right: -20px;
+                                         margin-left: -20px;
+                                         margin-top: -20px;
+                                         border-radius: 4px 4px 0px 0px;
+                                         padding: 13px 20px;
+                                         font-weight: bold;
+                                         background: #e6e6e6;
+                                         ">
+                                        Cancellation summary
+                                    </div>
+                                    <div style="font-size: large; margin-bottom: 10px;">
+                                        MyHotel
+                                    </div>
+                                    <div class="text-secondary">
+                                        Check-in
+                                    </div>
+                                    <div>
+                                    ${checkInDate}
                                 </div>
                                 <div class="text-secondary">
                                     Check-out
                                 </div>
                                 <div>
-                                    12/10/2022
+                                    ${checkOutDate}
                                 </div>
                                 <div class="text-secondary">
                                     Stay details
                                 </div>
                                 <div>
-                                    1 night, 1 room
+                                    <c:if test="${dateDiff>1}">
+                                        ${dateDiff} nights
+                                    </c:if>
+                                    <c:if test="${dateDiff==1}">
+                                        ${dateDiff} night
+                                    </c:if>
+                                    <c:if test="${totalRoom==1}">
+                                        , ${totalRoom} room
+                                    </c:if>
+                                    <c:if test="${totalRoom>1}">
+                                        , ${totalRoom} rooms
+                                    </c:if>
                                 </div>
                                 <div style="margin-top: 1rem;
                                      background: #ebf3ff;
@@ -236,7 +247,7 @@
         <style type="text/css">
             body{
                 /*background: #f7f7ff;*/
-                margin-top: 20px;
+                /*margin-top: 20px;*/
             }
             .card {
                 position: relative;
@@ -244,7 +255,7 @@
                 flex-direction: column;
                 min-width: 0;
                 word-wrap: break-word;
-                background-color: #fff;
+                background-color: #fff; 
                 background-clip: border-box;
                 border: 0 solid transparent;
                 border-radius: .25rem;

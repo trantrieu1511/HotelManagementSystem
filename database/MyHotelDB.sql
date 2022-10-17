@@ -65,6 +65,7 @@ CREATE TABLE Room(
 	RoomTypeID int not null,
 	[Floor] int not null,
 	[View] nvarchar(MAX),
+	isAvailable bit default 0 not null,
 	foreign key (RoomTypeID) references RoomType (RoomTypeID)
 )
 
@@ -82,8 +83,8 @@ CREATE TABLE BookDetail(
 	BD_ID int identity(1,1) primary key,
 	BookID int not null,
 	RoomID int not null,
-	CheckIn datetime not null,
-	CheckOut datetime not null,
+	CheckIn date not null,
+	CheckOut date not null,
 	Amount money not null,
 	foreign key (BookID) references Booking (BookID),
 	foreign key (RoomID) references Room (RoomID)

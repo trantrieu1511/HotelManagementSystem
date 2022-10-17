@@ -35,11 +35,12 @@
         <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript">
             window.onload = function () {
-                var today = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":"));
+                var today = new Date();
+//                var today = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":")); // get datetime-local instance
                 var tomorrow = new Date(); // The Date object returns today's timestamp
-                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setDate(today.getDate() + 1);
 //                alert(today);
-                document.getElementById('checkInDate').setAttribute('min', today);
+                document.getElementById('checkInDate').setAttribute('min', today.toISOString().split('T')[0]);
                 document.getElementById('checkOutDate').setAttribute('min', tomorrow.toISOString().split('T')[0]);
             }
             function autoSelectCheckOutDate() {
@@ -152,7 +153,7 @@
                                         <div class="form-group align-self-stretch d-flex align-items-end">
                                             <div class="wrap align-self-stretch py-3 px-4">
                                                 <label for="checkInDate">Check-in Date</label>
-                                                <input type="datetime-local" id="checkInDate" onchange="autoSelectCheckOutDate();" name="checkInDate" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date">
+                                                <input type="date" id="checkInDate" onchange="autoSelectCheckOutDate();" name="checkInDate" required="" onkeydown="event.preventDefault()" class="form-control" placeholder="Check-in date">
                                             </div>
                                         </div>
                                     </div>

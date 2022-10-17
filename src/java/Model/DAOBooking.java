@@ -153,6 +153,30 @@ public class DAOBooking extends DBConnect {
         return 0;
     }
 
+    public boolean cancelBooking(String cusID) {
+        String sql = "update Booking\n"
+                + "set \n"
+                + "isCancelled = 1,\n"
+                + "PaymentStatus = 1\n"
+                + "where \n"
+                + "BookID = (select top 1 BookID from Booking where CusID = ? \n"
+                + "order by BookID desc)";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, cusID);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
     static List<RoomType> listRcmd = new ArrayList<>();
 
     public static void main(String[] args) {

@@ -264,12 +264,12 @@
                             today.getFullYear();
                     $('input[name="daterange"]').daterangepicker({
                         "showDropdowns": true,
-                        timePicker: true,
-                        "timePicker24Hour": true,
+//                        timePicker: true,
+//                        "timePicker24Hour": true,
 //                        startDate: moment().startOf('hour'),
 //                        endDate: moment().startOf('hour').add(32, 'hour'),
                         "locale": {
-                            "format": "DD/MM/YYYY HH:mm",
+                            "format": "DD/MM/YYYY",
                             "separator": " - ",
                             "applyLabel": "Apply",
                             "cancelLabel": "Cancel",
@@ -312,29 +312,17 @@
                         var tomorrow;
                         var startDate = picker.startDate.format('YYYY-MM-DD');
                         var endDate = picker.endDate.format('YYYY-MM-DD');
-                        today = dates.convert(picker.startDate.format('YYYY-MM-DD HH:mm'));
-                        tomorrow = dates.convert(picker.endDate.format('YYYY-MM-DD HH:mm'));
-                        today.setHours(new Date().getHours());
-                        today.setMinutes(new Date().getMinutes());
-                        tomorrow.setHours(12);
-                        tomorrow.setMinutes(00);
+                        today = dates.convert(startDate);
+                        tomorrow = dates.convert(endDate);
                         if (startDate === endDate) {
                             tomorrow.setDate(today.getDate() + 1);
-//                            tomorrow = ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
-//                                    ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
-//                                    tomorrow.getFullYear();
-//                            today = ((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
-//                                    ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
-//                                    today.getFullYear();
-//                            alert('today: ' + today + ', tommorow: ' + tomorrow);
-
                         }
                         $('input[name="daterange"]').val(((today.getDate() > 9) ? today.getDate() : ('0' + today.getDate())) + '/' +
                                 ((today.getMonth() > 8) ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))) + '/' +
-                                today.getFullYear() + " " + today.toLocaleString([], {hour: '2-digit', minute: '2-digit'}) + " - "
+                                today.getFullYear() + " - "
                                 + ((tomorrow.getDate() > 9) ? tomorrow.getDate() : ('0' + tomorrow.getDate())) + '/' +
                                 ((tomorrow.getMonth() > 8) ? (tomorrow.getMonth() + 1) : ('0' + (tomorrow.getMonth() + 1))) + '/' +
-                                tomorrow.getFullYear() + " " + tomorrow.toLocaleString([], {hour: '2-digit', minute: '2-digit'}));
+                                tomorrow.getFullYear());
                     });
                 });
 
@@ -830,7 +818,7 @@
 
         <style type="text/css">
             body{
-                margin-top:20px;
+                /*margin-top:20px;*/
                 color: #1a202c;
                 text-align: left;
                 /*                background-color: #e2e8f0;    */

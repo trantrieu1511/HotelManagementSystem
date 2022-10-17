@@ -88,12 +88,26 @@ where RoomID = 25
 select * from Booking
 update Booking
 set 
-PaymentStatus = 1
-where BookID = 3
+PaymentStatus = 0
+where BookID = 1
 
 --select lastest booking by CusID
 select top 1 * from Booking where CusID = 'CUS00001'
 order by BookID desc
+
+--select Booking with CheckIn, CheckOut
+select b.*, bd.CheckIn, bd.CheckOut from Booking b join BookDetail bd
+on b.BookID = bd.BookID where b.CusID = 'CUS00002'
+
+--cancel booking query
+update Booking
+set 
+isCancelled = 1,
+PaymentStatus = 1
+where 
+--CusID = 'CUS00001' and 
+BookID = (select top 1 BookID from Booking where CusID = 'CUS00001' 
+order by BookID desc)
 
 --BookDetail Queries
 select * from BookDetail
@@ -101,6 +115,9 @@ update BookDetail
 set 
 Amount = 350000
 where BD_ID = 1
+
+--delete from BookDetail where BD_ID = 2
+update BookDetail set BookID = 3 where BD_ID = 1002
 
 --display all RoomType in hotel
 select * from RoomType
@@ -122,7 +139,7 @@ PaymentStatus = 1 or PaymentStatus is null
 --and r.RoomTypeID = 1
 --and rt.Adult >= 2 and rt.Children >= 2
 
-select distinct top 3 b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
+select  b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
 r.[Name] as RoomName, r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, rt.Price,
 rt.Img, rt.[Description], rt.Adult, rt.Children
 from Booking b full outer join BookDetail bd
@@ -130,7 +147,7 @@ on b.BookID = bd.BookID full outer join Room r
 on bd.RoomID = r.RoomID full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
 where 
-(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and 
+bd.CheckOut <= '2022-10-17' and 
 b.PaymentStatus = 1 and
 rt.RoomTypeID = 1 or 
 b.PaymentStatus is null and

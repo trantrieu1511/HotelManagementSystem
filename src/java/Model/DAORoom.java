@@ -25,7 +25,7 @@ public class DAORoom extends DBConnect {
     Statement st = null;
     ResultSet rs = null;
 
-    public List<Room> listAvailableRooms(String roomTypeID, String amount) {
+    public List<Room> listAvailableRooms(String roomTypeID, String amount, String checkInDate) {
         String sql = "select distinct top " + amount + " r.RoomID, r.[Name] as RoomName, \n"
                 + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
                 + "rt.Adult, rt.Children, rt.Price\n"
@@ -34,7 +34,7 @@ public class DAORoom extends DBConnect {
                 + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
                 + "where \n"
-                + "(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and\n"
+                + "bd.CheckOut <= ? and\n"
                 + "b.PaymentStatus = 1 and\n"
                 + "rt.RoomTypeID = " + roomTypeID + " or \n"
                 + "b.PaymentStatus is null and\n"
@@ -44,6 +44,7 @@ public class DAORoom extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, checkInDate);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Room(
@@ -77,7 +78,7 @@ public class DAORoom extends DBConnect {
         };
         for (int i = 0; i < roomTypeID.length; i++) {
             if (!"".equals(roomTypeID[i])) {
-                daoR.listAvailableRooms(roomTypeID[i], "3").forEach((Room room) -> {
+                daoR.listAvailableRooms(roomTypeID[i], "3", "2022-10-17").forEach((Room room) -> {
                     listRooms.add(room);
                 });
             }

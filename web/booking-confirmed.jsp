@@ -233,7 +233,7 @@
                                     <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 11.386l1.17-1.206c1.951.522 5.313 1.731 8.33 3.597 3.175-4.177 9.582-9.398 13.456-11.777l1.044 1.073-14 18.927-10-10.614z"/></svg>-->
                                     <!--<svg class="bk-icon -streamline-checkmark_selected" fill="#008009" height="18" role="presentation" width="18" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path d="M56.62 93.54a4 4 0 0 1-2.83-1.18L28.4 67a4 4 0 1 1 5.65-5.65l22.13 22.1 33-44a4 4 0 1 1 6.4 4.8L59.82 91.94a4.06 4.06 0 0 1-2.92 1.59zM128 64c0-35.346-28.654-64-64-64C28.654 0 0 28.654 0 64c0 35.346 28.654 64 64 64 35.33-.039 63.961-28.67 64-64zm-8 0c0 30.928-25.072 56-56 56S8 94.928 8 64 33.072 8 64 8c30.914.033 55.967 25.086 56 56z"></path></svg>-->
                                     <span style="margin-left: 10px;">You can now 
-                                        <a href="#" 
+                                        <a href="#action-section" 
                                            onclick="document.getElementById('action-section').style.backgroundColor = 'aliceblue';">modify or cancel</a> 
                                         your booking until check-in</span>
                                 </div>
@@ -268,7 +268,7 @@
                                         <h6>Booking details</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        ${dateDiff} night, ${fn.length(listRoom)} room
+                                        ${dateDiff} night, ${listRoom.size()} room
                                     </div>
                                 </div>
                                 <div class="row">
@@ -282,11 +282,12 @@
                                         <c:if test="${adult==1}">
                                             ${adult} adult
                                         </c:if>
-                                        ,&nbsp;
                                         <c:if test="${children>1}">
+                                            ,&nbsp;
                                             ${children} children
                                         </c:if>
                                         <c:if test="${children==1}">
+                                            ,&nbsp;
                                             ${children} child
                                         </c:if>
                                     </div>
@@ -296,7 +297,7 @@
                                         <h6>Check-in</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        ${checkInDate}
+                                        ${checkInDate} (14:00 – 00:00)
                                     </div>
                                 </div>
                                 <div class="row">
@@ -304,7 +305,7 @@
                                         <h6>Check-out</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        ${checkOutDate}
+                                        ${checkOutDate} (01:00 – 12:00)
                                     </div>
                                 </div>
                                 <div class="card" style="border: 1px solid #ebf3ff; box-shadow: none; background: aliceblue">
@@ -314,7 +315,7 @@
                                                 <div style="font-size: x-large">
                                                     Price
                                                 </div>
-                                                <div style="font-size: x-large">
+                                                <div style="font-size: x-large; font-weight: 500;">
                                                     VND ${totalPrice}
                                                 </div>
                                             </div>
@@ -325,8 +326,8 @@
                                                 The final price shown is the amount you will pay to the property.
                                             </strong>
                                             <div>
-                                                Booking.com does not charge quests any reservation, administration or other fees.<br>
-                                                Your card issuer may change you a foreign transaction fee.
+                                                Booking.com does not charge guests any reservation, administration or other fees.<br>
+                                                Your card issuer may charge you a foreign transaction fee.
                                             </div>
                                         </div>
                                         <hr>
@@ -335,8 +336,8 @@
                                                 Payment information
                                             </strong>
                                             <div>
-                                                Sen Hotel handles all payments.<br>
-                                                This property accepts the following forms of payment American Express, Visa, JCB, Bankcard, UnionPay
+                                                We handles all payments.<br>
+                                                Our property accepts the following forms of payment American Express, Visa, JCB, Bankcard, UnionPay
                                                 debit card, UnionPay credit card
                                             </div>
                                         </div>
@@ -348,7 +349,7 @@
                                             <div>
                                                 Please note that additional supplements (e.g. extra bed) are not added in this total.<br>
                                                 If you cancel, applicable taxes may still be charged by the property.<br>
-                                                If you don't show up at this booking, and you don't cancel beforehand, the property is liable to change you
+                                                If you don't show up at this booking, and you don't cancel beforehand, the property is liable to charge you
                                                 the full reservation amount.<br>
                                                 Please remember to read the Important information below, as this may contain important details not
                                                 mentioned here.
@@ -474,14 +475,22 @@
                                     </small>
                                     <div style="margin-top: 1rem;">
                                         <strong>
-                                            <a href="booking-cancelled.jsp" style="text-decoration: underline;">
-                                                <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
-                                                Cancel your booking
-                                            </a>
+                                            <c:if test="${sessionScope.Customer!=null}">
+                                                <a href="booking?do=cancelBooking&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&dateDiff=${dateDiff}&totalRoom=${listRoom.size()}" style="text-decoration: underline;">
+                                                    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
+                                                    Cancel your booking
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${sessionScope.Customer==null}">
+                                                <a href="booking?do=cancelBooking&status=not-sign-in&cusID=${cusID}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&dateDiff=${dateDiff}&totalRoom=${listRoom.size()}" style="text-decoration: underline;">
+                                                    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
+                                                    Cancel your booking
+                                                </a>
+                                            </c:if>
                                         </strong>
                                     </div>
                                     <div style="margin-top: 2rem;">
-                                        <a class="btn btn-primary" href="customer-booking.jsp" style="width: 100%;">View booking</a>
+                                        <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#check-booking" style="width: 100%;">View booking</a>
                                     </div>
                                     <small>
                                         Tip: You can make changes to this booking at anytime
@@ -490,6 +499,68 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Check Booking Modal -->
+                    <div id="check-booking" class="modal custom-modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered modal" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Your booking summary</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="details" style="margin-top: 1rem;">Total length of stay:</div>
+                                    <c:if test="${dateDiff==1}">
+                                        <div class="important-details">${dateDiff} night</div>
+                                    </c:if>
+                                    <c:if test="${dateDiff!=1}">
+                                        <div class="important-details">${dateDiff} night</div>
+                                    </c:if>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-md-6 left">
+                                            <div class="details">CheckIn</div>
+                                            <span class="important-details">${checkInDate}</span>
+                                            <div class="text-secondary">14:00 – 00:00</div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <div class="details">CheckOut</div>
+                                            <span class="important-details">${checkOutDate.split(" ")[0]}</span>
+                                            <div class="text-secondary">01:00 – 12:00</div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <div class="details">You selected:</div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <c:forEach items="${listRoomType}" var="listRt">
+                                                <c:forEach begin="0" end="${fn:length(roomTypeID)}" var="i">
+                                                    <c:if test="${listRt.getRoomTypeID()==roomTypeID[i]}">
+                                                        <div class="text-secondary">${amount[i]} x ${listRt.getName()} <div style="color: green;">Free cancellation</div></div>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:forEach>
+                                        </div>
+                                    </div><hr>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <h6 style="margin-bottom: 0px;">Price</h6>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <h6 style="margin-bottom: 0px;">VND ${totalPrice}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="text-secondary" style="font-size: small;">
+                                        (for ${dateDiff} nights & all guests)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Check Booking Modal -->
                 </div>
             </div>
         </div>
@@ -497,7 +568,7 @@
         <style type="text/css">
             body{
                 /*background: #f7f7ff;*/
-                margin-top: 20px;
+                /*margin-top: 20px;*/
             }
             .card {
                 position: relative;

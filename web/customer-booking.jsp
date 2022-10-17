@@ -10,74 +10,124 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
         <title>My booking</title>
+        <style>
+            #rate-recommend-table{
+                width: 900px; 
+                height: 8rem;
+                border: transparent;
+                border-radius: 3px;
+                box-shadow: 0 1px 8px 0 rgba(0,0,0,0.12),0 2px 3px -1px rgba(0,0,0,0.2);
+                margin-top: 3rem;
+            }
+            .rate-recommend-table-td{
+                border-top: 1px solid #e6e6e6;
+                border-right: 1px solid #e6e6e6;
+            }
+            .rate-recommend-table-th{
+                color: black;
+                background: white;
+                border: transparent;
+                border-radius: 3px;
+            }
+            .data{
+                vertical-align: top;
+                padding-top: 5px;
+                padding-left: 10px;
+            }
+            @media only screen and (min-width: 1200px) {
+                #rate-recommend-table{
+                    width: 100%; 
+                    height: 100%;
+                }
+            }
+        </style>
     </head>
     <body>
-        <h2>Booking & Trips</h2>
+        <jsp:include page="page-header.jsp"></jsp:include>
 
-        <table id="rate-recommend-table" border="1">
-            <thead>
-                <tr>
-                    <c:if test="${message!=''}">
-                        <th class="rate-recommend-table-th">
-                            ${message}
-                        </th>
-                    </c:if>
-                    <c:if test="${notice!=''}">
-                        <th class="rate-recommend-table-th" style="color: red;">
-                            ${notice}
-                        </th>
-                    </c:if>
-                    <th class="rate-recommend-table-th"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${listRecommendRooms}" var="list">
-                    <tr>
-                        <td class="rate-recommend-table-td room-data">
-                            <div><a href="#roomtype${list.getRoomTypeID()}" onclick="focusOnRoomType(${list.getRoomTypeID()}, ${room}, ${dateDiff*room*list.getPrice()});">${room} × ${list.getName()}</a></div>
-                            <div>
-                                <strong>Price for: ${list.getAdult()} adults + ${list.getChildren()} child</strong>
-                            </div>
-                            <div>
-                                <c:forEach items="${listRoomTypeDetail}" var="rtd">
-                                    <c:if test="${rtd.getRoomTypeID()==list.getRoomTypeID()}">
-                                        <div>
-                                            <!--<li>-->
-                                            ${rtd.getBedAmount()} x ${rtd.getName()}
-                                            <!--</li>-->
-                                        </div>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-                            <c:if test="${listRecommendRooms.size()-1!=listRecommendRooms.lastIndexOf(list)}">
-                                <div style="font-weight: bold">
-                                    Or:
-                                </div>
-                            </c:if>
-                        </td>
-                        <td class="rate-recommend-table-td room-data" style="border-right: 0px;">
-                            <c:if test="${dateDiff > 1}">
+            <div class="container" style="margin-top: 3rem;">
+                <h2>Booking & Trips</h2>
+
+                <table id="rate-recommend-table" border="1">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${listRecommendRooms}" var="list">
+                        <tr>
+                            <td class="rate-recommend-table-td data">
                                 <div>
-                                    <strong>Price for: ${dateDiff} nights stay</strong>
+                                    
                                 </div>
-                            </c:if>
-                            <c:if test="${dateDiff == 1}">
-                                <div>
-                                    <strong>Price for a night stay</strong>
-                                </div>
-                            </c:if>
-                            <strong>VND ${dateDiff*room*list.getPrice()}</strong>
-                        </td>
-                        <!--                                <td style="text-align: center; border-top: 1px solid #e6e6e6;">
-                                                            <a href="#rate-table" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
-                                                               margin-top: 1rem; margin-bottom: 1rem; width: 70%">
-                                                                Reserve your selection
-                                                            </a>
-                                                        </td>-->
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                            </td>
+                            <td class="rate-recommend-table-td data" style="border-right: 0px;">
+                                <strong>VND 200,000</strong>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+        <style type="text/css">
+            body{
+                /*margin-top:20px;*/
+                color: #1a202c;
+                text-align: left;
+                /*                background-color: #e2e8f0;    */
+            }
+            .main-body {
+                padding: 15px;
+            }
+            .card {
+                box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+            }
+
+            .card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 0 solid rgba(0,0,0,.125);
+                border-radius: .25rem;
+            }
+
+            .card-body {
+                flex: 1 1 auto;
+                min-height: 1px;
+                padding: 1rem;
+            }
+
+            .gutters-sm {
+                margin-right: -8px;
+                margin-left: -8px;
+            }
+
+            .gutters-sm>.col, .gutters-sm>[class*=col-] {
+                padding-right: 8px;
+                padding-left: 8px;
+            }
+            .mb-3, .my-3 {
+                margin-bottom: 1rem!important;
+            }
+
+            .bg-gray-300 {
+                background-color: #e2e8f0;
+            }
+            .h-100 {
+                height: 100%!important;
+            }
+            .shadow-none {
+                box-shadow: none!important;
+            }
+
+        </style>
     </body>
 </html>

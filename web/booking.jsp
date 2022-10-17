@@ -541,6 +541,8 @@
                                             <c:forEach begin="1" end="${fn:length(amount)}" var="i">
                                                 <input type="hidden" id="amount${i}" name="amount" value="">
                                             </c:forEach>
+                                            <input type="hidden" name="adult" value="${adult}">
+                                            <input type="hidden" name="children" value="${children}">
                                             <input type="hidden" name="totalPrice" value="">
                                             <input type="hidden" name="dateDiff" value="">
                                             <input type="hidden" name="checkInDate" value="">
@@ -602,7 +604,6 @@
                                                        title="FirstName not contain: 
                                                        Special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
                                                        allow uppercase and lowercase letters, max length: 12"
-                                                       onkeydown="event.preventDefault()"
                                                        value="${Customer.getFirstName()}">
                                             </div>
                                         </div>
@@ -1581,6 +1582,8 @@
                                             <c:forEach begin="1" end="${fn:length(amount)}" var="i">
                                                 <input type="hidden" id="amount1${i}" name="amount" value="">
                                             </c:forEach>
+                                            <input type="hidden" name="adult" value="${adult}">
+                                            <input type="hidden" name="children" value="${children}">
                                             <input type="hidden" name="totalPrice" value="">
                                             <input type="hidden" name="dateDiff" value="">
                                             <input type="hidden" name="checkInDate" value="">
@@ -1603,7 +1606,7 @@
         <style type="text/css">
             body{
                 /*background: #f7f7ff;*/
-                margin-top: 20px;
+                /*margin-top: 20px;*/
             }
             .card {
                 position: relative;
