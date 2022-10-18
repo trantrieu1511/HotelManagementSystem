@@ -48,6 +48,7 @@ public class ControllerBooking extends HttpServlet {
     DAOBookingDetail daoBd = new DAOBookingDetail();
 
     boolean statusAdd = false;
+    boolean statusUpdate = false;
     String checkInDate_date = "";
     String checkInDate = "";
     String checkOutDate_date = "";
@@ -124,7 +125,7 @@ public class ControllerBooking extends HttpServlet {
                 roomID = request.getParameterValues("RoomID");
 
                 request.setAttribute("FirstName", FirstName);
-
+                request.setAttribute("RoomID", roomID);
 //                for (int i = 0; i < roomID.length; i++) {
 //                    out.print(roomID[i] + " ");
 //                }
@@ -135,14 +136,21 @@ public class ControllerBooking extends HttpServlet {
                         for (int i = 0; i < roomID.length; i++) {
                             statusAdd = daoBd.addBookingDetail(new BookDetail(daoB.getLatestBookIDByCusID(cus.getCusID()),
                                     Integer.parseInt(roomID[i]), checkInDate, checkOutDate), dateDiff);
-                            if (statusAdd) {
+                            statusUpdate = daoR.setRoomToUnavailable(roomID[i]);
+                            if (statusAdd && statusUpdate) {
                                 System.out.println("Add BookDetail Successfully x " + (i + 1));
-                                RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed.jsp");
-                                dispatch.forward(request, response);
+                                System.out.println("Set room: " + roomID[i] + " to unavailable successfully");
+
                             } else {
                                 System.out.println("Add BookDetail Failed x " + (i + 1));
-                                response.sendRedirect("error404.jsp");
+                                System.out.println("Set room to unavailable failed x " + (i + 1));
                             }
+                        }
+                        if (statusAdd && statusUpdate) {
+                            RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed.jsp");
+                            dispatch.forward(request, response);
+                        } else {
+                            response.sendRedirect("error404.jsp");
                         }
                     } else {//Add Failed
                         System.out.println("Add Booking Failed!");
@@ -160,15 +168,21 @@ public class ControllerBooking extends HttpServlet {
                             for (int i = 0; i < roomID.length; i++) {
                                 statusAdd = daoBd.addBookingDetail(new BookDetail(daoB.getLatestBookIDByCusID(cusID),
                                         Integer.parseInt(roomID[i]), checkInDate, checkOutDate), dateDiff);
-                                if (statusAdd) {
+                                statusUpdate = daoR.setRoomToUnavailable(roomID[i]);
+                                if (statusAdd && statusUpdate) {
                                     System.out.println("Add BookDetail Successfully x " + (i + 1));
+                                    System.out.println("Set room: " + roomID[i] + " to unavailable successfully");
                                     request.setAttribute("cusID", cusID);
-                                    RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed.jsp");
-                                    dispatch.forward(request, response);
                                 } else {
                                     System.out.println("Add BookDetail Failed x " + (i + 1));
-                                    response.sendRedirect("error404.jsp");
+                                    System.out.println("Set room to unavailable failed x " + (i + 1));
                                 }
+                            }
+                            if (statusAdd && statusUpdate) {
+                                RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed.jsp");
+                                dispatch.forward(request, response);
+                            } else {
+                                response.sendRedirect("error404.jsp");
                             }
                         } else {//Add Failed
                             System.out.println("Add Booking Failed!");
@@ -184,29 +198,64 @@ public class ControllerBooking extends HttpServlet {
                 checkOutDate = request.getParameter("checkOutDate");
                 dateDiff = request.getParameter("dateDiff");
                 room = Integer.parseInt(request.getParameter("totalRoom"));
+                roomID = request.getParameterValues("RoomID");
                 boolean isCancelled = false;
+
+                request.setAttribute("totalRoom", roomID.length);
+                request.setAttribute("dateDiff", dateDiff);
+                request.setAttribute("checkInDate", checkInDate);
+                request.setAttribute("checkOutDate", checkOutDate);
+
                 if (status != null && status.equals("not-sign-in")) {
                     cusID = request.getParameter("cusID");
                     isCancelled = daoB.cancelBooking(cusID);
                     if (isCancelled) {
                         System.out.println("booking of customer: " + cusID + " is cancelled.");
+                        for (int i = 0; i < roomID.length; i++) {
+                            statusUpdate = daoR.setRoomToAvailable(roomID[i]);
+                            if (statusUpdate) {
+                                System.out.println("Set room: " + roomID[i] + " to available successfully");
+                            } else {
+                                System.out.println("Set room to available failed x " + (i + 1));
+                            }
+                        }
+                        if (statusUpdate) {
+                            RequestDispatcher dispatch = request.getRequestDispatcher("booking-cancelled.jsp");
+                            dispatch.forward(request, response);
+                        } else {
+                            response.sendRedirect("error404.jsp");
+                        }
                     } else {
                         System.out.println("cancelled booking failed.");
+                        response.sendRedirect("error404.jsp");
                     }
                 } else { //Customer signed in
-                    isCancelled = daoB.cancelBooking(cus.getCusID());
-                    if (isCancelled) {
-                        System.out.println("booking of customer: " + cus.getCusID() + " is cancelled.");
+                    if (cus == null) {
+                        response.sendRedirect("booking-confirmed-out-of-session.jsp");
                     } else {
-                        System.out.println("cancelled booking failed.");
+                        isCancelled = daoB.cancelBooking(cus.getCusID());
+                        if (isCancelled) {
+                            System.out.println("booking of customer: " + cus.getCusID() + " is cancelled.");
+                            for (int i = 0; i < roomID.length; i++) {
+                                statusUpdate = daoR.setRoomToAvailable(roomID[i]);
+                                if (statusUpdate) {
+                                    System.out.println("Set room: " + roomID[i] + " to available successfully");
+                                } else {
+                                    System.out.println("Set room to available failed x " + (i + 1));
+                                }
+                            }
+                            if (statusUpdate) {
+                                RequestDispatcher dispatch = request.getRequestDispatcher("booking-cancelled.jsp");
+                                dispatch.forward(request, response);
+                            } else {
+                                response.sendRedirect("error404.jsp");
+                            }
+                        } else {
+                            System.out.println("cancelled booking failed.");
+                            response.sendRedirect("error404.jsp");
+                        }
                     }
                 }
-                request.setAttribute("totalRoom", room);
-                request.setAttribute("dateDiff", dateDiff);
-                request.setAttribute("checkInDate", checkInDate);
-                request.setAttribute("checkOutDate", checkOutDate);
-                RequestDispatcher dispatch = request.getRequestDispatcher("booking-cancelled.jsp");
-                dispatch.forward(request, response);
             }
             if (service.equals("customerLogin")) {
                 String email = "";
@@ -308,7 +357,7 @@ public class ControllerBooking extends HttpServlet {
     int count_unavailableRoomType = 0;
     List<RoomType> listRt = new ArrayList<>();
     List<RoomTypeDetail> listRtd = new ArrayList<>();
-    List<RoomType> listCountAvailableRooms = new ArrayList<>();
+    List<Room> listCountAvailableRooms = new ArrayList<>();
 
     public void checkAvailabiltyOfRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         adult = Integer.parseInt(request.getParameter("adult"));
@@ -319,7 +368,7 @@ public class ControllerBooking extends HttpServlet {
         listRtd.clear();
         listRtd = daoRtd.listRoomTypeDetail();
         listCountAvailableRooms.clear();
-        listCountAvailableRooms = daoB.countAvailableRoomAsList(checkInDate);
+        listCountAvailableRooms = daoB.countAvailableRoomAsList();
 
         //recommend rooms
         listRecommendRooms.clear();
@@ -398,7 +447,7 @@ public class ControllerBooking extends HttpServlet {
         //get available Rooms
         for (int i = 0; i < roomTypeID.length; i++) {
             if (!"".equals(roomTypeID[i])) {
-                daoR.listAvailableRooms(roomTypeID[i], amount[i], sdf3.format(sdf5.parse(checkInDate))).forEach((Room room) -> {
+                daoR.listAvailableRooms(roomTypeID[i], amount[i]).forEach((Room room) -> {
                     listRooms.add(room);
                 });
             }

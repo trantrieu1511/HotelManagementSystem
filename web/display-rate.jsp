@@ -330,7 +330,7 @@
                 const collection = document.getElementsByClassName("amount");
                 for (i = 1; i < collection.length + 1; i++) {
                     x = document.createElement("INPUT");
-                    x.setAttribute("type", "text");
+                    x.setAttribute("type", "hidden");
                     x.setAttribute("id", "num" + i);
                     x.setAttribute("name", "roomTypeID");
 //                    x.setAttribute("value", i);

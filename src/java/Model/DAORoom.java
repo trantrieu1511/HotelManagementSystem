@@ -25,26 +25,19 @@ public class DAORoom extends DBConnect {
     Statement st = null;
     ResultSet rs = null;
 
-    public List<Room> listAvailableRooms(String roomTypeID, String amount, String checkInDate) {
+    public List<Room> listAvailableRooms(String roomTypeID, String amount) {
         String sql = "select distinct top " + amount + " r.RoomID, r.[Name] as RoomName, \n"
                 + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
                 + "rt.Adult, rt.Children, rt.Price\n"
-                + "from Booking b full outer join BookDetail bd\n"
-                + "on b.BookID = bd.BookID full outer join Room r\n"
-                + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"
+                + "from Room r full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
-                + "where \n"
-                + "bd.CheckOut <= ? and\n"
-                + "b.PaymentStatus = 1 and\n"
-                + "rt.RoomTypeID = " + roomTypeID + " or \n"
-                + "b.PaymentStatus is null and\n"
+                + "where r.isAvailable = 1 and\n"
                 + "rt.RoomTypeID = " + roomTypeID + "\n"
                 + "order by r.RoomID asc";
         List<Room> list = new ArrayList<>();
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, checkInDate);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Room(
@@ -69,6 +62,46 @@ public class DAORoom extends DBConnect {
         return list;
     }
 
+    public boolean setRoomToUnavailable(String RoomID) {
+        String sql = "update Room set\n"
+                + "isAvailable = 0\n"
+                + "where RoomID = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, RoomID);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean setRoomToAvailable(String RoomID) {
+        String sql = "update Room set\n"
+                + "isAvailable = 1\n"
+                + "where RoomID = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, RoomID);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         DAORoom daoR = new DAORoom();
         List<Room> listRooms = new ArrayList<>();
@@ -78,7 +111,7 @@ public class DAORoom extends DBConnect {
         };
         for (int i = 0; i < roomTypeID.length; i++) {
             if (!"".equals(roomTypeID[i])) {
-                daoR.listAvailableRooms(roomTypeID[i], "3", "2022-10-17").forEach((Room room) -> {
+                daoR.listAvailableRooms(roomTypeID[i], "3").forEach((Room room) -> {
                     listRooms.add(room);
                 });
             }

@@ -15,16 +15,18 @@ public class Room extends RoomType {
     String Name;
     int RoomTypeID, Floor;
     String View;
+    boolean isAvailable;
 
     public Room() {
     }
 
-    public Room(int RoomID, String Name, int RoomTypeID, int Floor, String View) {
+    public Room(int RoomID, String Name, int RoomTypeID, int Floor, String View, boolean isAvailable) {
         this.RoomID = RoomID;
         this.Name = Name;
         this.RoomTypeID = RoomTypeID;
         this.Floor = Floor;
         this.View = View;
+        this.isAvailable = isAvailable;
     }
 
     public Room(int RoomID, String RoomName, int Floor, String View, int RoomTypeID, String RoomTypeName, int Adult, int Children, double Price) {
@@ -33,6 +35,11 @@ public class Room extends RoomType {
         this.Name = RoomName;
         this.Floor = Floor;
         this.View = View;
+    }
+
+    //count available rooms constructor
+    public Room(int RoomTypeID, int NoOfAvailableRoom) {
+        super(RoomTypeID, NoOfAvailableRoom);
     }
 
     public int getRoomID() {
@@ -105,6 +112,24 @@ public class Room extends RoomType {
     @Override
     public void setChildren(int Children) {
         this.Children = Children;
+    }
+
+    @Override
+    public int getNoOfAvailableRoom() {
+        return NoOfAvailableRoom;
+    }
+
+    @Override
+    public void setNoOfAvailableRoom(int NoOfAvailableRoom) {
+        this.NoOfAvailableRoom = NoOfAvailableRoom;
+    }
+
+    public boolean isIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     @Override

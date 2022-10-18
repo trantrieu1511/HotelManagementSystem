@@ -142,7 +142,7 @@
                 </section>
             </div>
 
-            <section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb">
+            <section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb" id="booking-section">
                 <div class="container">
                     <div class="row no-gutters">
                         <div class="col-lg-12">
@@ -319,7 +319,7 @@
                             <h2 class="mb-4">Harbor Lights Hotel the Most Recommended Hotel All Over the World</h2>
                         </div>
                         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                        <p><a href="#" class="btn btn-secondary rounded">Reserve Your Room Now</a></p>
+                        <p><a href="#booking-section" class="btn btn-secondary rounded">Reserve Your Room Now</a></p>
                     </div>
                 </div>
             </div>

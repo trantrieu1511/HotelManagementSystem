@@ -5,7 +5,7 @@
  */
 package Model;
 
-import Entity.Customer;
+import Entity.Room;
 import Entity.RoomType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,24 +26,19 @@ public class DAOBooking extends DBConnect {
     Statement st = null;
     ResultSet rs = null;
 
-    public List<RoomType> countAvailableRoomAsList(String checkIn) {
-        String sql = "select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer join BookDetail bd\n"
-                + "on b.BookID = bd.BookID full outer join Room r\n"
-                + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"
+    public List<Room> countAvailableRoomAsList() {
+        String sql = "select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' \n"
+                + "from Room r full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
-                + "where \n"
-                + "(select MAX(CheckOut) from BookDetail) <= ? and\n"
-                + "b.PaymentStatus = 1 or \n"
-                + "b.PaymentStatus is null \n"
+                + "where r.isAvailable = 1\n"
                 + "group by rt.RoomTypeID";
-        List<RoomType> list = new ArrayList<>();
+        List<Room> list = new ArrayList<>();
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, checkIn);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new RoomType(
+                list.add(new Room(
                         rs.getInt("RoomTypeID"),
                         rs.getInt("NoOfAvailableRoom")
                 ));
@@ -181,11 +176,12 @@ public class DAOBooking extends DBConnect {
 
     public static void main(String[] args) {
         DAOBooking daoB = new DAOBooking();
-//        List<RoomType> list = daoB.listAvailableRoom("2022-10-05");
+        List<Room> list = daoB.countAvailableRoomAsList();
 ////        listRcmd = daoB.listRecommendRoom(listRcmd, 1, 2, 0, 1);
-//        for (RoomType roomType : list) {
-//            System.out.println(roomType.getRoomTypeID() + ", " + roomType.getNoOfAvailableRoom());
-//        }
+
+        for (Room room : list) {
+            System.out.println(room.getRoomTypeID() + ", " + room.getNoOfAvailableRoom());
+        }
         System.out.println(daoB.getLatestCusIDByEmail("vuivanve@gmail.com"));
 //        for (RoomType roomType : listRcmd) {
 //            System.out.println(roomType);

@@ -86,15 +86,20 @@ insert into Room([Name],RoomTypeID,[Floor],[View]) values('503', 5, 5, 'Beautifu
 
 --insert Booking
 --select * from Booking
-insert into Booking(CusID, BookDate) values('CUS00001', '2022-09-22')
-insert into Booking(CusID, BookDate) values('CUS00002', '2022-09-28')
-insert into Booking(CusID, BookDate, SpecialRequests) values('CUS00002', GETDATE(), 'I need more bath towels')
+--delete from booking
+
+--insert into Booking(CusID, BookDate) values('CUS00001', '2022-09-22')
+--insert into Booking(CusID, BookDate) values('CUS00002', '2022-09-28')
+--insert into Booking(CusID, BookDate, SpecialRequests) values('CUS00002', GETDATE(), 'I need more bath towels')
+
 --insert BookDetail
 --select * from BookDetail
 --select * from Booking
 --select * from Room
 --select * from RoomType
 --select * from RoomTypeDetail
-insert into BookDetail values(1,1,'2022-09-22','2022-09-23',DATEDIFF(DAY,'2022-09-22','2022-09-23')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 1))
-insert into BookDetail values(2,7,'2022-09-28','2022-09-30',DATEDIFF(DAY,'2022-09-28','2022-09-30')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 7))
+--delete from BookDetail
+
+--insert into BookDetail values(1,1,'2022-09-22','2022-09-23',DATEDIFF(DAY,'2022-09-22','2022-09-23')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 1))
+--insert into BookDetail values(2,7,'2022-09-28','2022-09-30',DATEDIFF(DAY,'2022-09-28','2022-09-30')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 7))
 --insert into BookDetail values(0,1,'2022-10-08','2022-10-10',DATEDIFF(DAY,'2022-10-08','2022-10-10')*(select Price from RoomType rt join Room r on rt.RoomTypeID = r.RoomTypeID where RoomID = 1))

@@ -61,7 +61,7 @@
                         <tr>
                             <td class="rate-recommend-table-td data">
                                 <div>
-                                    
+
                                 </div>
                             </td>
                             <td class="rate-recommend-table-td data" style="border-right: 0px;">

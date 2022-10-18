@@ -106,8 +106,15 @@ isCancelled = 1,
 PaymentStatus = 1
 where 
 --CusID = 'CUS00001' and 
-BookID = (select top 1 BookID from Booking where CusID = 'CUS00001' 
-order by BookID desc)
+--BookID = (select top 1 BookID from Booking where CusID = 'CUS00001' 
+--order by BookID desc)
+BookID = 8
+
+--set room to unavailable query
+update Room set
+isAvailable = 1
+where RoomID = 16
+
 
 --BookDetail Queries
 select * from BookDetail
@@ -139,7 +146,7 @@ PaymentStatus = 1 or PaymentStatus is null
 --and r.RoomTypeID = 1
 --and rt.Adult >= 2 and rt.Children >= 2
 
-select  b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
+select b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
 r.[Name] as RoomName, r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, rt.Price,
 rt.Img, rt.[Description], rt.Adult, rt.Children
 from Booking b full outer join BookDetail bd
@@ -154,38 +161,27 @@ b.PaymentStatus is null and
 rt.RoomTypeID = 1
 order by r.RoomID asc
 
+--select available rooms query
 select distinct top 3 r.RoomID, r.[Name] as RoomName, 
 r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, 
 rt.Adult, rt.Children, rt.Price
-from Booking b full outer join BookDetail bd
-on b.BookID = bd.BookID full outer join Room r
-on bd.RoomID = r.RoomID full outer join RoomType rt
+from Room r full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
-where 
-(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and
-b.PaymentStatus = 1 and
-rt.RoomTypeID = 1 or 
-b.PaymentStatus is null and
+where r.isAvailable = 1 and
 rt.RoomTypeID = 1
 order by r.RoomID asc
 
---count rooms that are available to some condition
-select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' from Booking b full outer join BookDetail bd
-on b.BookID = bd.BookID full outer join Room r
-on bd.RoomID = r.RoomID full outer join RoomType rt
+--count rooms that are available
+select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' 
+from Room r full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
-where 
-(select MAX(CheckOut) from BookDetail) <= '2022-10-10' and
-b.PaymentStatus = 1 or 
-b.PaymentStatus is null 
+where r.isAvailable = 1
 group by rt.RoomTypeID
 
-select * from Booking b full outer join BookDetail bd
-on b.BookID = bd.BookID full outer join Room r
-on bd.RoomID = r.RoomID full outer join RoomType rt
+select * 
+from Room r full outer join RoomType rt
 on r.RoomTypeID = rt.RoomTypeID 
-where PaymentStatus = 1 or PaymentStatus is null
-and r.RoomTypeID = 1
+where r.isAvailable = 1
 
 --select BedTypes and BedAmount of a RoomType
 select rtd.RTD_ID, rtd.RoomTypeID, bt.[Name], 

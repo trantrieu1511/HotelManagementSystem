@@ -65,7 +65,7 @@ CREATE TABLE Room(
 	RoomTypeID int not null,
 	[Floor] int not null,
 	[View] nvarchar(MAX),
-	isAvailable bit default 0 not null,
+	isAvailable bit default 1 not null,
 	foreign key (RoomTypeID) references RoomType (RoomTypeID)
 )
 
