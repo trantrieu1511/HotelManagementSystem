@@ -63,6 +63,16 @@ public class RoomTypeDetail extends BedType {
     }
 
     @Override
+    public String getName() {
+        return Name;
+    }
+
+    @Override
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    @Override
     public String toString() {
         return super.toString() + " RoomTypeDetail{" + "RTD_ID=" + RTD_ID + ", RoomTypeID=" + RoomTypeID + ", BedTypeID=" + BedTypeID + ", BedAmount=" + BedAmount + '}';
     }

@@ -102,6 +102,79 @@ public class DAORoom extends DBConnect {
         return true;
     }
 
+    public List<Room> getListAvailableRoomsByRT_ID(String RT_ID) {
+        String sql = "select r.RoomID, r.[Name] as RoomName, \n"
+                + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
+                + "rt.Adult, rt.Children, rt.Price\n"
+                + "from Room r full outer join RoomType rt\n"
+                + "on r.RoomTypeID = rt.RoomTypeID \n"
+                + "where r.isAvailable = 1 and\n"
+                + "rt.RoomTypeID = " + RT_ID + "\n"
+                + "order by r.RoomID asc";
+        List<Room> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Room(
+                        rs.getInt("RoomID"),
+                        rs.getString("RoomName"),
+                        rs.getInt("Floor"),
+                        rs.getString("View"),
+                        rs.getInt("RoomTypeID"),
+                        rs.getString("RoomTypeName"),
+                        rs.getInt("Adult"),
+                        rs.getInt("Children"),
+                        rs.getDouble("Price")
+                ));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Room> getListOfRoomsByRT_ID(String RT_ID) {
+        String sql = "select r.RoomID, r.[Name] as RoomName, \n"
+                + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
+                + "rt.Adult, rt.Children, rt.Price\n"
+                + "from Room r full outer join RoomType rt\n"
+                + "on r.RoomTypeID = rt.RoomTypeID \n"
+                + "where rt.RoomTypeID = " + RT_ID + "\n"
+                + "order by r.RoomID asc";
+        List<Room> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Room(
+                        rs.getInt("RoomID"),
+                        rs.getString("RoomName"),
+                        rs.getInt("Floor"),
+                        rs.getString("View"),
+                        rs.getInt("RoomTypeID"),
+                        rs.getString("RoomTypeName"),
+                        rs.getInt("Adult"),
+                        rs.getInt("Children"),
+                        rs.getDouble("Price")
+                ));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAORoom daoR = new DAORoom();
         List<Room> listRooms = new ArrayList<>();
@@ -109,13 +182,16 @@ public class DAORoom extends DBConnect {
         String[] roomTypeID = new String[]{
             "1", "", "3", "", ""
         };
-        for (int i = 0; i < roomTypeID.length; i++) {
-            if (!"".equals(roomTypeID[i])) {
-                daoR.listAvailableRooms(roomTypeID[i], "3").forEach((Room room) -> {
-                    listRooms.add(room);
-                });
-            }
-        }
+//        for (int i = 0; i < roomTypeID.length; i++) {
+//            if (!"".equals(roomTypeID[i])) {
+//                daoR.listAvailableRooms(roomTypeID[i], "3").forEach((Room room) -> {
+//                    listRooms.add(room);
+//                });
+//            }
+//        }
+
+//        listRooms = daoR.getListAvailableRoomsByRT_ID("2");
+        listRooms = daoR.getListOfRoomsByRT_ID("2");
 
         listRooms.forEach((room) -> {
             System.out.println(room.getRoomID() + " " + room.getRoomName() + " " + room.getFloor() + " " + room.getView()

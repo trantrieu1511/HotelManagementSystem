@@ -5,8 +5,12 @@
  */
 package Controller;
 
+import Entity.Room;
 import Entity.RoomType;
+import Entity.RoomTypeDetail;
+import Model.DAORoom;
 import Model.DAORoomType;
+import Model.DAORoomTypeDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,14 +21,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author DELL
  */
-@WebServlet(name = "ControllerHome", urlPatterns = {"/home"})
-public class ControllerHome extends HttpServlet {
+@WebServlet(name = "ControllerRoomType", urlPatterns = {"/roomtype"})
+public class ControllerRoomType extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,27 +39,47 @@ public class ControllerHome extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     List<RoomType> listRoomType = new ArrayList<>();
+    List<RoomTypeDetail> listRtd = new ArrayList<>();
+    List<Room> listAvailableRoom = new ArrayList<>();
+    List<Room> listRoom = new ArrayList<>();
+
+    DAORoom daoR = new DAORoom();
     DAORoomType daoRt = new DAORoomType();
+    DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
+
+    RoomType roomType = new RoomType();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
-//            HttpSession session = request.getSession();
             if (service == null) {
-                service = "homeView";
+                service = "viewAllRoomTypes";
             }
-            if (service.equals("homeView")) {
+            if (service.equals("viewAllRoomTypes")) {
                 listRoomType.clear();
                 listRoomType = daoRt.listAllRoomType();
                 request.setAttribute("listRoomType", listRoomType);
-                RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                RequestDispatcher dispatch = request.getRequestDispatcher("rooms.jsp");
                 dispatch.forward(request, response);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            response.sendRedirect("error404.jsp");
+            if (service.equals("viewDetail")) {
+                String RT_ID = request.getParameter("RoomTypeID");
+                listRtd.clear();
+                listRoom.clear();
+//                listAvailableRoom.clear();
+                roomType = daoRt.getRoomTypeByID(RT_ID);
+                listRtd = daoRtd.getListOfRoomTypeDetailByRT_ID(RT_ID);
+//                listAvailableRoom = daoR.getListAvailableRoomsByRT_ID(RT_ID);
+                listRoom = daoR.getListOfRoomsByRT_ID(RT_ID);
+                request.setAttribute("roomType", roomType);
+                request.setAttribute("listRtd", listRtd);
+//                request.setAttribute("listAvailableRoom", listAvailableRoom);
+                request.setAttribute("listRoom", listRoom);
+                RequestDispatcher dispatch = request.getRequestDispatcher("rooms-single.jsp");
+                dispatch.forward(request, response);
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import Entity.RoomTypeDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class DAORoomType extends DBConnect {
 
     List<RoomType> list = new ArrayList<>();
 
-    public List<RoomType> listRoomType() {
+    public List<RoomType> listAllRoomType() {
         String sql = "select * from RoomType";
         try {
             conn = getConnection();
@@ -56,11 +57,39 @@ public class DAORoomType extends DBConnect {
         return list;
     }
 
+    public RoomType getRoomTypeByID(String RT_ID) {
+        String sql = "select * from RoomType where RoomTypeID = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, RT_ID);
+            rs = state.executeQuery();
+            if (rs.next()) {
+                return new RoomType(
+                        rs.getInt("RoomTypeID"),
+                        rs.getString("Name"),
+                        rs.getDouble("Price"),
+                        rs.getString("Img"),
+                        rs.getString("Description"),
+                        rs.getInt("Adult"),
+                        rs.getInt("Children"));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         DAORoomType daoRt = new DAORoomType();
-        List<RoomType> list = daoRt.listRoomType();
-        list.forEach((roomType) -> {
-            System.out.println(roomType);
-        });
+//        List<RoomType> list = daoRt.listAllRoomType();
+//        list.forEach((roomType) -> {
+//            System.out.println(roomType);
+//        });
+        System.out.println(daoRt.getRoomTypeByID("2"));
     }
 }

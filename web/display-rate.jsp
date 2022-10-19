@@ -642,7 +642,8 @@
                                 <c:forEach items="${listRoomType}" var="rt">
                                     <tr id="roomtype${rt.getRoomTypeID()}">
                                         <td class="room-data">
-                                            <a class="view-room" href="#"><div>
+                                            <a class="view-room" href="roomtype?do=viewDetail&RoomTypeID=${rt.getRoomTypeID()}">
+                                                <div>
                                                     <h4>${rt.getName()}</h4>
                                                 </div>
                                                 <img src="${rt.getImg()}" width="200" height="150">

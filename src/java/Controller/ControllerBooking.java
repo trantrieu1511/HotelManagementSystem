@@ -364,7 +364,7 @@ public class ControllerBooking extends HttpServlet {
         children = Integer.parseInt(request.getParameter("children"));
         room = Integer.parseInt(request.getParameter("room"));
         listRt.clear();
-        listRt = daoRt.listRoomType();
+        listRt = daoRt.listAllRoomType();
         listRtd.clear();
         listRtd = daoRtd.listRoomTypeDetail();
         listCountAvailableRooms.clear();
@@ -436,7 +436,7 @@ public class ControllerBooking extends HttpServlet {
         children = Integer.parseInt(request.getParameter("children"));
         listRooms.clear();
         listRt.clear();
-        listRt = daoRt.listRoomType();
+        listRt = daoRt.listAllRoomType();
         roomTypeID = request.getParameterValues("roomTypeID");
         amount = request.getParameterValues("amount");
         dateDiff = request.getParameter("dateDiff");

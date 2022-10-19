@@ -5,8 +5,12 @@
  */
 package Controller;
 
+import Entity.Room;
+import Model.DAORoom;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,10 +39,10 @@ public class ControllerRoom extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
+            if (service == null || service.equals("")) {
+                service = "viewHotelRooms";
+            }
             if (service.equals("viewHotelRooms")) {
-
-                RequestDispatcher dispatch = request.getRequestDispatcher("rooms.jsp");
-                dispatch.forward(request, response);
             }
 
         } catch (Exception ex) {
