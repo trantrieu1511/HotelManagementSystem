@@ -172,6 +172,23 @@ public class DAOBooking extends DBConnect {
         return true;
     }
 
+    public boolean deleteBooking(String bookID) {
+        String sql = "delete from Booking where bookID = " + bookID;
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
     static List<RoomType> listRcmd = new ArrayList<>();
 
     public static void main(String[] args) {

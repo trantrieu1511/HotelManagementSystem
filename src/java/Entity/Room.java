@@ -29,8 +29,9 @@ public class Room extends RoomType {
         this.isAvailable = isAvailable;
     }
 
-    public Room(int RoomID, String RoomName, int Floor, String View, int RoomTypeID, String RoomTypeName, int Adult, int Children, double Price) {
-        super(RoomTypeID, RoomTypeName, Adult, Children, Price);
+    //get list of room bt RT_ID constructor
+    public Room(int RoomID, String RoomName, int Floor, String View, int RoomTypeID, String RoomTypeName, int Adult, int Children, double Price, String Description) {
+        super(RoomTypeID, RoomTypeName, Adult, Children, Price, Description);
         this.RoomID = RoomID;
         this.Name = RoomName;
         this.Floor = Floor;

@@ -14,6 +14,8 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- FontAwesome JS-->
+        <script src="https://kit.fontawesome.com/310efd8ed3.js" crossorigin="anonymous"></script>
         <title>My booking</title>
         <style>
             #rate-recommend-table{
@@ -36,7 +38,8 @@
             }
             .data{
                 vertical-align: top;
-                padding-top: 5px;
+                padding-top: 10px;
+                padding-bottom: 10px;
                 padding-left: 10px;
             }
             @media only screen and (min-width: 1200px) {
@@ -45,32 +48,89 @@
                     height: 100%;
                 }
             }
+            .submit-section{
+                text-align: center;
+            }
+            .submit-section input{
+                padding: 10px 3rem;
+            }
         </style>
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 3rem;">
-                <h2>Booking & Trips</h2>
+                <h2>Booking</h2>
 
                 <table id="rate-recommend-table" border="1">
                     <thead>
                     </thead>
                     <tbody>
-                    <c:forEach items="${listRecommendRooms}" var="list">
+                    <c:forEach items="${listBookDetail}" var="list">
                         <tr>
-                            <td class="rate-recommend-table-td data">
+                            <td class="rate-recommend-table-td data" style="border-right: 0px;">
                                 <div>
-
+                                    ${list.getCheckIn()} - ${list.getCheckOut()}
+                                </div>
+                                <div>
+                                    <c:if test="${list.isIsCancelled()}">
+                                        Cancelled
+                                    </c:if>
+                                    <c:if test="${!list.isIsCancelled()}">
+                                        Staying
+                                    </c:if>
                                 </div>
                             </td>
                             <td class="rate-recommend-table-td data" style="border-right: 0px;">
-                                <strong>VND 200,000</strong>
+                                <strong>VND ${list.getTotalPrice()}</strong>
+                            </td>
+                            <td class="rate-recommend-table-td" style="border-right: 0px; width: 3%;">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" style="padding: 15px 15px;" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-vertical"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="customer?do=viewBookingDetail&bookID=${list.getBookID()}">View Details</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#remove-booking${list.getBookID()}">Remove</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
+            <!-- Remove Booking Modal -->
+            <c:forEach items="${listBookDetail}" var="list">
+                <div id="remove-booking${list.getBookID()}" class="modal custom-modal fade" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <!--                                    <div class="modal-header" style="text-align: center;">
+                                                                    <h5 class="modal-title">Are you sure to log out?</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>-->
+                            <div class="modal-body">
+                                <div style="text-align: center;">
+                                    <div class="form-header">
+                                        <h4>Remove booking</h4>
+                                    </div>
+                                    <hr>
+                                    <p>Are you sure want to delete this booking?</p>
+                                </div>
+                                <form action="customer" method="post">
+                                    <input type="text" name="do" value="removeBooking">
+                                    <input type="text" name="bookID" value="${list.getBookID()}">
+                                    <!--<input type="text" name="cusID" value="${sessionScope.Customer.getCusID()}">-->
+                                    <div class="submit-section" style="display: flex; justify-content: space-around;">
+                                        <input type="submit" class="btn btn-primary" value="Yes">
+                                        <a href="#" class="btn btn-light" style="padding: 10px 35px;" data-dismiss="modal">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+            <!-- /Remove Booking Modal -->
         </div>
 
         <style type="text/css">

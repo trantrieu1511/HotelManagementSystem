@@ -115,6 +115,10 @@ update Room set
 isAvailable = 1
 where RoomID = 16
 
+--manage booking query
+select distinct b.BookID, b.BookDate ,b.PaymentStatus, b.isCancelled, bd.CheckIn, bd.CheckOut, SUM(bd.Amount) as 'TotalPrice' from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID where b.CusID = 'CUS00001'
+group by b.BookID, b.BookDate, bd.CheckIn, bd.CheckOut, b.PaymentStatus, b.isCancelled
 
 --BookDetail Queries
 select * from BookDetail
@@ -170,6 +174,23 @@ on r.RoomTypeID = rt.RoomTypeID
 where r.isAvailable = 1 and
 rt.RoomTypeID = 1
 order by r.RoomID asc
+
+--room single query
+select r.RoomID, r.[Name] as RoomName, 
+r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, 
+rt.Adult, rt.Children, rt.Price, rt.[Description]
+from Room r full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID 
+where 
+--r.isAvailable = 1 and
+rt.RoomTypeID = 1
+order by r.RoomID asc
+
+--room single views query
+select distinct r.[View]
+from Room r full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID 
+where rt.RoomTypeID = 1
 
 --count rooms that are available
 select rt.RoomTypeID, Count(*) as 'NoOfAvailableRoom' 

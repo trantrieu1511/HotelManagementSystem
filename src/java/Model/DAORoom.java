@@ -28,7 +28,7 @@ public class DAORoom extends DBConnect {
     public List<Room> listAvailableRooms(String roomTypeID, String amount) {
         String sql = "select distinct top " + amount + " r.RoomID, r.[Name] as RoomName, \n"
                 + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
-                + "rt.Adult, rt.Children, rt.Price\n"
+                + "rt.Adult, rt.Children, rt.Price, rt.[Description]\n"
                 + "from Room r full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
                 + "where r.isAvailable = 1 and\n"
@@ -49,7 +49,8 @@ public class DAORoom extends DBConnect {
                         rs.getString("RoomTypeName"),
                         rs.getInt("Adult"),
                         rs.getInt("Children"),
-                        rs.getDouble("Price")
+                        rs.getDouble("Price"),
+                        rs.getString("Description")
                 ));
             }
         } catch (SQLException ex) {
@@ -105,7 +106,7 @@ public class DAORoom extends DBConnect {
     public List<Room> getListAvailableRoomsByRT_ID(String RT_ID) {
         String sql = "select r.RoomID, r.[Name] as RoomName, \n"
                 + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
-                + "rt.Adult, rt.Children, rt.Price\n"
+                + "rt.Adult, rt.Children, rt.Price, rt.[Description]\n"
                 + "from Room r full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
                 + "where r.isAvailable = 1 and\n"
@@ -126,7 +127,8 @@ public class DAORoom extends DBConnect {
                         rs.getString("RoomTypeName"),
                         rs.getInt("Adult"),
                         rs.getInt("Children"),
-                        rs.getDouble("Price")
+                        rs.getDouble("Price"),
+                        rs.getString("Description")
                 ));
             }
         } catch (SQLException ex) {
@@ -142,7 +144,7 @@ public class DAORoom extends DBConnect {
     public List<Room> getListOfRoomsByRT_ID(String RT_ID) {
         String sql = "select r.RoomID, r.[Name] as RoomName, \n"
                 + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
-                + "rt.Adult, rt.Children, rt.Price\n"
+                + "rt.Adult, rt.Children, rt.Price, rt.[Description]\n"
                 + "from Room r full outer join RoomType rt\n"
                 + "on r.RoomTypeID = rt.RoomTypeID \n"
                 + "where rt.RoomTypeID = " + RT_ID + "\n"
@@ -162,7 +164,8 @@ public class DAORoom extends DBConnect {
                         rs.getString("RoomTypeName"),
                         rs.getInt("Adult"),
                         rs.getInt("Children"),
-                        rs.getDouble("Price")
+                        rs.getDouble("Price"),
+                        rs.getString("Description")
                 ));
             }
         } catch (SQLException ex) {
@@ -173,6 +176,30 @@ public class DAORoom extends DBConnect {
             closeConnection(conn);
         }
         return list;
+    }
+
+    public List<String> getListOfViewsByRT_ID(String RT_ID) {
+        String sql = "select distinct r.[View]\n"
+                + "from Room r full outer join RoomType rt\n"
+                + "on r.RoomTypeID = rt.RoomTypeID \n"
+                + "where rt.RoomTypeID = ?";
+        List<String> views = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, RT_ID);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                views.add(rs.getString("View"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return views;
     }
 
     public static void main(String[] args) {
@@ -194,13 +221,19 @@ public class DAORoom extends DBConnect {
         listRooms = daoR.getListOfRoomsByRT_ID("2");
 
         listRooms.forEach((room) -> {
-            System.out.println(room.getRoomID() + " " + room.getRoomName() + " " + room.getFloor() + " " + room.getView()
-                    + " " + room.getRoomTypeID() + " " + room.getName() + " " + room.getAdult() + " " + room.getChildren()
-                    + " " + room.getPrice()
-            );
-//            System.out.println(room);
+//            System.out.println(room.getRoomID() + " " + room.getRoomName() + " " + room.getFloor() + " " + room.getView()
+//                    + " " + room.getRoomTypeID() + " " + room.getName() + " " + room.getAdult() + " " + room.getChildren()
+//                    + " " + room.getPrice()
+//            );
+            System.out.println(room);
         }
         );
+
+        List<String> views = daoR.getListOfViewsByRT_ID("1");
+        views.forEach(view -> {
+            System.out.println(view);
+        });
+
 //        list.forEach((room) -> {
 //            System.out.println(room);
 //        });

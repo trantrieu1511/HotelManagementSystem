@@ -14,6 +14,7 @@ public class Booking {
     int BookID;
     String CusID, BookDate;
     boolean PaymentStatus, isCancelled;
+    double TotalPrice;
 
     public Booking() {
     }
@@ -24,6 +25,14 @@ public class Booking {
         this.BookDate = BookDate;
         this.PaymentStatus = PaymentStatus;
         this.isCancelled = isCancelled;
+    }
+
+    public Booking(int BookID, String BookDate, boolean PaymentStatus, boolean isCancelled, double TotalPrice) {
+        this.BookID = BookID;
+        this.BookDate = BookDate;
+        this.PaymentStatus = PaymentStatus;
+        this.isCancelled = isCancelled;
+        this.TotalPrice = TotalPrice;
     }
 
     public int getBookID() {
@@ -68,7 +77,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" + "BookID=" + BookID + ", CusID=" + CusID + ", BookDate=" + BookDate + ", PaymentStatus=" + PaymentStatus + ", isCancelled=" + isCancelled + '}';
+        return "Booking{" + "BookID=" + BookID + ", CusID=" + CusID + ", BookDate=" + BookDate + ", PaymentStatus=" + PaymentStatus + ", isCancelled=" + isCancelled + ", TotalPrice=" + TotalPrice + '}';
     }
 
 }

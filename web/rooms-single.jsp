@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-12 room-single mt-4 mb-5 ftco-animate">
                                     <h2 class="mb-4">${roomType.getName()} <span>- (${listRoom.size()} rooms)</span></h2>
-                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+                                <p>${roomType.getDescription()}</p>
                                 <div class="d-md-flex mt-5 mb-5">
                                     <ul class="list">
                                         <li><span>Max:</span> ${roomType.getAdult()+roomType.getChildren()} Persons (
@@ -93,7 +93,21 @@
                                         <li><span>Size:</span> 45 m2</li>
                                     </ul>
                                     <ul class="list ml-md-5">
-                                        <li><span>View:</span> Sea View</li>
+                                        <li><span>View:</span> 
+                                            <c:forEach items="${listOfRoomView}" var="view">
+                                                <c:if test="${listOfRoomView.size()==1}">
+                                                    ${view}
+                                                </c:if>
+                                                <c:if test="${listOfRoomView.size()>1}">
+                                                    <c:if test="${listOfRoomView.size()-1!=listOfRoomView.lastIndexOf(view)}">
+                                                        ${view}, 
+                                                    </c:if>
+                                                    <c:if test="${listOfRoomView.size()-1==listOfRoomView.lastIndexOf(view)}">
+                                                        ${view}
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach>
+                                        </li>
                                         <li><span>Bed:</span> 
                                             <c:forEach items="${listRtd}" var="listRtd">
                                                 ${listRtd.getBedAmount()} x ${listRtd.getName()} <br>
@@ -101,7 +115,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+                                <!--<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>-->
                             </div>
                             <div class="col-md-12 room-single ftco-animate mb-5 mt-4">
                                 <h3 class="mb-4">Take A Tour</h3>

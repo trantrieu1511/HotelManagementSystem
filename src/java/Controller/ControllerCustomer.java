@@ -5,11 +5,16 @@
  */
 package Controller;
 
+import Entity.BookDetail;
 import Entity.Customer;
+import Model.DAOBooking;
+import Model.DAOBookingDetail;
 import Model.DAOCustomer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +29,14 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ControllerCustomer", urlPatterns = {"/customer"})
 public class ControllerCustomer extends HttpServlet {
+
+    DAOBookingDetail daoBd = new DAOBookingDetail();
+    List<BookDetail> listBookDetail = new ArrayList<>();
+    boolean statusAdd = false;
+    boolean statusUpdate = false;
+    boolean statusDelete = false;
+
+    DAOBooking daoB = new DAOBooking();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -192,8 +205,34 @@ public class ControllerCustomer extends HttpServlet {
                     }
                 }
                 if (service.equals("manageBooking")) {
+                    listBookDetail.clear();
+                    listBookDetail = daoBd.getBookDetailByCusID(cus.getCusID());
+                    request.setAttribute("listBookDetail", listBookDetail);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-booking.jsp");
                     dispatch.forward(request, response);
+                }
+                if (service.equals("viewBookingDetail")) {
+                    out.print("ok!");
+                    RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed-printed.jsp");
+                    dispatch.forward(request, response);
+                }
+                if (service.equals("removeBooking")) {
+                    String bookID = request.getParameter("bookID");
+                    statusDelete = daoBd.deleteBookingDetails(bookID);
+                    if (statusDelete) {
+                        System.out.println("Delete book details by bookID = " + bookID + " successfully");
+                        statusDelete = daoB.deleteBooking(bookID);
+                        if (statusDelete) {
+                            System.out.println("Delete booking by bookID = " + bookID + " successfully");
+                            response.sendRedirect("customer?do=manageBooking");
+                        } else {
+                            System.out.println("Delete booking by bookID = " + bookID + " failed");
+                            response.sendRedirect("error404.jsp");
+                        }
+                    } else {
+                        System.out.println("Delete book details by bookID = " + bookID + " failed");
+                        response.sendRedirect("error404.jsp");
+                    }
                 }
             }
         } catch (Exception ex) {

@@ -35,6 +35,12 @@ public class BookDetail extends Booking {
         this.CheckOut = CheckOut;
     }
 
+    public BookDetail(String CheckIn, String CheckOut, int BookID, String BookDate, boolean PaymentStatus, boolean isCancelled, double TotalPrice) {
+        super(BookID, BookDate, PaymentStatus, isCancelled, TotalPrice);
+        this.CheckIn = CheckIn;
+        this.CheckOut = CheckOut;
+    }
+
     public int getBD_ID() {
         return BD_ID;
     }
@@ -43,11 +49,11 @@ public class BookDetail extends Booking {
         this.BD_ID = BD_ID;
     }
 
-    public int getBookID() {
+    public int getBDBookID() {
         return BookID;
     }
 
-    public void setBookID(int BookID) {
+    public void setBDBookID(int BookID) {
         this.BookID = BookID;
     }
 
@@ -83,9 +89,17 @@ public class BookDetail extends Booking {
         this.Amount = Amount;
     }
 
+    public double getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public void setTotalPrice(double TotalPrice) {
+        this.TotalPrice = TotalPrice;
+    }
+
     @Override
     public String toString() {
-        return "BookDetail{" + "BD_ID=" + BD_ID + ", BookID=" + BookID + ", RoomID=" + RoomID + ", CheckIn=" + CheckIn + ", CheckOut=" + CheckOut + ", Amount=" + Amount + '}';
+        return super.toString() + "BookDetail{" + "BD_ID=" + BD_ID + ", BookID=" + BookID + ", RoomID=" + RoomID + ", CheckIn=" + CheckIn + ", CheckOut=" + CheckOut + ", Amount=" + Amount + '}';
     }
 
 }

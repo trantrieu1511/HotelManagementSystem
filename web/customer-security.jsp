@@ -55,9 +55,9 @@
                 padding: 6px 6px;
                 border-radius: 0.25rem;
             }
-            button.btn-default svg:active{
+            button.btn-default:active{
                 transform: translateY(1px);
-                /*box-shadow: none;*/
+                box-shadow: none;
             }
             button.btn-default:hover{
                 background-color: whitesmoke;

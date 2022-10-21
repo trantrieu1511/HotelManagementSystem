@@ -4,14 +4,147 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Booking Detail Page</title>
+        <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
+        <!--  All snippets are MIT license http://bootdey.com/license -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+            body{
+                background: white;
+            }
+            .container{
+                width: 100%;
+                padding-right: 0px; 
+                padding-left: 0px; 
+                margin-right: auto;
+                margin-left: auto;
+            }
+            label{
+                font-weight: 500;
+            }
+            .details{
+                font-weight: 500;
+            }
+            .important-details{
+                font-weight: bold;
+            }
+            .least-important-details{
+                font-size: smaller;
+            }
+            h6, h5, h4, h3{
+                font-weight: bold;
+                margin-bottom: 1rem;
+            }
+            .left{
+                border-right: 1px solid gainsboro;
+            }
+            .almost-done{
+                display: inline-block;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                padding: 0.4em 0.8em;
+                border-radius: 4px;
+                background: #d2edd5;
+                margin: auto;
+                color: #006607;
+                text-align: left;
+            }
+            #customerDetailForm{
+                padding: 0px;
+            }
+            @media only screen and (max-width: 260px) {
+                .container{
+                    padding: 0px;
+                }
+            }
+            /*            @media only screen and (max-width: 520px) {
+                            .left{
+                                border: none;
+                            }
+                        }*/
+            @media (max-width: 520px){
+                .col-sm-6 {
+                    -ms-flex: 0 0 50%;
+                    flex: 0 0 100%;
+                    max-width: 50%;
+                }
+                /*                .left{
+                                    border: none;
+                                }*/
+            }
+            .svg-checkmark{
+                fill: green;
+            }
+            .main-content{
+                border: 2px solid black;
+                background: whitesmoke;
+            }
+        </style>
+
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <jsp:include page="page-header.jsp"></jsp:include>
+        <div class="container" style="margin-top: 2rem">
+            <div class="main-body">
+                <div class="main-content">
+                    This is the main content
+                </div>
+            </div>
+        </div>
+
+        <style type="text/css">
+            body{
+                /*background: #f7f7ff;*/
+                /*margin-top: 20px;*/
+            }
+            .card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 0 solid transparent;
+                border-radius: .25rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+            }
+            .me-2 {
+                margin-right: .5rem!important;
+            }
+            nav{
+                background-color: midnightblue;
+            }
+            .nav-item a, .navbar-brand {
+                color: white;
+            }
+            .nav-item a:hover, .navbar-brand:hover {
+                color: blue;
+            }
+            a.dropdown-item{
+                color: black;
+            }
+            .div-section{
+                margin-top: 10px;
+            }
+            .submit-section{
+                text-align: center;
+            }
+            .submit-section input{
+                padding: 10px 3rem;
+            }
+        </style>
     </body>
 </html>
+

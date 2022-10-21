@@ -42,6 +42,7 @@ public class ControllerRoomType extends HttpServlet {
     List<RoomTypeDetail> listRtd = new ArrayList<>();
     List<Room> listAvailableRoom = new ArrayList<>();
     List<Room> listRoom = new ArrayList<>();
+    List<String> listOfRoomViews = null;
 
     DAORoom daoR = new DAORoom();
     DAORoomType daoRt = new DAORoomType();
@@ -73,10 +74,12 @@ public class ControllerRoomType extends HttpServlet {
                 listRtd = daoRtd.getListOfRoomTypeDetailByRT_ID(RT_ID);
 //                listAvailableRoom = daoR.getListAvailableRoomsByRT_ID(RT_ID);
                 listRoom = daoR.getListOfRoomsByRT_ID(RT_ID);
+                listOfRoomViews = daoR.getListOfViewsByRT_ID(RT_ID);
                 request.setAttribute("roomType", roomType);
                 request.setAttribute("listRtd", listRtd);
 //                request.setAttribute("listAvailableRoom", listAvailableRoom);
                 request.setAttribute("listRoom", listRoom);
+                request.setAttribute("listOfRoomView", listOfRoomViews);
                 RequestDispatcher dispatch = request.getRequestDispatcher("rooms-single.jsp");
                 dispatch.forward(request, response);
             }
