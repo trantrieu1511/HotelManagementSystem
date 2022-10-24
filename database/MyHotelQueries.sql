@@ -130,6 +130,12 @@ where BD_ID = 1
 --delete from BookDetail where BD_ID = 2
 update BookDetail set BookID = 3 where BD_ID = 1002
 
+--display booking detail by BookID
+select * from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID
+where b.BookID = 4
+
+
 --display all RoomType in hotel
 select * from RoomType
 

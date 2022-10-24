@@ -39,7 +39,7 @@
                 font-weight: bold;
             }
             .least-important-details{
-                font-size: smaller;
+                font-size: x-small;
             }
             h6, h5, h4, h3{
                 font-weight: bold;
@@ -47,6 +47,7 @@
             }
             .left{
                 border-right: 1px solid gainsboro;
+                border-left: 0.5mm solid #cecece;
             }
             .almost-done{
                 display: inline-block;
@@ -89,16 +90,131 @@
                 border: 2px solid black;
                 background: whitesmoke;
             }
+            .sub-content{
+                border: 2px solid black;
+                border-top: 1px solid transparent;
+                background: white;
+            }
+            hr{
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+            .content-body{
+                margin: 10px;
+            }
         </style>
 
     </head>
     <body>
         <jsp:include page="page-header.jsp"></jsp:include>
-        <div class="container" style="margin-top: 2rem">
-            <div class="main-body">
-                <div class="main-content">
-                    This is the main content
+            <div class="container" style="margin-top: 2rem">
+                <div class="main-body">
+                    <div class="main-content">
+                        <div class="content-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div>
+                                        <h6>MyHotel</h6>
+                                    </div>
+                                    <div>
+                                        <strong>Address:</strong> MyHotel address
+                                    </div>
+                                    <div>
+                                        <strong>Phone:</strong> +84868342491
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-md-6 left">
+                                            <div class="least-important-details">CHECKIN</div>
+                                            <span class="important-details">${checkInDate}</span>
+                                        <div class="text-secondary">14:00 – 00:00</div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="least-important-details">CHECKOUT</div>
+                                        <span class="important-details">${checkOutDate.split(" ")[0]}</span>
+                                        <div class="text-secondary">01:00 – 12:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6 left">
+                                        <div class="least-important-details">UNITS</div>
+                                        <div class="important-details">1</div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="least-important-details">NIGHTS</div>
+                                        <div class="important-details">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <h4 style="margin-bottom: 0px;">Price</h4>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <div style="margin-bottom: 15px; font-size: x-large;">Price</div>
+                            </div>
+                            <div>
+                                <div style="margin-bottom: 0px; font-size: x-large;">VND ${totalPrice}</div>
+                            </div>
+                        </div>
+                        <div class="important-details">
+                            The final price shown is the amount you will pay to the property.
+                        </div>
+                        <div class="least-important-details">
+                            Our website does not charge guests any reservation, administration or other fees.
+                            Your card issuer may charge you a foreign transaction fee.
+                        </div>
+                        <hr>
+                        <div class="important-details">
+                            Payment information
+                        </div>
+                        <div class="least-important-details">
+                            We handles all payments.
+                        </div>
+                        <hr>
+                        <div class="important-details">
+                            Additional information
+                        </div>
+                        <div class="least-important-details">
+                            Please note that additional supplements (e.g. extra bed) are not added in this total.
+                            If you don't show up or cancel, applicable taxes may still be charged by the property.
+                            Please remember to read the <strong>Important information</strong> below, as this may contain important details not mentioned here.
+                        </div>
+                        <hr>
+                    </div>
                 </div>
+                <div class="sub-content">
+                    <div class="content-body">
+                        <div class="row">
+                            <div class="col-lg-9 col-sm-9 col-md-9 left least-important-details" style="border-left: 0px;">
+                                <div class="important-details">
+                                    Standard Studio
+                                </div>
+                                <div>
+                                    <strong>Guest name:</strong> Triệu Trần / for 2 Adults, 1 child (up to 12 years of age)
+                                </div>
+                                <div>
+                                    <strong>Meal Plan:</strong> There is no meal option with this room.
+                                </div>
+                                <div>
+                                    <strong>Bed Size(s):</strong> 1 single bed (90-130 cm wide)
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-md-3">
+                                <div>
+                                    <div class="least-important-details"><strong>Prepayment :</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr style="margin-top: 2rem;">
             </div>
         </div>
 

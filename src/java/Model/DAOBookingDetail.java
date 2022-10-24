@@ -84,14 +84,6 @@ public class DAOBookingDetail extends DBConnect {
         return list;
     }
 
-    public static void main(String[] args) {
-        DAOBookingDetail daoBd = new DAOBookingDetail();
-        List<BookDetail> list = daoBd.getBookDetailByCusID("CUS00001");
-        for (BookDetail bookDetail : list) {
-            System.out.println(bookDetail.getBookID());
-        }
-    }
-
     public boolean deleteBookingDetails(String bookID) {
         String sql = "delete from BookDetail where bookID = " + bookID;
         try {
@@ -107,5 +99,13 @@ public class DAOBookingDetail extends DBConnect {
             closeConnection(conn);
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        DAOBookingDetail daoBd = new DAOBookingDetail();
+        List<BookDetail> list = daoBd.getBookDetailByCusID("CUS00001");
+        for (BookDetail bookDetail : list) {
+            System.out.println(bookDetail);
+        }
     }
 }
