@@ -619,6 +619,7 @@
                     <input type="hidden" name="do" value="proceedBooking">
                     <input type="hidden" name="adult" value="${adult}">
                     <input type="hidden" name="children" value="${children}">
+                    <input type="hidden" name="room" value="${room}">
                     <!--<input type="hidden" name="RoomTypeID" id="RoomTypeID" value="">-->
                     <input type="hidden" name="dateDiff" value="${dateDiff}">
                     <!--<input type="hidden" name="Name" id="roomTypeName" value="">-->

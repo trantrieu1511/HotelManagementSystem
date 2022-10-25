@@ -86,13 +86,17 @@ public class DAOBooking extends DBConnect {
         return listRecommendRooms;
     }
 
-    public boolean addBooking(String cusID, String Remarks) {
-        String sql = "insert into Booking(CusID, BookDate, SpecialRequests) values(?, GETDATE(), ?)";
+    public boolean addBooking(String cusID, int adult, int children, int room, String Remarks) {
+        String sql = "insert into Booking(CusID, BookDate, NumOfAdult, NumOfChildren, NumOfRoom, SpecialRequests) "
+                + "values(?, GETDATE(), ?, ?, ?, ?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, cusID);
-            state.setString(2, Remarks);
+            state.setInt(2, adult);
+            state.setInt(3, children);
+            state.setInt(4, room);
+            state.setString(5, Remarks);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -199,7 +203,8 @@ public class DAOBooking extends DBConnect {
         for (Room room : list) {
             System.out.println(room.getRoomTypeID() + ", " + room.getNoOfAvailableRoom());
         }
-        System.out.println(daoB.getLatestCusIDByEmail("vuivanve@gmail.com"));
+        System.out.println(daoB.getLatestCusIDByEmail("nguyenvana@gmail.com"));
+        System.out.println(daoB.getLatestBookIDByCusID("CUS00001"));
 //        for (RoomType roomType : listRcmd) {
 //            System.out.println(roomType);
 //        }

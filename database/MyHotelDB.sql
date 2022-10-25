@@ -73,6 +73,9 @@ CREATE TABLE Booking(
 	BookID int identity(1,1) primary key,
 	CusID nvarchar(4000) not null,
 	BookDate datetime not null,
+	NumOfAdult int not null,
+	NumOfChildren int not null,
+	NumOfRoom int not null,
 	PaymentStatus bit default 0 not null,
 	SpecialRequests nvarchar(MAX),
 	isCancelled bit default 0 not null

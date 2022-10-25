@@ -135,6 +135,15 @@ select * from Booking b full outer join BookDetail bd
 on b.BookID = bd.BookID
 where b.BookID = 4
 
+--display booking detail printed by BookID
+select b.*, bd.BD_ID, bd.CheckIn, bd.CheckOut, bd.Amount, r.RoomID,
+r.[Name], r.[Floor], r.[View], rt.RoomTypeID, rt.[Name], rt.Price, 
+rt.Adult, rt.Children 
+from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID full outer join Room r
+on bd.RoomID = r.RoomID full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID
+where b.BookID = 4
 
 --display all RoomType in hotel
 select * from RoomType

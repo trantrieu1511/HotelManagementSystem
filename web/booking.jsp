@@ -448,7 +448,12 @@
                                     </div>
                                 </div>
                                 <div class="text-secondary" style="font-size: small;">
-                                    (for ${dateDiff} nights & all guests)
+                                    <c:if test="${dateDiff==1}">
+                                        (for ${dateDiff} night & all guests)
+                                    </c:if>
+                                    <c:if test="${dateDiff>1}">
+                                        (for ${dateDiff} nights & all guests)
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -543,6 +548,7 @@
                                             </c:forEach>
                                             <input type="hidden" name="adult" value="${adult}">
                                             <input type="hidden" name="children" value="${children}">
+                                            <input type="hidden" name="room" value="${room}">
                                             <input type="hidden" name="totalPrice" value="">
                                             <input type="hidden" name="dateDiff" value="">
                                             <input type="hidden" name="checkInDate" value="">
@@ -582,6 +588,7 @@
                             <input type="hidden" name="do" value="finishReserve">
                             <input type="hidden" name="adult" value="${adult}">
                             <input type="hidden" name="children" value="${children}">
+                            <input type="hidden" name="room" value="${room}">
                             <input type="hidden" name="totalPrice" value="${totalPrice}">
                             <input type="hidden" name="dateDiff" value="${dateDiff}">
                             <input type="hidden" name="checkInDate" value="${checkInDate}">
@@ -1549,7 +1556,12 @@
                                             </div>
                                         </div>
                                         <div class="text-secondary" style="font-size: small;">
-                                            (for ${dateDiff} nights & all guests)
+                                            <c:if test="${dateDiff==1}">
+                                                (for ${dateDiff} night & all guests)
+                                            </c:if>
+                                            <c:if test="${dateDiff>1}">
+                                                (for ${dateDiff} nights & all guests)
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -1585,6 +1597,7 @@
                                             </c:forEach>
                                             <input type="hidden" name="adult" value="${adult}">
                                             <input type="hidden" name="children" value="${children}">
+                                            <input type="hidden" name="room" value="${room}">
                                             <input type="hidden" name="totalPrice" value="">
                                             <input type="hidden" name="dateDiff" value="">
                                             <input type="hidden" name="checkInDate" value="">

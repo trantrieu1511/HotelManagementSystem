@@ -109,6 +109,14 @@
         <jsp:include page="page-header.jsp"></jsp:include>
             <div class="container" style="margin-top: 2rem">
                 <div class="main-body">
+                    <div style="text-align: right;">
+                        <div class="important-details">
+                            Booking confirmation
+                        </div>
+                        <div class="">
+                            BookID: 1
+                        </div>
+                    </div>
                     <div class="main-content">
                         <div class="content-body">
                             <div class="row">

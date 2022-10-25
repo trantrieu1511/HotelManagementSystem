@@ -37,7 +37,7 @@ public class DAOBookingDetail extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setInt(1, bookDetail.getBookID());
+            state.setInt(1, bookDetail.getBDBookID());
             state.setInt(2, bookDetail.getRoomID());
             state.setInt(3, bookDetail.getRoomID());
             state.executeUpdate();
@@ -103,9 +103,17 @@ public class DAOBookingDetail extends DBConnect {
 
     public static void main(String[] args) {
         DAOBookingDetail daoBd = new DAOBookingDetail();
+        DAOBooking daoB = new DAOBooking();
         List<BookDetail> list = daoBd.getBookDetailByCusID("CUS00001");
         for (BookDetail bookDetail : list) {
             System.out.println(bookDetail);
         }
+//        boolean statusAdd = daoBd.addBookingDetail(new BookDetail(1,
+//                1, "2022-10-25", "2022-10-26"), "1");
+//        if (statusAdd) {
+//            System.out.println("Add BookDetail Successfully");
+//        } else {
+//            System.out.println("Add BookDetail Failed");
+//        }
     }
 }

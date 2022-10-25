@@ -130,7 +130,7 @@ public class ControllerBooking extends HttpServlet {
 //                    out.print(roomID[i] + " ");
 //                }
                 if (cus != null) {//Customer has signed in
-                    statusAdd = daoB.addBooking(cus.getCusID(), Remarks);
+                    statusAdd = daoB.addBooking(cus.getCusID(), adult, children, room, Remarks);
                     if (statusAdd) {//Add succeeded
                         System.out.println("Add Booking Successfully!");
                         for (int i = 0; i < roomID.length; i++) {
@@ -162,7 +162,7 @@ public class ControllerBooking extends HttpServlet {
                     if (statusAdd) {//Add succeeded
                         System.out.println("Add Customer Successfully!");
                         cusID = daoB.getLatestCusIDByEmail(Email);
-                        statusAdd = daoB.addBooking(cusID, Remarks);
+                        statusAdd = daoB.addBooking(cusID, adult, children, room, Remarks);
                         if (statusAdd) {//Add succeeded
                             System.out.println("Add Booking Successfully!");
                             for (int i = 0; i < roomID.length; i++) {
@@ -197,7 +197,7 @@ public class ControllerBooking extends HttpServlet {
                 checkInDate = request.getParameter("checkInDate");
                 checkOutDate = request.getParameter("checkOutDate");
                 dateDiff = request.getParameter("dateDiff");
-                room = Integer.parseInt(request.getParameter("totalRoom"));
+//                room = Integer.parseInt(request.getParameter("totalRoom"));
                 roomID = request.getParameterValues("RoomID");
                 boolean isCancelled = false;
 
@@ -434,6 +434,7 @@ public class ControllerBooking extends HttpServlet {
     private void getCurrentBookingDetail(HttpServletRequest request, HttpServletResponse response) throws ParseException {
         adult = Integer.parseInt(request.getParameter("adult"));
         children = Integer.parseInt(request.getParameter("children"));
+        room = Integer.parseInt(request.getParameter("room"));
         listRooms.clear();
         listRt.clear();
         listRt = daoRt.listAllRoomType();
@@ -454,6 +455,7 @@ public class ControllerBooking extends HttpServlet {
         }
         request.setAttribute("adult", adult);
         request.setAttribute("children", children);
+        request.setAttribute("room", room);
         request.setAttribute("roomTypeID", roomTypeID);
         request.setAttribute("amount", amount);
         request.setAttribute("totalPrice", totalPrice);
