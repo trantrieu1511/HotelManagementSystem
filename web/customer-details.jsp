@@ -19,20 +19,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/customer-account-settings.js"></script>
-        <style>
-            nav{
-                background-color: midnightblue;
-            }
-            .nav-item a, .navbar-brand {
-                color: white;
-            }
-            .nav-item a:hover, .navbar-brand:hover {
-                color: blue;
-            }
-            a.dropdown-item{
-                color: black;
-            }
-        </style>
         <script type="text/javascript">
             <c:if test="${alert!=''}">
             window.onload = function () {
@@ -412,7 +398,7 @@
 
         <style type="text/css">
             body{
-                margin-top:20px;
+                /*margin-top:20px;*/
                 color: #1a202c;
                 text-align: left;
                 background-color: #e2e8f0;    

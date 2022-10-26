@@ -16,6 +16,8 @@ public class Room extends RoomType {
     int RoomTypeID, Floor;
     String View;
     boolean isAvailable;
+    int NumOfAdultDisplay;
+    int NumOfChildrenDisplay;
 
     public Room() {
     }
@@ -32,6 +34,16 @@ public class Room extends RoomType {
     //get list of room bt RT_ID constructor
     public Room(int RoomID, String RoomName, int Floor, String View, int RoomTypeID, String RoomTypeName, int Adult, int Children, double Price, String Description) {
         super(RoomTypeID, RoomTypeName, Adult, Children, Price, Description);
+        this.RoomID = RoomID;
+        this.Name = RoomName;
+        this.Floor = Floor;
+        this.View = View;
+    }
+
+    public Room(int NumOfAdultDisplay, int NumOfChildrenDisplay, int RoomID, String RoomName, int Floor, String View, int RoomTypeID, String RoomTypeName, int Adult, int Children, double Price, String Description) {
+        super(RoomTypeID, RoomTypeName, Adult, Children, Price, Description);
+        this.NumOfAdultDisplay = NumOfAdultDisplay;
+        this.NumOfChildrenDisplay = NumOfChildrenDisplay;
         this.RoomID = RoomID;
         this.Name = RoomName;
         this.Floor = Floor;
@@ -133,9 +145,25 @@ public class Room extends RoomType {
         this.isAvailable = isAvailable;
     }
 
+    public int getNumOfAdultDisplay() {
+        return NumOfAdultDisplay;
+    }
+
+    public void setNumOfAdultDisplay(int NumOfAdultDisplay) {
+        this.NumOfAdultDisplay = NumOfAdultDisplay;
+    }
+
+    public int getNumOfChildrenDisplay() {
+        return NumOfChildrenDisplay;
+    }
+
+    public void setNumOfChildrenDisplay(int NumOfChildrenDisplay) {
+        this.NumOfChildrenDisplay = NumOfChildrenDisplay;
+    }
+
     @Override
     public String toString() {
-        return "Room{" + "RoomID=" + RoomID + ", Name=" + Name + ", RoomTypeID=" + RoomTypeID + ", Floor=" + Floor + ", View=" + View + '}' + " " + super.toString();
+        return "Room{" + "RoomID=" + RoomID + ", Name=" + Name + ", RoomTypeID=" + RoomTypeID + ", Floor=" + Floor + ", View=" + View + ", isAvailable=" + isAvailable + ", NumOfAdultDisplay=" + NumOfAdultDisplay + ", NumOfChildrenDisplay=" + NumOfChildrenDisplay + '}' + " " + super.toString();
     }
 
 }

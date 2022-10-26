@@ -14,7 +14,9 @@ public class Booking {
     int BookID;
     String CusID, BookDate;
     int NumOfAdult, NumOfChildren, NumOfRoom;
-    boolean PaymentStatus, isCancelled;
+    boolean PaymentStatus;
+    String SpecialRequests;
+    boolean isCancelled;
     double TotalPrice;
 
     public Booking() {
@@ -39,6 +41,17 @@ public class Booking {
     public Booking(int BookID, String CusID, String BookDate, int NumOfAdult, int NumOfChildren, int NumOfRoom, boolean PaymentStatus, boolean isCancelled, double TotalPrice) {
         this.BookID = BookID;
         this.CusID = CusID;
+        this.BookDate = BookDate;
+        this.NumOfAdult = NumOfAdult;
+        this.NumOfChildren = NumOfChildren;
+        this.NumOfRoom = NumOfRoom;
+        this.PaymentStatus = PaymentStatus;
+        this.isCancelled = isCancelled;
+        this.TotalPrice = TotalPrice;
+    }
+
+    public Booking(int BookID, String BookDate, int NumOfAdult, int NumOfChildren, int NumOfRoom, boolean PaymentStatus, boolean isCancelled, double TotalPrice) {
+        this.BookID = BookID;
         this.BookDate = BookDate;
         this.NumOfAdult = NumOfAdult;
         this.NumOfChildren = NumOfChildren;
@@ -114,8 +127,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" + "BookID=" + BookID + ", CusID=" + CusID + ", BookDate=" + BookDate + ", NumOfAdult=" + NumOfAdult + ", NumOfChildren=" + NumOfChildren + ", NumOfRoom=" + NumOfRoom + ", PaymentStatus=" + PaymentStatus + ", isCancelled=" + isCancelled + ", TotalPrice=" + TotalPrice + '}';
+        return "Booking{" + "BookID=" + BookID + ", CusID=" + CusID + ", BookDate=" + BookDate + ", NumOfAdult=" + NumOfAdult + ", NumOfChildren=" + NumOfChildren + ", NumOfRoom=" + NumOfRoom + ", PaymentStatus=" + PaymentStatus + ", SpecialRequests=" + SpecialRequests + ", isCancelled=" + isCancelled + ", TotalPrice=" + TotalPrice + '}';
     }
 
-    
 }

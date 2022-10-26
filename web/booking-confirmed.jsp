@@ -4,6 +4,7 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -99,7 +100,10 @@
                             <div class="row">
                                 <div class="col-lg-8">
                                     <h6 style="margin-bottom: 15px">Thanks ${FirstName}</h6>
-                                <h5 style="margin-bottom: 15px">Your booking at our Hotel is confirmed</h5>
+                                <h5 style="margin-bottom: 15px">
+                                    <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.393 7.5l-5.643 5.784-2.644-2.506-1.856 1.858 4.5 4.364 7.5-7.643-1.857-1.857z"/></svg>
+                                    Your booking at our Hotel is confirmed
+                                </h5>
                                 <div style="margin-bottom: 15px; margin-left: 5px;">
                                     <%--<c:if test="${Date().getTime()>0}">--%>
                                     <!--ok?-->
@@ -146,7 +150,18 @@
                                         <h6>Booking details</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        ${dateDiff} night, ${listRoom.size()} room
+                                        <c:if test="${dateDiff>1}">
+                                            ${dateDiff} nights
+                                        </c:if>
+                                        <c:if test="${dateDiff==1}">
+                                            ${dateDiff} night
+                                        </c:if>
+                                        <c:if test="${listRoom.size()>1}">
+                                            , ${listRoom.size()} rooms
+                                        </c:if>
+                                        <c:if test="${listRoom.size()==1}">
+                                            , ${listRoom.size()} room
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -194,7 +209,7 @@
                                                     Price
                                                 </div>
                                                 <div style="font-size: x-large; font-weight: 500;">
-                                                    VND ${totalPrice}
+                                                    VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalPrice}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -354,38 +369,16 @@
                                     <div style="margin-top: 1rem;">
                                         <strong>
                                             <c:if test="${sessionScope.Customer!=null}">
-                                                <form action="booking" method="post">
-                                                    <input type="hidden" name="do" value="cancelBooking">
-                                                    <input type="hidden" name="checkInDate" value="${checkInDate}">
-                                                    <input type="hidden" name="checkOutDate" value="${checkOutDate}">
-                                                    <input type="hidden" name="dateDiff" value="${dateDiff}">
-                                                    <input type="hidden" name="totalRoom" value="${listRoom.size()}">
-                                                    <c:forEach items="${RoomID}" var="roomID">
-                                                        <input type="hidden" name="RoomID" value="${roomID}">
-                                                    </c:forEach>
-                                                    <button style="text-decoration: underline; border: 0px;">
-                                                        <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
-                                                        Cancel your booking
-                                                    </button>
-                                                </form>
+                                                <a href="#" data-toggle="modal" data-target="#cancel-booking-logged-in">
+                                                    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
+                                                    Cancel your booking
+                                                </a>
                                             </c:if>
                                             <c:if test="${sessionScope.Customer==null}">
-                                                <form action="booking" method="post">
-                                                    <input type="hidden" name="do" value="cancelBooking">
-                                                    <input type="hidden" name="status" value="not-sign-in">
-                                                    <input type="hidden" name="cusID" value="${cusID}">
-                                                    <input type="hidden" name="checkInDate" value="${checkInDate}">
-                                                    <input type="hidden" name="checkOutDate" value="${checkOutDate}">
-                                                    <input type="hidden" name="dateDiff" value="${dateDiff}">
-                                                    <input type="hidden" name="totalRoom" value="${listRoom.size()}">
-                                                    <c:forEach items="${RoomID}" var="roomID">
-                                                        <input type="hidden" name="RoomID" value="${roomID}">
-                                                    </c:forEach>
-                                                    <button style="text-decoration: underline; border: 0px;">
-                                                        <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
-                                                        Cancel your booking
-                                                    </button>
-                                                </form>
+                                                <a href="#" data-toggle="modal" data-target="#cancel-booking-not-login">
+                                                    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
+                                                    Cancel your booking
+                                                </a>
                                             </c:if>
                                         </strong>
                                     </div>
@@ -399,6 +392,80 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Cancel Booking Modal -->
+                    <div id="cancel-booking-not-login" class="modal custom-modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <!--                                    <div class="modal-header" style="text-align: center;">
+                                                                        <h5 class="modal-title">Are you sure to log out?</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>-->
+                                <div class="modal-body">
+                                    <div style="text-align: center;">
+                                        <div class="form-header">
+                                            <h4>Cancel booking</h4>
+                                        </div>
+                                        <hr>
+                                        <p>Are you sure want to cancel this booking?</p>
+                                    </div>
+                                    <form action="booking" method="post">
+                                        <input type="hidden" name="do" value="cancelBooking">
+                                        <input type="hidden" name="status" value="not-sign-in">
+                                        <input type="hidden" name="cusID" value="${cusID}">
+                                        <input type="hidden" name="checkInDate" value="${checkInDate}">
+                                        <input type="hidden" name="checkOutDate" value="${checkOutDate}">
+                                        <input type="hidden" name="dateDiff" value="${dateDiff}">
+                                        <input type="hidden" name="totalRoom" value="${listRoom.size()}">
+                                        <c:forEach items="${RoomID}" var="roomID">
+                                            <input type="hidden" name="RoomID" value="${roomID}">
+                                        </c:forEach>
+                                        <div class="submit-section" style="display: flex; justify-content: space-around;">
+                                            <input type="submit" class="btn btn-primary" value="Yes">
+                                            <a href="#" class="btn btn-light" style="padding: 10px 35px;" data-dismiss="modal">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cancel-booking-logged-in" class="modal custom-modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <!--                                    <div class="modal-header" style="text-align: center;">
+                                                                        <h5 class="modal-title">Are you sure to log out?</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>-->
+                                <div class="modal-body">
+                                    <div style="text-align: center;">
+                                        <div class="form-header">
+                                            <h4>Remove booking</h4>
+                                        </div>
+                                        <hr>
+                                        <p>Are you sure want to cancel this booking?</p>
+                                    </div>
+                                    <form action="booking" method="post">
+                                        <input type="hidden" name="do" value="cancelBooking">
+                                        <input type="hidden" name="checkInDate" value="${checkInDate}">
+                                        <input type="hidden" name="checkOutDate" value="${checkOutDate}">
+                                        <input type="hidden" name="dateDiff" value="${dateDiff}">
+                                        <input type="hidden" name="totalRoom" value="${listRoom.size()}">
+                                        <c:forEach items="${RoomID}" var="roomID">
+                                            <input type="hidden" name="RoomID" value="${roomID}">
+                                        </c:forEach>
+                                        <div class="submit-section" style="display: flex; justify-content: space-around;">
+                                            <input type="submit" class="btn btn-primary" value="Yes">
+                                            <a href="#" class="btn btn-light" style="padding: 10px 35px;" data-dismiss="modal">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Cancel Booking Modal -->
                     <!-- Check Booking Modal -->
                     <div id="check-booking" class="modal custom-modal fade" role="dialog">
                         <div class="modal-dialog modal-dialog-centered modal" role="document">
@@ -450,11 +517,16 @@
                                             <h6 style="margin-bottom: 0px;">Price</h6>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-md-6">
-                                            <h6 style="margin-bottom: 0px;">VND ${totalPrice}</h6>
+                                            <h6 style="margin-bottom: 0px;">VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalPrice}"/></h6>
                                         </div>
                                     </div>
                                     <div class="text-secondary" style="font-size: small;">
-                                        (for ${dateDiff} nights & all guests)
+                                        <c:if test="${dateDiff==1}">
+                                            (for ${dateDiff} night & all guests)
+                                        </c:if>
+                                        <c:if test="${dateDiff>1}">
+                                            (for ${dateDiff} nights & all guests)
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>

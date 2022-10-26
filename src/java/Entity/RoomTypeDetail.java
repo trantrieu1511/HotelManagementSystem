@@ -46,10 +46,12 @@ public class RoomTypeDetail extends BedType {
         this.RoomTypeID = RoomTypeID;
     }
 
+    @Override
     public int getBedTypeID() {
         return BedTypeID;
     }
 
+    @Override
     public void setBedTypeID(int BedTypeID) {
         this.BedTypeID = BedTypeID;
     }

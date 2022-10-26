@@ -100,8 +100,8 @@ public class DAORoomTypeDetail extends DBConnect {
 
     public static void main(String[] args) {
         DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
-//        List<RoomTypeDetail> list = daoRtd.listRoomTypeDetail();
-        List<RoomTypeDetail> list = daoRtd.getListOfRoomTypeDetailByRT_ID("2");
+        List<RoomTypeDetail> list = daoRtd.listRoomTypeDetail();
+//        List<RoomTypeDetail> list = daoRtd.getListOfRoomTypeDetailByRT_ID("2");
         for (RoomTypeDetail roomTypeDetail : list) {
             System.out.println(roomTypeDetail);
         }

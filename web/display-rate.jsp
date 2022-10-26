@@ -4,6 +4,7 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -394,7 +395,7 @@
                     console.log("room_num" + i + " = " + room_num[i]);
                 }
                 if (sum_room !== 0) {
-                    document.getElementById("total-price-fake-table").innerHTML = "VND " + sum_price;
+                    document.getElementById("total-price-fake-table").innerHTML = "VND " + sum_price.toLocaleString("en-US");
                     document.getElementById("roomTypePrice").value = sum_price;
                     (sum_room > 1 ? document.getElementById("total-rooms").innerHTML = sum_room + " rooms for: "
                             :
@@ -504,15 +505,17 @@
                                             <strong>Price for a night stay</strong>
                                         </div>
                                     </c:if>
-                                    <strong>VND ${dateDiff*room*list.getPrice()}</strong>
-                                </td>
-                                <!--                                <td style="text-align: center; border-top: 1px solid #e6e6e6;">
-                                                                    <a href="#rate-table" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
-                                                                       margin-top: 1rem; margin-bottom: 1rem; width: 70%">
-                                                                        Reserve your selection
-                                                                    </a>
-                                                                </td>-->
-                            </tr>
+                                    <strong>
+                                        VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateDiff*room*list.getPrice()}"></fmt:formatNumber>
+                                        </strong>
+                                    </td>
+                                    <!--                                <td style="text-align: center; border-top: 1px solid #e6e6e6;">
+                                                                        <a href="#rate-table" class="btn btn-secondary" style="color: white; border-color: darkblue; background-color: midnightblue; 
+                                                                           margin-top: 1rem; margin-bottom: 1rem; width: 70%">
+                                                                            Reserve your selection
+                                                                        </a>
+                                                                    </td>-->
+                                </tr>
                         </c:forEach>
                     </tbody>
                 </table>
@@ -675,7 +678,7 @@
                                             </div>
                                         </td>
                                         <td class="room-data">
-                                            <div><strong>VND ${dateDiff*rt.getPrice()}</strong></div>
+                                            <div><strong>VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateDiff*rt.getPrice()}"/></strong></div>
                                         </td>
                                         <td class="room-data" style="width: 25%">
                                             <div style="color: green;">
@@ -694,7 +697,7 @@
                                                 <c:forEach items="${listCountAvailableRooms}" var="list">
                                                     <c:forEach var="j" begin="1" end="${list.getNoOfAvailableRoom()}">
                                                         <c:if test="${list.getRoomTypeID()==rt.getRoomTypeID()}">
-                                                            <option value="${j}">${j} (VND ${dateDiff*j*rt.getPrice()})</option>
+                                                            <option value="${j}">${j} (VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateDiff*j*rt.getPrice()}"/>)</option>
                                                         </c:if>
                                                     </c:forEach>
                                                 </c:forEach>

@@ -4,6 +4,7 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -62,6 +63,7 @@
             <div class="container" style="margin-top: 3rem;">
                 <h2>Booking</h2>
 
+                <a href="home#booking-section">Continue book</a>
                 <table id="rate-recommend-table" border="1">
                     <thead>
                     </thead>
@@ -82,14 +84,16 @@
                                 </div>
                             </td>
                             <td class="rate-recommend-table-td data" style="border-right: 0px;">
-                                <strong>VND ${list.getTotalPrice()}</strong>
+                                <strong>VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.getTotalPrice()}"/></strong>
                             </td>
                             <td class="rate-recommend-table-td" style="border-right: 0px; width: 3%;">
                                 <div class="dropdown dropdown-action">
                                     <a href="#" style="padding: 15px 15px;" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-vertical"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="customer?do=viewBookingDetail&bookID=${list.getBookID()}">View Details</a>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#remove-booking${list.getBookID()}">Remove</a>
+                                        <c:if test="${list.isIsCancelled()}">
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#remove-booking${list.getBookID()}">Remove</a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </td>
@@ -117,8 +121,8 @@
                                     <p>Are you sure want to delete this booking?</p>
                                 </div>
                                 <form action="customer" method="post">
-                                    <input type="text" name="do" value="removeBooking">
-                                    <input type="text" name="bookID" value="${list.getBookID()}">
+                                    <input type="hidden" name="do" value="removeBooking">
+                                    <input type="hidden" name="bookID" value="${list.getBookID()}">
                                     <!--<input type="text" name="cusID" value="${sessionScope.Customer.getCusID()}">-->
                                     <div class="submit-section" style="display: flex; justify-content: space-around;">
                                         <input type="submit" class="btn btn-primary" value="Yes">

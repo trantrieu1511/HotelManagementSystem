@@ -178,6 +178,48 @@ public class DAORoom extends DBConnect {
         return list;
     }
 
+    public List<Room> getRoomDetailByBookID(String bookID) {
+        String sql = "select b.NumOfAdult, b.NumOfChildren, r.RoomID, r.[Name] as RoomName, \n"
+                + "r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, \n"
+                + "rt.Adult, rt.Children, rt.Price, rt.[Description]\n"
+                + "from Booking b full outer join BookDetail bd\n"
+                + "on b.BookID = bd.BookID full outer join Room r\n"
+                + "on bd.RoomID = r.RoomID full outer join RoomType rt\n"
+                + "on r.RoomTypeID = rt.RoomTypeID\n"
+                + "where \n"
+                + "b.BookID = " + bookID + "\n"
+                + "order by r.RoomID asc";
+        List<Room> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Room(
+                        rs.getInt("NumOfAdult"),
+                        rs.getInt("NumOfChildren"),
+                        rs.getInt("RoomID"),
+                        rs.getString("RoomName"),
+                        rs.getInt("Floor"),
+                        rs.getString("View"),
+                        rs.getInt("RoomTypeID"),
+                        rs.getString("RoomTypeName"),
+                        rs.getInt("Adult"),
+                        rs.getInt("Children"),
+                        rs.getDouble("Price"),
+                        rs.getString("Description")
+                ));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
     public List<String> getListOfViewsByRT_ID(String RT_ID) {
         String sql = "select distinct r.[View]\n"
                 + "from Room r full outer join RoomType rt\n"
@@ -218,7 +260,8 @@ public class DAORoom extends DBConnect {
 //        }
 
 //        listRooms = daoR.getListAvailableRoomsByRT_ID("2");
-        listRooms = daoR.getListOfRoomsByRT_ID("2");
+//        listRooms = daoR.getListOfRoomsByRT_ID("2");
+        listRooms = daoR.getRoomDetailByBookID("4");
 
         listRooms.forEach((room) -> {
 //            System.out.println(room.getRoomID() + " " + room.getRoomName() + " " + room.getFloor() + " " + room.getView()

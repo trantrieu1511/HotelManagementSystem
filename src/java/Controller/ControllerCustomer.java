@@ -7,9 +7,14 @@ package Controller;
 
 import Entity.BookDetail;
 import Entity.Customer;
+import Entity.Room;
+import Entity.RoomTypeDetail;
 import Model.DAOBooking;
 import Model.DAOBookingDetail;
 import Model.DAOCustomer;
+import Model.DAORoom;
+import Model.DAORoomType;
+import Model.DAORoomTypeDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -30,13 +35,24 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ControllerCustomer", urlPatterns = {"/customer"})
 public class ControllerCustomer extends HttpServlet {
 
+    BookDetail bookDetail = new BookDetail();
+
     DAOBookingDetail daoBd = new DAOBookingDetail();
+    DAOBooking daoB = new DAOBooking();
+    DAORoom daoR = new DAORoom();
+    DAORoomType daoRt = new DAORoomType();
+    DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
+
     List<BookDetail> listBookDetail = new ArrayList<>();
+    List<Room> listRoomDetail = new ArrayList<>();
+    List<RoomTypeDetail> listRtd = new ArrayList<>();
+
     boolean statusAdd = false;
     boolean statusUpdate = false;
     boolean statusDelete = false;
+    boolean isCancelled = false;
 
-    DAOBooking daoB = new DAOBooking();
+    String[] roomID = null;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -206,15 +222,48 @@ public class ControllerCustomer extends HttpServlet {
                 }
                 if (service.equals("manageBooking")) {
                     listBookDetail.clear();
-                    listBookDetail = daoBd.getBookDetailByCusID(cus.getCusID());
+                    listBookDetail = daoBd.getBookingByCusID(cus.getCusID());
                     request.setAttribute("listBookDetail", listBookDetail);
                     RequestDispatcher dispatch = request.getRequestDispatcher("customer-booking.jsp");
                     dispatch.forward(request, response);
                 }
                 if (service.equals("viewBookingDetail")) {
-                    out.print("ok!");
+                    String bookID = request.getParameter("bookID");
+                    listBookDetail.clear();
+                    listRoomDetail.clear();
+                    listRtd.clear();
+                    bookDetail = daoBd.getBookDetailByBookID(bookID);
+                    listRoomDetail = daoR.getRoomDetailByBookID(bookID);
+                    listRtd = daoRtd.listRoomTypeDetail();
+                    request.setAttribute("bookDetail", bookDetail);
+                    request.setAttribute("listRoomDetail", listRoomDetail);
+                    request.setAttribute("listRoomTypeDetail", listRtd);
                     RequestDispatcher dispatch = request.getRequestDispatcher("booking-confirmed-printed.jsp");
                     dispatch.forward(request, response);
+                }
+                if (service.equals("cancelBooking")) {
+                    String bookID = request.getParameter("BookID");
+                    isCancelled = daoB.cancelBookingByBookID(bookID);
+                    roomID = request.getParameterValues("RoomID");
+                    if (isCancelled) {
+                        System.out.println("booking of customer: " + cus.getCusID() + " is cancelled.");
+                        for (int i = 0; i < roomID.length; i++) {
+                            statusUpdate = daoR.setRoomToAvailable(roomID[i]);
+                            if (statusUpdate) {
+                                System.out.println("Set room: " + roomID[i] + " to available successfully");
+                            } else {
+                                System.out.println("Set room to available failed x " + (i + 1));
+                            }
+                        }
+                        if (statusUpdate) {
+                            response.sendRedirect("customer?do=manageBooking");
+                        } else {
+                            response.sendRedirect("error404.jsp");
+                        }
+                    } else {
+                        System.out.println("cancelled booking failed.");
+                        response.sendRedirect("error404.jsp");
+                    }
                 }
                 if (service.equals("removeBooking")) {
                     String bookID = request.getParameter("bookID");

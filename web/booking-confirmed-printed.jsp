@@ -4,6 +4,10 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="Entity.BookDetail"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -114,33 +118,33 @@
                             Booking confirmation
                         </div>
                         <div class="">
-                            BookID: 1
-                        </div>
+                            BookID: ${bookDetail.getBookID()}
                     </div>
-                    <div class="main-content">
-                        <div class="content-body">
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-md-6">
-                                    <div>
-                                        <h6>MyHotel</h6>
-                                    </div>
-                                    <div>
-                                        <strong>Address:</strong> MyHotel address
-                                    </div>
-                                    <div>
-                                        <strong>Phone:</strong> +84868342491
-                                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="content-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div>
+                                    <h6>MyHotel</h6>
                                 </div>
-                                <div class="col-lg-4 col-sm-4 col-md-4">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-md-6 left">
-                                            <div class="least-important-details">CHECKIN</div>
-                                            <span class="important-details">${checkInDate}</span>
+                                <div>
+                                    <strong>Address:</strong> MyHotel address
+                                </div>
+                                <div>
+                                    <strong>Phone:</strong> +84868342491
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6 left">
+                                        <div class="least-important-details">CHECKIN</div>
+                                        <span class="important-details">${bookDetail.getCheckIn()}</span>
                                         <div class="text-secondary">14:00 – 00:00</div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-md-6">
                                         <div class="least-important-details">CHECKOUT</div>
-                                        <span class="important-details">${checkOutDate.split(" ")[0]}</span>
+                                        <span class="important-details">${bookDetail.getCheckOut()}</span>
                                         <div class="text-secondary">01:00 – 12:00</div>
                                     </div>
                                 </div>
@@ -149,11 +153,26 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-6 col-md-6 left">
                                         <div class="least-important-details">UNITS</div>
-                                        <div class="important-details">1</div>
+                                        <div class="important-details">${listRoomDetail.size()}</div>
                                     </div>
+                                    <%
+                                        BookDetail bd = new BookDetail();
+                                        bd = (BookDetail) request.getAttribute("bookDetail");
+                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                        //date-diff
+                                        Date checkIn = sdf.parse(bd.getCheckIn());
+                                        Date checkOut = sdf.parse(bd.getCheckOut());
+                                        long Difference_In_Time = checkOut.getTime() - checkIn.getTime();
+
+                                        // To calculate the no. of days between two dates
+                                        int Difference_In_Days = (int) (Difference_In_Time / (1000 * 3600 * 24));
+                                        if (Difference_In_Days < 0) {
+                                            Difference_In_Days = 0;
+                                        }
+                                    %>
                                     <div class="col-lg-6 col-sm-6 col-md-6">
                                         <div class="least-important-details">NIGHTS</div>
-                                        <div class="important-details">1</div>
+                                        <div class="important-details"><%=Difference_In_Days%></div>
                                     </div>
                                 </div>
                             </div>
@@ -167,11 +186,11 @@
                                 <div style="margin-bottom: 15px; font-size: x-large;">Price</div>
                             </div>
                             <div>
-                                <div style="margin-bottom: 0px; font-size: x-large;">VND ${totalPrice}</div>
+                                <div style="margin-bottom: 0px; font-size: x-large;">VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${bookDetail.getTotalPrice()}"/></div>
                             </div>
                         </div>
                         <div class="important-details">
-                            The final price shown is the amount you will pay to the property.
+                            The final price shown is the amount you will pay to our property.
                         </div>
                         <div class="least-important-details">
                             Our website does not charge guests any reservation, administration or other fees.
@@ -199,30 +218,98 @@
                 <div class="sub-content">
                     <div class="content-body">
                         <div class="row">
-                            <div class="col-lg-9 col-sm-9 col-md-9 left least-important-details" style="border-left: 0px;">
-                                <div class="important-details">
-                                    Standard Studio
+                            <c:set var="count" value="0"/>
+                            <c:forEach items="${listRoomDetail}" var="rd">
+                                <div class="col-lg-9 col-sm-9 col-md-9 left least-important-details" style="border-left: 0px;">
+                                    <div class="important-details">
+                                        ${rd.getName()}
+                                    </div>
+                                    <!--                                    <div>
+                                                                            <strong>Guest name:</strong> ${sessionScope.Customer.getLastName()} ${sessionScope.Customer.getFirstName()} 
+                                                                            / for ${rd.getNumOfAdultDisplay()} Adults
+                                    <c:if test="${rd.getNumOfChildrenDisplay()==0}">
+
+                                    </c:if>
+                                    <c:if test="${rd.getNumOfChildrenDisplay()>0}">
+                                        <c:if test="${rd.getNumOfChildrenDisplay()==1}">
+                                            , ${rd.getNumOfChildrenDisplay()} child
+                                        </c:if>
+                                        <c:if test="${rd.getNumOfChildrenDisplay()>1}">
+                                            , ${rd.getNumOfChildrenDisplay()} children
+                                        </c:if>
+                                    </c:if>
+                                </div>-->
+                                    <div>
+                                        <strong>Meal Plan:</strong> There is no meal option with this room.
+                                    </div>
+                                    <div>
+                                        <strong>Bed Size(s):</strong> 
+                                        <c:forEach items="${listRoomTypeDetail}" var="rtd">
+                                            <c:if test="${rtd.getRoomTypeID()==rd.getRoomTypeID()}">
+                                                ${rtd.getBedAmount()} ${rtd.getName()} <br>
+                                            </c:if>
+                                        </c:forEach>
+                                        <!--1 single bed (90-130 cm wide)-->
+                                    </div>
+                                    <hr>
                                 </div>
-                                <div>
-                                    <strong>Guest name:</strong> Triệu Trần / for 2 Adults, 1 child (up to 12 years of age)
-                                </div>
-                                <div>
-                                    <strong>Meal Plan:</strong> There is no meal option with this room.
-                                </div>
-                                <div>
-                                    <strong>Bed Size(s):</strong> 1 single bed (90-130 cm wide)
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-3 col-md-3">
-                                <div>
-                                    <div class="least-important-details"><strong>Prepayment :</strong></div>
-                                </div>
-                            </div>
+                                <c:set var="count" value="${count=count+1}"/>
+                                <c:if test="${count==1}">
+                                    <div class="col-lg-3 col-sm-3 col-md-3">
+                                        <div>
+                                            <div class="least-important-details"><strong>Prepayment :</strong></div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
                         </div>
 
                     </div>
                 </div>
                 <hr style="margin-top: 2rem;">
+                <c:if test="${!bookDetail.isIsCancelled()}">
+                    <a href="#" data-toggle="modal" data-target="#cancel-booking">Cancel this book</a>
+                </c:if>
+                <c:if test="${bookDetail.isIsCancelled()}">
+                    <div class="important-details">
+                        This book has been cancelled
+                    </div>
+                </c:if>
+
+                <!-- Cancel Booking Modal -->
+                <div id="cancel-booking" class="modal custom-modal fade" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <!--                                    <div class="modal-header" style="text-align: center;">
+                                                                    <h5 class="modal-title">Are you sure to log out?</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>-->
+                            <div class="modal-body">
+                                <div style="text-align: center;">
+                                    <div class="form-header">
+                                        <h4>Cancel booking</h4>
+                                    </div>
+                                    <hr>
+                                    <p>Are you sure want to cancel this booking?</p>
+                                </div>
+                                <form action="customer" method="post">
+                                    <input type="hidden" name="do" value="cancelBooking">
+                                    <input type="hidden" name="BookID" value="${bookDetail.getBookID()}">
+                                    <c:forEach items="${listRoomDetail}" var="rd">
+                                        <input type="hidden" name="RoomID" value="${rd.getRoomID()}">
+                                    </c:forEach>
+                                    <div class="submit-section" style="display: flex; justify-content: space-around;">
+                                        <input type="submit" class="btn btn-primary" value="Yes">
+                                        <a href="#" class="btn btn-light" style="padding: 10px 35px;" data-dismiss="modal">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Cancel Booking Modal -->
             </div>
         </div>
 

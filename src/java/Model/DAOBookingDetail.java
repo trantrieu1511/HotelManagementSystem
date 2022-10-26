@@ -52,7 +52,7 @@ public class DAOBookingDetail extends DBConnect {
         return true;
     }
 
-    public List<BookDetail> getBookDetailByCusID(String cusID) {
+    public List<BookDetail> getBookingByCusID(String cusID) {
         String sql = "select distinct b.BookID, b.BookDate ,b.PaymentStatus, b.isCancelled, bd.CheckIn, bd.CheckOut, SUM(bd.Amount) as 'TotalPrice' "
                 + "from Booking b full outer join BookDetail bd\n"
                 + "on b.BookID = bd.BookID where b.CusID = ?\n"
@@ -84,6 +84,41 @@ public class DAOBookingDetail extends DBConnect {
         return list;
     }
 
+    public BookDetail getBookDetailByBookID(String bookID) {
+        String sql = "select distinct b.BookID, b.BookDate, b.NumOfAdult, b.NumOfChildren, b.NumOfRoom, "
+                + " b.PaymentStatus, b.isCancelled, bd.CheckIn, bd.CheckOut, SUM(bd.Amount) as 'TotalPrice' "
+                + "from Booking b full outer join BookDetail bd\n"
+                + "on b.BookID = bd.BookID where b.bookID = ?\n"
+                + "group by b.BookID, b.BookDate, b.NumOfAdult, b.NumOfChildren, b.NumOfRoom, b.PaymentStatus, "
+                + "b.isCancelled, bd.CheckIn, bd.CheckOut";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, bookID);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                return new BookDetail(
+                        rs.getString("CheckIn"),
+                        rs.getString("CheckOut"),
+                        rs.getInt("BookID"),
+                        rs.getString("BookDate"),
+                        rs.getInt("NumOfAdult"),
+                        rs.getInt("NumOfChildren"),
+                        rs.getInt("NumOfRoom"),
+                        rs.getBoolean("PaymentStatus"),
+                        rs.getBoolean("isCancelled"),
+                        rs.getDouble("TotalPrice"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return null;
+    }
+
     public boolean deleteBookingDetails(String bookID) {
         String sql = "delete from BookDetail where bookID = " + bookID;
         try {
@@ -104,10 +139,12 @@ public class DAOBookingDetail extends DBConnect {
     public static void main(String[] args) {
         DAOBookingDetail daoBd = new DAOBookingDetail();
         DAOBooking daoB = new DAOBooking();
-        List<BookDetail> list = daoBd.getBookDetailByCusID("CUS00001");
-        for (BookDetail bookDetail : list) {
-            System.out.println(bookDetail);
-        }
+//        List<BookDetail> list = daoBd.getBookingByCusID("CUS00001");
+        BookDetail bookDetail = daoBd.getBookDetailByBookID("4");
+//        for (BookDetail bookDetail : list) {
+//            System.out.println(bookDetail);
+//        }
+        System.out.println(bookDetail);
 //        boolean statusAdd = daoBd.addBookingDetail(new BookDetail(1,
 //                1, "2022-10-25", "2022-10-26"), "1");
 //        if (statusAdd) {

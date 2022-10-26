@@ -41,6 +41,12 @@ public class BookDetail extends Booking {
         this.CheckOut = CheckOut;
     }
 
+    public BookDetail(String CheckIn, String CheckOut, int BookID, String BookDate, int NumOfAdult, int NumOfChildren, int NumOfRoom, boolean PaymentStatus, boolean isCancelled, double TotalPrice) {
+        super(BookID, BookDate, NumOfAdult, NumOfChildren, NumOfRoom, PaymentStatus, isCancelled, TotalPrice);
+        this.CheckIn = CheckIn;
+        this.CheckOut = CheckOut;
+    }
+
     public int getBD_ID() {
         return BD_ID;
     }

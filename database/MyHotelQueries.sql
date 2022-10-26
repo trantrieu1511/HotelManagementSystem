@@ -9,6 +9,9 @@ select * from Room
 select * from RoomTypeDetail
 select * from RoomType
 
+update Room
+set isAvailable = 1
+
 update Booking
 set BookDate = '2022-09-22 11:20'
 where BookID = 1
@@ -199,6 +202,18 @@ on r.RoomTypeID = rt.RoomTypeID
 where 
 --r.isAvailable = 1 and
 rt.RoomTypeID = 1
+order by r.RoomID asc
+
+--select room detail by bookID
+select b.NumOfAdult, b.NumOfChildren, r.RoomID, r.[Name] as RoomName, 
+r.[Floor], r.[View], rt.RoomTypeID, rt.[Name] as RoomTypeName, 
+rt.Adult, rt.Children, rt.Price, rt.[Description]
+from Booking b full outer join BookDetail bd
+on b.BookID = bd.BookID full outer join Room r
+on bd.RoomID = r.RoomID full outer join RoomType rt
+on r.RoomTypeID = rt.RoomTypeID
+where 
+b.BookID = 4
 order by r.RoomID asc
 
 --room single views query
