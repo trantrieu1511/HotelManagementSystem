@@ -74,12 +74,12 @@
                                 <div>
                                     ${list.getCheckIn()} - ${list.getCheckOut()}
                                 </div>
-                                <div>
+                                <div style="margin-top: 10px; font-weight: 500">
                                     <c:if test="${list.isIsCancelled()}">
-                                        Cancelled
+                                        <span style="color: red">Cancelled</span>
                                     </c:if>
                                     <c:if test="${!list.isIsCancelled()}">
-                                        Staying
+                                        <span style="color: lightgreen">Staying</span>
                                     </c:if>
                                 </div>
                             </td>
@@ -92,7 +92,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="customer?do=viewBookingDetail&bookID=${list.getBookID()}">View Details</a>
                                         <c:if test="${list.isIsCancelled()}">
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#remove-booking${list.getBookID()}">Remove</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#remove-booking${list.getBookID()}">Remove booking</a>
                                         </c:if>
                                     </div>
                                 </div>

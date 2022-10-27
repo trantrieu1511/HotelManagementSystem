@@ -263,11 +263,11 @@
                                 </c:if>
                             </c:forEach>
                         </div>
-
                     </div>
                 </div>
                 <hr style="margin-top: 2rem;">
                 <c:if test="${!bookDetail.isIsCancelled()}">
+                    <spsan>You can cancel this book at any time</spsan>
                     <a href="#" data-toggle="modal" data-target="#cancel-booking">Cancel this book</a>
                 </c:if>
                 <c:if test="${bookDetail.isIsCancelled()}">

@@ -382,9 +382,9 @@
                                             </c:if>
                                         </strong>
                                     </div>
-                                    <div style="margin-top: 2rem;">
+<!--                                    <div style="margin-top: 2rem;">
                                         <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#check-booking" style="width: 100%;">View booking</a>
-                                    </div>
+                                    </div>-->
                                     <small>
                                         Tip: You can make changes to this booking at anytime
                                     </small>
@@ -442,7 +442,7 @@
                                 <div class="modal-body">
                                     <div style="text-align: center;">
                                         <div class="form-header">
-                                            <h4>Remove booking</h4>
+                                            <h4>Cancel booking</h4>
                                         </div>
                                         <hr>
                                         <p>Are you sure want to cancel this booking?</p>
@@ -635,7 +635,7 @@
                                         The final price shown is the amount you will pay to the property.
                                     </strong>
                                     <div>
-                                        Booking.com does not charge guests any reservation, administration or other fees.<br>
+                                        MyHotel.com does not charge guests any reservation, administration or other fees.<br>
                                         Your card issuer may charge you a foreign transaction fee.
                                     </div>
                                 </div>
@@ -676,7 +676,7 @@
                                 <h6>Address</h6>
                             </div>
                             <div class="col-sm-8 text-secondary">
-                                abc streets, abc state, abc district, abc country
+                                MyHotel streets, x state, y district, z country
                             </div>
                         </div>
                         <div class="row">
