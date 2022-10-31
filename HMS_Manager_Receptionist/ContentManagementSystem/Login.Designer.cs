@@ -36,6 +36,9 @@ namespace ContentManagementSystem
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.btnShowpassword = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.chkRememberme = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,24 +91,60 @@ namespace ContentManagementSystem
             // 
             this.txtPassword.Location = new System.Drawing.Point(481, 254);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(289, 27);
             this.txtPassword.TabIndex = 2;
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(481, 336);
+            this.btnLogin.Location = new System.Drawing.Point(481, 352);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(94, 42);
-            this.btnLogin.TabIndex = 3;
+            this.btnLogin.TabIndex = 5;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // btnShowpassword
+            // 
+            this.btnShowpassword.BackColor = System.Drawing.Color.Transparent;
+            this.btnShowpassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnShowpassword.Location = new System.Drawing.Point(776, 254);
+            this.btnShowpassword.Name = "btnShowpassword";
+            this.btnShowpassword.Size = new System.Drawing.Size(31, 27);
+            this.btnShowpassword.TabIndex = 3;
+            this.btnShowpassword.UseVisualStyleBackColor = false;
+            this.btnShowpassword.Click += new System.EventHandler(this.btnShowpassword_Click);
+            // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(676, 352);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(94, 42);
+            this.btnExit.TabIndex = 6;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // chkRememberme
+            // 
+            this.chkRememberme.AutoSize = true;
+            this.chkRememberme.Location = new System.Drawing.Point(481, 296);
+            this.chkRememberme.Name = "chkRememberme";
+            this.chkRememberme.Size = new System.Drawing.Size(129, 24);
+            this.chkRememberme.TabIndex = 4;
+            this.chkRememberme.Text = "Remember me";
+            this.chkRememberme.UseVisualStyleBackColor = true;
+            this.chkRememberme.CheckedChanged += new System.EventHandler(this.chkRememberme_CheckedChanged);
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(824, 450);
+            this.Controls.Add(this.chkRememberme);
+            this.Controls.Add(this.btnShowpassword);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
@@ -130,5 +169,8 @@ namespace ContentManagementSystem
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Button btnShowpassword;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.CheckBox chkRememberme;
     }
 }

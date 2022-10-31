@@ -16,8 +16,12 @@ namespace ContentManagementSystem
         public Login()
         {
             InitializeComponent();
+            txtPassword.PasswordChar = '*';
+            btnShowpassword.BackgroundImage = Properties.Resources.Eye_Icon_Show93;
         }
 
+        bool isRememberme = false;
+        bool isManager = false;
         private void btnLogin_Click(object sender, EventArgs e)
         {
             using (MyHotelContext context = new MyHotelContext())
@@ -30,13 +34,18 @@ namespace ContentManagementSystem
                     {
                         MessageBox.Show("Đăng nhập thành công. Chào bạn đến với chương trình.", "Chào mừng đến với chương trình");
                         this.Hide();
-                        MainFrm mainForm = new MainFrm();
+                        MainFrm mainForm = new MainFrm(isManager, username);
                         DialogResult dr = mainForm.ShowDialog();
-                        this.Close();
+                        if (!isRememberme)
+                        {
+                            txtPassword.Text = "";
+                        }
+                        txtPassword.PasswordChar = '*';
+                        btnShowpassword.BackgroundImage = Properties.Resources.Eye_Icon_Show93;
+                        this.Show();
                     }
                     else
                     {
-
                         MessageBox.Show("Bạn nhập sai Tên truy cập hay mật khẩu. Xin vui lòng kiểm tra lại.", "Login");
                     }
                 }
@@ -46,19 +55,58 @@ namespace ContentManagementSystem
                 }
             }
         }
+
         private bool taiKhoanTonTai(string user, string pass)
         {
             using (MyHotelContext context = new MyHotelContext())
             {
-                var employee = context.Employees.AsEnumerable();
+                var employee = context.Employees.ToList();
                 foreach (var emp in employee)
                 {
                     if (emp.Username == user && emp.Password == pass)
                     {
+                        if (emp.ReportsTo == null)
+                        {
+                            isManager = true;
+                        }
                         return true;
                     }
                 }
                 return false;
+            }
+        }
+
+        private void btnShowpassword_Click(object sender, EventArgs e)
+        {
+            if (txtPassword.PasswordChar == '\0')
+            {
+                btnShowpassword.BackgroundImage = Properties.Resources.Eye_Icon_Show93;
+                txtPassword.PasswordChar = '*';
+            }
+            else
+            {
+                btnShowpassword.BackgroundImage = Properties.Resources.hide_512;
+                txtPassword.PasswordChar = '\0';
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Bạn có muốn thoát?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                this.Close();
+            }
+        }
+
+        private void chkRememberme_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isRememberme)
+            {
+                isRememberme = false;
+            }
+            else
+            {
+                isRememberme = true;
             }
         }
     }

@@ -34,15 +34,15 @@ namespace ContentManagementSystem
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.manageContentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageRoomTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageRoomTypeDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageBedTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageBedTypeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manageBookingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageBookDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageCustomerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageEmployeeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usernameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.profileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -74,7 +74,7 @@ namespace ContentManagementSystem
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageContentToolStripMenuItem,
-            this.profileToolStripMenuItem});
+            this.usernameToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 28);
@@ -85,9 +85,9 @@ namespace ContentManagementSystem
             // 
             this.manageContentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageRoomTypeToolStripMenuItem,
+            this.manageRoomTypeDetailToolStripMenuItem,
             this.manageRoomToolStripMenuItem,
             this.manageBedTypeToolStripMenuItem,
-            this.manageBedTypeToolStripMenuItem1,
             this.manageBookingToolStripMenuItem,
             this.manageBookDetailToolStripMenuItem,
             this.manageCustomerToolStripMenuItem,
@@ -103,69 +103,77 @@ namespace ContentManagementSystem
             this.manageRoomTypeToolStripMenuItem.Text = "Manage RoomType";
             this.manageRoomTypeToolStripMenuItem.Click += new System.EventHandler(this.manageRoomTypeToolStripMenuItem_Click);
             // 
+            // manageRoomTypeDetailToolStripMenuItem
+            // 
+            this.manageRoomTypeDetailToolStripMenuItem.Name = "manageRoomTypeDetailToolStripMenuItem";
+            this.manageRoomTypeDetailToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.manageRoomTypeDetailToolStripMenuItem.Text = "Manage RoomTypeDetail";
+            this.manageRoomTypeDetailToolStripMenuItem.Click += new System.EventHandler(this.manageRoomTypeDetailToolStripMenuItem_Click);
+            // 
             // manageRoomToolStripMenuItem
             // 
             this.manageRoomToolStripMenuItem.Name = "manageRoomToolStripMenuItem";
             this.manageRoomToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
-            this.manageRoomToolStripMenuItem.Text = "Manage RoomTypeDetail";
+            this.manageRoomToolStripMenuItem.Text = "Manage Room";
             this.manageRoomToolStripMenuItem.Click += new System.EventHandler(this.manageRoomToolStripMenuItem_Click);
             // 
             // manageBedTypeToolStripMenuItem
             // 
             this.manageBedTypeToolStripMenuItem.Name = "manageBedTypeToolStripMenuItem";
             this.manageBedTypeToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
-            this.manageBedTypeToolStripMenuItem.Text = "Manage Room";
-            // 
-            // manageBedTypeToolStripMenuItem1
-            // 
-            this.manageBedTypeToolStripMenuItem1.Name = "manageBedTypeToolStripMenuItem1";
-            this.manageBedTypeToolStripMenuItem1.Size = new System.Drawing.Size(261, 26);
-            this.manageBedTypeToolStripMenuItem1.Text = "Manage BedType";
+            this.manageBedTypeToolStripMenuItem.Text = "Manage BedType";
+            this.manageBedTypeToolStripMenuItem.Click += new System.EventHandler(this.manageBedTypeToolStripMenuItem_Click);
             // 
             // manageBookingToolStripMenuItem
             // 
             this.manageBookingToolStripMenuItem.Name = "manageBookingToolStripMenuItem";
             this.manageBookingToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
             this.manageBookingToolStripMenuItem.Text = "Manage Booking";
+            this.manageBookingToolStripMenuItem.Click += new System.EventHandler(this.manageBookingToolStripMenuItem_Click);
             // 
             // manageBookDetailToolStripMenuItem
             // 
             this.manageBookDetailToolStripMenuItem.Name = "manageBookDetailToolStripMenuItem";
             this.manageBookDetailToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
             this.manageBookDetailToolStripMenuItem.Text = "Manage BookDetail";
+            this.manageBookDetailToolStripMenuItem.Click += new System.EventHandler(this.manageBookDetailToolStripMenuItem_Click);
             // 
             // manageCustomerToolStripMenuItem
             // 
             this.manageCustomerToolStripMenuItem.Name = "manageCustomerToolStripMenuItem";
             this.manageCustomerToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
             this.manageCustomerToolStripMenuItem.Text = "Manage Customer";
+            this.manageCustomerToolStripMenuItem.Click += new System.EventHandler(this.manageCustomerToolStripMenuItem_Click);
             // 
             // manageEmployeeToolStripMenuItem
             // 
             this.manageEmployeeToolStripMenuItem.Name = "manageEmployeeToolStripMenuItem";
             this.manageEmployeeToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
             this.manageEmployeeToolStripMenuItem.Text = "Manage Employee";
+            this.manageEmployeeToolStripMenuItem.Click += new System.EventHandler(this.manageEmployeeToolStripMenuItem_Click);
+            // 
+            // usernameToolStripMenuItem
+            // 
+            this.usernameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.profileToolStripMenuItem,
+            this.logoutToolStripMenuItem});
+            this.usernameToolStripMenuItem.Name = "usernameToolStripMenuItem";
+            this.usernameToolStripMenuItem.Size = new System.Drawing.Size(89, 24);
+            this.usernameToolStripMenuItem.Text = "Username";
             // 
             // profileToolStripMenuItem
             // 
-            this.profileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.profileToolStripMenuItem1,
-            this.logoutToolStripMenuItem});
             this.profileToolStripMenuItem.Name = "profileToolStripMenuItem";
-            this.profileToolStripMenuItem.Size = new System.Drawing.Size(89, 24);
-            this.profileToolStripMenuItem.Text = "Username";
-            // 
-            // profileToolStripMenuItem1
-            // 
-            this.profileToolStripMenuItem1.Name = "profileToolStripMenuItem1";
-            this.profileToolStripMenuItem1.Size = new System.Drawing.Size(139, 26);
-            this.profileToolStripMenuItem1.Text = "Profile";
+            this.profileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.profileToolStripMenuItem.Text = "Profile";
+            this.profileToolStripMenuItem.Click += new System.EventHandler(this.profileToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.logoutToolStripMenuItem.Text = "Logout";
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
             // MainFrm
             // 
@@ -180,7 +188,6 @@ namespace ContentManagementSystem
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainFrm";
             this.Text = "Hệ thống";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -195,12 +202,12 @@ namespace ContentManagementSystem
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem manageContentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageRoomTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem usernameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageRoomTypeDetailToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageRoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageBedTypeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manageBedTypeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem manageBookingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageBookDetailToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageCustomerToolStripMenuItem;
