@@ -93,8 +93,8 @@ namespace ContentManagementSystem
             this.manageCustomerToolStripMenuItem,
             this.manageEmployeeToolStripMenuItem});
             this.manageContentToolStripMenuItem.Name = "manageContentToolStripMenuItem";
-            this.manageContentToolStripMenuItem.Size = new System.Drawing.Size(129, 24);
-            this.manageContentToolStripMenuItem.Text = "ManageContent";
+            this.manageContentToolStripMenuItem.Size = new System.Drawing.Size(133, 24);
+            this.manageContentToolStripMenuItem.Text = "Manage Content";
             // 
             // manageRoomTypeToolStripMenuItem
             // 
@@ -164,14 +164,14 @@ namespace ContentManagementSystem
             // profileToolStripMenuItem
             // 
             this.profileToolStripMenuItem.Name = "profileToolStripMenuItem";
-            this.profileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.profileToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.profileToolStripMenuItem.Text = "Profile";
             this.profileToolStripMenuItem.Click += new System.EventHandler(this.profileToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 

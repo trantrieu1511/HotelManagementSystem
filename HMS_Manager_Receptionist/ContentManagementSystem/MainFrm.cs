@@ -29,7 +29,8 @@ namespace ContentManagementSystem
 
         private void manageRoomTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            RoomType rt = new RoomType();
+            rt.Show();
         }
 
         private void manageRoomTypeDetailToolStripMenuItem_Click(object sender, EventArgs e)
