@@ -47,7 +47,7 @@ namespace ContentManagementSystem
             this.pictureBox1.Image = global::ContentManagementSystem.Properties.Resources.bg_2;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(439, 426);
+            this.pictureBox1.Size = new System.Drawing.Size(452, 426);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -56,7 +56,8 @@ namespace ContentManagementSystem
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(470, 49);
+            this.label1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label1.Location = new System.Drawing.Point(483, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(314, 38);
             this.label1.TabIndex = 1;
@@ -65,7 +66,7 @@ namespace ContentManagementSystem
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(481, 156);
+            this.label2.Location = new System.Drawing.Point(494, 156);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 20);
             this.label2.TabIndex = 1;
@@ -74,7 +75,7 @@ namespace ContentManagementSystem
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(481, 231);
+            this.label3.Location = new System.Drawing.Point(494, 231);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 20);
             this.label3.TabIndex = 1;
@@ -82,22 +83,22 @@ namespace ContentManagementSystem
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(481, 179);
+            this.txtUsername.Location = new System.Drawing.Point(494, 179);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(289, 27);
+            this.txtUsername.Size = new System.Drawing.Size(276, 27);
             this.txtUsername.TabIndex = 1;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(481, 254);
+            this.txtPassword.Location = new System.Drawing.Point(494, 254);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(289, 27);
+            this.txtPassword.Size = new System.Drawing.Size(276, 27);
             this.txtPassword.TabIndex = 2;
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(481, 352);
+            this.btnLogin.Location = new System.Drawing.Point(494, 352);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(94, 42);
             this.btnLogin.TabIndex = 5;
@@ -129,7 +130,7 @@ namespace ContentManagementSystem
             // chkRememberme
             // 
             this.chkRememberme.AutoSize = true;
-            this.chkRememberme.Location = new System.Drawing.Point(481, 296);
+            this.chkRememberme.Location = new System.Drawing.Point(494, 296);
             this.chkRememberme.Name = "chkRememberme";
             this.chkRememberme.Size = new System.Drawing.Size(129, 24);
             this.chkRememberme.TabIndex = 4;

@@ -106,11 +106,11 @@ namespace ContentManagementSystem
         private void btnAdd_Click(object sender, EventArgs e)
         {
             //validation
-            if (string.IsNullOrWhiteSpace(txtRoomTypeID.Text))
+            /*if (!string.IsNullOrWhiteSpace(txtRoomTypeID.Text))
             {
-                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để thêm mới!");
+                MessageBox.Show("Làm ơn nhấn nút reset trước khi thêm mới!");
                 return;
-            }
+            }*/
             if (string.IsNullOrWhiteSpace(txtRoomTypeName.Text))
             {
                 MessageBox.Show("Tên kiểu phòng không được trống! Làm ơn nhập lại!");
@@ -195,7 +195,7 @@ namespace ContentManagementSystem
             //validate
             if (string.IsNullOrWhiteSpace(txtRoomTypeID.Text))
             {
-                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để cập nhật!");
+                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một kiểu phòng bất kỳ trong danh sách phía dưới để cập nhật!");
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtRoomTypeName.Text))
@@ -255,7 +255,7 @@ namespace ContentManagementSystem
             //validate
             if (string.IsNullOrWhiteSpace(txtRoomTypeID.Text))
             {
-                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để xóa!");
+                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một kiểu phòng bất kỳ trong danh sách phía dưới để xóa!");
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtRoomTypeName.Text))
@@ -462,7 +462,7 @@ namespace ContentManagementSystem
             }
         }
 
-        private void dgRoomType_CellEnter(object sender, DataGridViewCellEventArgs e)
+        /*private void dgRoomType_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1)
             {
@@ -489,6 +489,6 @@ namespace ContentManagementSystem
             {
                 numericUpDownMaxChildren.Value = Convert.ToInt32(dgRoomType.Rows[e.RowIndex].Cells[6].FormattedValue.ToString());
             }
-        }
+        }*/
     }
 }

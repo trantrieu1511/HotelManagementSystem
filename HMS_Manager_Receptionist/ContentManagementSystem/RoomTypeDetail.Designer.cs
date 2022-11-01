@@ -226,6 +226,7 @@ namespace ContentManagementSystem
             // 
             // cbBedType
             // 
+            this.cbBedType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBedType.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.cbBedType.FormattingEnabled = true;
             this.cbBedType.Location = new System.Drawing.Point(131, 151);
@@ -235,6 +236,7 @@ namespace ContentManagementSystem
             // 
             // cbRoomType
             // 
+            this.cbRoomType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRoomType.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.cbRoomType.FormattingEnabled = true;
             this.cbRoomType.Location = new System.Drawing.Point(131, 97);
@@ -298,7 +300,7 @@ namespace ContentManagementSystem
             this.dgRoomTypeDetail.Size = new System.Drawing.Size(534, 346);
             this.dgRoomTypeDetail.TabIndex = 15;
             this.dgRoomTypeDetail.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomTypeDetail_CellClick);
-            this.dgRoomTypeDetail.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomTypeDetail_CellEnter);
+            //this.dgRoomTypeDetail.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomTypeDetail_CellEnter);
             // 
             // RoomTypeDetail
             // 

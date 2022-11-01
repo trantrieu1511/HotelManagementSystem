@@ -70,6 +70,9 @@ namespace ContentManagementSystem
             cbRoomType.Enabled = true;
             cbBedType.Enabled = true;
             numericUpDownBedAmount.Enabled = true;
+            btnSearchByRoomType.Enabled = true;
+            btnSearchByBedType.Enabled = true;
+            btnSearchByBedAmount.Enabled = true;
             btnAdd.Enabled = true;
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
@@ -77,6 +80,28 @@ namespace ContentManagementSystem
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            //validate
+            /*if (!string.IsNullOrWhiteSpace(txtRTD_ID.Text))
+            {
+                MessageBox.Show("Làm ơn nhấn nút reset trước khi thêm mới!");
+                return;
+            }*/
+            if (string.IsNullOrWhiteSpace(cbRoomType.Text))
+            {
+                MessageBox.Show("Kiểu phòng không được trống! Làm ơn chọn lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(cbBedType.Text))
+            {
+                MessageBox.Show("kiểu giường không được trống! Làm ơn chọn lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(numericUpDownBedAmount.Value.ToString()))
+            {
+                MessageBox.Show("Số lượng giường không được trống! Làm ơn nhập/chọn lại!");
+                return;
+            }
+
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tạo đối tượng sẽ insert
@@ -102,6 +127,9 @@ namespace ContentManagementSystem
             cbRoomType.Enabled = true;
             cbBedType.Enabled = true;
             numericUpDownBedAmount.Enabled = true;
+            btnSearchByRoomType.Enabled = true;
+            btnSearchByBedType.Enabled = true;
+            btnSearchByBedAmount.Enabled = true;
             btnAdd.Enabled = false;
             btnUpdate.Enabled = true;
             btnDelete.Enabled = true;
@@ -109,6 +137,28 @@ namespace ContentManagementSystem
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            //validate
+            if (string.IsNullOrWhiteSpace(txtRTD_ID.Text))
+            {
+                MessageBox.Show("Mã kiểu phòng chi tiết đang bị trống! Làm ơn chọn một kiểu phòng chi tiết bất kỳ trong danh sách ở cạnh bên để cập nhật!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(cbRoomType.Text))
+            {
+                MessageBox.Show("Kiểu phòng không được trống! Làm ơn chọn lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(cbBedType.Text))
+            {
+                MessageBox.Show("kiểu giường không được trống! Làm ơn chọn lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(numericUpDownBedAmount.Value.ToString()))
+            {
+                MessageBox.Show("Số lượng giường không được trống! Làm ơn nhập/chọn lại!");
+                return;
+            }
+
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm RoomTypeDetail muốn update
@@ -132,6 +182,28 @@ namespace ContentManagementSystem
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            //validate
+            if (string.IsNullOrWhiteSpace(txtRTD_ID.Text))
+            {
+                MessageBox.Show("Mã kiểu phòng chi tiết đang bị trống! Làm ơn chọn một kiểu phòng chi tiết bất kỳ trong danh sách ở cạnh bên để xóa!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(cbRoomType.Text))
+            {
+                MessageBox.Show("Kiểu phòng không được trống! Làm ơn chọn lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(cbBedType.Text))
+            {
+                MessageBox.Show("kiểu giường không được trống! Làm ơn chọn lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(numericUpDownBedAmount.Value.ToString()))
+            {
+                MessageBox.Show("Số lượng giường không được trống! Làm ơn nhập/chọn lại!");
+                return;
+            }
+
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm RoomTypeDetail sẽ delete
@@ -177,21 +249,65 @@ namespace ContentManagementSystem
 
         private void btnSearchByRoomType_Click(object sender, EventArgs e)
         {
-
+            using (MyHotelContext context = new MyHotelContext())
+            {
+                //MessageBox.Show("RoomType selectedItem: "+cbRoomType.Text);
+                var result = context.RoomTypeDetails
+                    .Select(item => new
+                    {
+                        RTD_ID = item.RtdId,
+                        RoomType = item.RoomType.Name,
+                        BedType = item.BedType.Name,
+                        BedAmount = item.BedAmount
+                    })
+                    .Where(item => item.RoomType.Contains(cbRoomType.Text))
+                    .ToList();
+                dgRoomTypeDetail.DataSource = result;
+            }
         }
 
         private void btnSearchByBedType_Click(object sender, EventArgs e)
         {
-
+            using (MyHotelContext context = new MyHotelContext())
+            {
+                var result = context.RoomTypeDetails
+                    .Select(item => new
+                    {
+                        RTD_ID = item.RtdId,
+                        RoomType = item.RoomType.Name,
+                        BedType = item.BedType.Name,
+                        BedAmount = item.BedAmount
+                    })
+                    .Where(item => item.BedType.Contains(cbBedType.Text))
+                    .ToList();
+                dgRoomTypeDetail.DataSource = result;
+            }
         }
 
         private void btnSearchByBedAmount_Click(object sender, EventArgs e)
         {
-
+            using (MyHotelContext context = new MyHotelContext())
+            {
+                var result = context.RoomTypeDetails
+                    .Select(item => new
+                    {
+                        RTD_ID = item.RtdId,
+                        RoomType = item.RoomType.Name,
+                        BedType = item.BedType.Name,
+                        BedAmount = item.BedAmount
+                    })
+                    .Where(item => item.BedAmount <= (int)numericUpDownBedAmount.Value && item.BedAmount > 0)
+                    .ToList();
+                dgRoomTypeDetail.DataSource = result;
+            }
         }
 
         private void dgRoomTypeDetail_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
             txtRTD_ID.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
             cbRoomType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
             cbBedType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
@@ -205,8 +321,12 @@ namespace ContentManagementSystem
             }
         }
 
-        private void dgRoomTypeDetail_CellEnter(object sender, DataGridViewCellEventArgs e)
+        /*private void dgRoomTypeDetail_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
             txtRTD_ID.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
             cbRoomType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
             cbBedType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
@@ -218,6 +338,6 @@ namespace ContentManagementSystem
             {
                 numericUpDownBedAmount.Value = Convert.ToInt32(dgRoomTypeDetail.Rows[e.RowIndex].Cells[3].FormattedValue.ToString());
             }
-        }
+        }*/
     }
 }
