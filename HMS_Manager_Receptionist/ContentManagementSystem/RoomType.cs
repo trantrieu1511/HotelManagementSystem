@@ -16,20 +16,11 @@ namespace ContentManagementSystem
         public RoomType()
         {
             InitializeComponent();
+            dgRoomType.AllowUserToAddRows = false;
             numericUpDownMaxAdult.Minimum = 1;
             numericUpDownMaxAdult.Maximum = 20;
             numericUpDownMaxChildren.Minimum = 0;
             numericUpDownMaxChildren.Maximum = 20;
-        }
-
-        private void RoomType_Load(object sender, EventArgs e)
-        {
-            loadData();
-            dgRoomType.CurrentCell = dgRoomType.Rows[0].Cells[0];
-        }
-
-        private void loadData()
-        {
             txtRoomTypeID.Enabled = false;
             txtRoomTypeName.Enabled = false;
             txtPrice.Enabled = false;
@@ -45,7 +36,16 @@ namespace ContentManagementSystem
             btnAdd.Enabled = false;
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
+        }
 
+        private void RoomType_Load(object sender, EventArgs e)
+        {
+            loadData();
+            //dgRoomType.CurrentCell = dgRoomType.Rows[0].Cells[0];
+        }
+
+        private void loadData()
+        {
             //load datagrid
             using (MyHotelContext context = new MyHotelContext())
             {
@@ -76,7 +76,6 @@ namespace ContentManagementSystem
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            loadData();
             txtRoomTypeName.Enabled = true;
             txtPrice.Enabled = true;
             txtImg.Enabled = true;
@@ -91,11 +90,15 @@ namespace ContentManagementSystem
             btnAdd.Enabled = true;
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
+        }
 
+        private void resetFields()
+        {
             txtRoomTypeID.Text = "";
             txtRoomTypeName.Text = "";
             txtPrice.Text = "";
             txtImg.Text = "";
+            txtDescription.Text = "";
             numericUpDownMaxAdult.Value = numericUpDownMaxAdult.Minimum;
             numericUpDownMaxChildren.Value = numericUpDownMaxChildren.Minimum;
         }
@@ -103,6 +106,11 @@ namespace ContentManagementSystem
         private void btnAdd_Click(object sender, EventArgs e)
         {
             //validation
+            if (string.IsNullOrWhiteSpace(txtRoomTypeID.Text))
+            {
+                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để thêm mới!");
+                return;
+            }
             if (string.IsNullOrWhiteSpace(txtRoomTypeName.Text))
             {
                 MessageBox.Show("Tên kiểu phòng không được trống! Làm ơn nhập lại!");
@@ -160,6 +168,7 @@ namespace ContentManagementSystem
                     MessageBox.Show("Insert successfully!");
                 }
                 loadData();
+                resetFields();
             }
         }
 
@@ -186,7 +195,7 @@ namespace ContentManagementSystem
             //validate
             if (string.IsNullOrWhiteSpace(txtRoomTypeID.Text))
             {
-                MessageBox.Show("Mã kiểu phòng không được trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để cập nhật!");
+                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để cập nhật!");
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtRoomTypeName.Text))
@@ -237,6 +246,7 @@ namespace ContentManagementSystem
                     MessageBox.Show("Update successfully!");
                 }
                 loadData();
+                resetFields();
             }
         }
 
@@ -245,7 +255,7 @@ namespace ContentManagementSystem
             //validate
             if (string.IsNullOrWhiteSpace(txtRoomTypeID.Text))
             {
-                MessageBox.Show("Mã kiểu phòng không được trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để xóa!");
+                MessageBox.Show("Mã kiểu phòng đang bị trống! Làm ơn chọn một phòng bất kỳ trong danh sách phía dưới để xóa!");
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtRoomTypeName.Text))
@@ -291,6 +301,7 @@ namespace ContentManagementSystem
                         MessageBox.Show("Delete successfully!");
                     }
                     loadData();
+                    resetFields();
                 }
             }
         }
@@ -301,6 +312,12 @@ namespace ContentManagementSystem
             {
                 this.Close();
             }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            loadData();
+            resetFields();
         }
 
         /*private void btnSearchByID_Click(object sender, EventArgs e)
@@ -316,17 +333,60 @@ namespace ContentManagementSystem
         {
             using (MyHotelContext context = new MyHotelContext())
             {
-                var result = context.RoomTypes.Where(item => item.Name.Contains(txtRoomTypeName.Text)).ToList();
+                var result = context.RoomTypes
+                    .Select(item => new
+                    {
+                        RoomTypeId = item.RoomTypeId,
+                        Name = item.Name,
+                        Price = (int)item.Price,
+                        Img = item.Img,
+                        Description = item.Description,
+                        Adult = item.Adult,
+                        Children = item.Children
+                    })
+                    .Where(item => item.Name.Contains(txtRoomTypeName.Text))
+                    .ToList();
                 dgRoomType.DataSource = result;
             }
         }
 
         private void btnSearchByPrice_Click(object sender, EventArgs e)
         {
+            //validate
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtPrice.Text))
+                {
+                    MessageBox.Show("Giá của kiểu phòng không được trống! Làm ơn nhập lại!");
+                    return;
+                }
+                if (Convert.ToInt32(txtPrice.Text) < 0 || Convert.ToInt32(txtPrice.Text) > 999999999)
+                {
+                    MessageBox.Show("Giá ở trong khoảng từ 0 - 999tr. Làm ơn nhập lại!");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
             using (MyHotelContext context = new MyHotelContext())
             {
-                var result = context.RoomTypes.Where(item => item.Price <= Convert.ToDecimal(txtPrice.Text) &&
-                item.Price > 0).ToList();
+                var result = context.RoomTypes
+                    .Select(item => new
+                    {
+                        RoomTypeId = item.RoomTypeId,
+                        Name = item.Name,
+                        Price = (int)item.Price,
+                        Img = item.Img,
+                        Description = item.Description,
+                        Adult = item.Adult,
+                        Children = item.Children
+                    })
+                    .Where(item => item.Price <= Convert.ToDecimal(txtPrice.Text) &&
+                item.Price > 0)
+                    .ToList();
                 dgRoomType.DataSource = result;
             }
         }
@@ -336,6 +396,16 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 var result = context.RoomTypes
+                    .Select(item => new
+                    {
+                        RoomTypeId = item.RoomTypeId,
+                        Name = item.Name,
+                        Price = (int)item.Price,
+                        Img = item.Img,
+                        Description = item.Description,
+                        Adult = item.Adult,
+                        Children = item.Children
+                    })
                     .Where(item => item.Adult > 0 && item.Adult <= (int)numericUpDownMaxAdult.Value)
                     .ToList();
                 dgRoomType.DataSource = result;
@@ -347,6 +417,16 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 var result = context.RoomTypes
+                    .Select(item => new
+                    {
+                        RoomTypeId = item.RoomTypeId,
+                        Name = item.Name,
+                        Price = (int)item.Price,
+                        Img = item.Img,
+                        Description = item.Description,
+                        Adult = item.Adult,
+                        Children = item.Children
+                    })
                     .Where(item => item.Children >= 0 && item.Children <= (int)numericUpDownMaxChildren.Value)
                     .ToList();
                 dgRoomType.DataSource = result;

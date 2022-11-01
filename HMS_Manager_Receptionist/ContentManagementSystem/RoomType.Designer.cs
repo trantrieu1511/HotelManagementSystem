@@ -46,9 +46,11 @@ namespace ContentManagementSystem
             this.btnSearchByName = new System.Windows.Forms.Button();
             this.btnSearchByMaxChildren = new System.Windows.Forms.Button();
             this.btnSearchByMaxAdult = new System.Windows.Forms.Button();
+            this.btnSearchByID = new System.Windows.Forms.Button();
             this.numericUpDownMaxChildren = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownMaxAdult = new System.Windows.Forms.NumericUpDown();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -56,7 +58,6 @@ namespace ContentManagementSystem
             this.btnAdd = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.dgRoomType = new System.Windows.Forms.DataGridView();
-            this.btnSearchByID = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxChildren)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxAdult)).BeginInit();
@@ -179,6 +180,7 @@ namespace ContentManagementSystem
             this.groupBox1.Controls.Add(this.numericUpDownMaxChildren);
             this.groupBox1.Controls.Add(this.numericUpDownMaxAdult);
             this.groupBox1.Controls.Add(this.btnExit);
+            this.groupBox1.Controls.Add(this.btnReset);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.btnUpdate);
             this.groupBox1.Controls.Add(this.btnEdit);
@@ -200,7 +202,7 @@ namespace ContentManagementSystem
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox1.Location = new System.Drawing.Point(12, 65);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1003, 316);
+            this.groupBox1.Size = new System.Drawing.Size(994, 316);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin kiểu phòng";
@@ -253,6 +255,18 @@ namespace ContentManagementSystem
             this.btnSearchByMaxAdult.UseVisualStyleBackColor = true;
             this.btnSearchByMaxAdult.Click += new System.EventHandler(this.btnSearchByMaxAdult_Click);
             // 
+            // btnSearchByID
+            // 
+            this.btnSearchByID.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSearchByID.ForeColor = System.Drawing.Color.White;
+            this.btnSearchByID.Location = new System.Drawing.Point(345, 55);
+            this.btnSearchByID.Name = "btnSearchByID";
+            this.btnSearchByID.Size = new System.Drawing.Size(130, 29);
+            this.btnSearchByID.TabIndex = 2;
+            this.btnSearchByID.Text = "SearchByID";
+            this.btnSearchByID.UseVisualStyleBackColor = true;
+            this.btnSearchByID.Visible = false;
+            // 
             // numericUpDownMaxChildren
             // 
             this.numericUpDownMaxChildren.Location = new System.Drawing.Point(647, 106);
@@ -270,18 +284,29 @@ namespace ContentManagementSystem
             // btnExit
             // 
             this.btnExit.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnExit.Location = new System.Drawing.Point(780, 265);
+            this.btnExit.Location = new System.Drawing.Point(837, 261);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(108, 39);
-            this.btnExit.TabIndex = 18;
+            this.btnExit.TabIndex = 19;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnReset
+            // 
+            this.btnReset.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnReset.Location = new System.Drawing.Point(705, 261);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(108, 39);
+            this.btnReset.TabIndex = 18;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // btnDelete
             // 
             this.btnDelete.ForeColor = System.Drawing.Color.Green;
-            this.btnDelete.Location = new System.Drawing.Point(647, 265);
+            this.btnDelete.Location = new System.Drawing.Point(569, 261);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(108, 39);
             this.btnDelete.TabIndex = 17;
@@ -292,7 +317,7 @@ namespace ContentManagementSystem
             // btnUpdate
             // 
             this.btnUpdate.ForeColor = System.Drawing.Color.Green;
-            this.btnUpdate.Location = new System.Drawing.Point(514, 265);
+            this.btnUpdate.Location = new System.Drawing.Point(438, 261);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(108, 39);
             this.btnUpdate.TabIndex = 16;
@@ -302,8 +327,8 @@ namespace ContentManagementSystem
             // 
             // btnEdit
             // 
-            this.btnEdit.ForeColor = System.Drawing.Color.Red;
-            this.btnEdit.Location = new System.Drawing.Point(379, 265);
+            this.btnEdit.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnEdit.Location = new System.Drawing.Point(305, 261);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(108, 39);
             this.btnEdit.TabIndex = 15;
@@ -313,8 +338,8 @@ namespace ContentManagementSystem
             // 
             // btnNew
             // 
-            this.btnNew.ForeColor = System.Drawing.Color.Red;
-            this.btnNew.Location = new System.Drawing.Point(105, 265);
+            this.btnNew.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnNew.Location = new System.Drawing.Point(42, 261);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(108, 39);
             this.btnNew.TabIndex = 13;
@@ -325,7 +350,7 @@ namespace ContentManagementSystem
             // btnAdd
             // 
             this.btnAdd.ForeColor = System.Drawing.Color.Green;
-            this.btnAdd.Location = new System.Drawing.Point(237, 265);
+            this.btnAdd.Location = new System.Drawing.Point(174, 261);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(108, 39);
             this.btnAdd.TabIndex = 14;
@@ -336,11 +361,11 @@ namespace ContentManagementSystem
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.SystemColors.Control;
+            this.label8.BackColor = System.Drawing.SystemColors.ControlLight;
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(332, 9);
+            this.label8.Location = new System.Drawing.Point(334, 9);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(332, 43);
             this.label8.TabIndex = 5;
@@ -349,33 +374,20 @@ namespace ContentManagementSystem
             // dgRoomType
             // 
             this.dgRoomType.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgRoomType.Location = new System.Drawing.Point(12, 387);
+            this.dgRoomType.Location = new System.Drawing.Point(37, 387);
             this.dgRoomType.Name = "dgRoomType";
             this.dgRoomType.RowHeadersWidth = 51;
             this.dgRoomType.RowTemplate.Height = 29;
-            this.dgRoomType.Size = new System.Drawing.Size(1003, 323);
+            this.dgRoomType.Size = new System.Drawing.Size(943, 275);
             this.dgRoomType.TabIndex = 19;
             this.dgRoomType.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomType_CellClick);
             this.dgRoomType.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomType_CellEnter);
-            // 
-            // btnSearchByID
-            // 
-            this.btnSearchByID.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSearchByID.ForeColor = System.Drawing.Color.White;
-            this.btnSearchByID.Location = new System.Drawing.Point(345, 55);
-            this.btnSearchByID.Name = "btnSearchByID";
-            this.btnSearchByID.Size = new System.Drawing.Size(130, 29);
-            this.btnSearchByID.TabIndex = 2;
-            this.btnSearchByID.Text = "SearchByID";
-            this.btnSearchByID.UseVisualStyleBackColor = true;
-            this.btnSearchByID.Visible = false;
-            /*this.btnSearchByID.Click += new System.EventHandler(this.btnSearchByID_Click);*/
             // 
             // RoomType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1027, 722);
+            this.ClientSize = new System.Drawing.Size(1018, 673);
             this.Controls.Add(this.dgRoomType);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.groupBox1);
@@ -423,5 +435,7 @@ namespace ContentManagementSystem
         private System.Windows.Forms.Button btnSearchByMaxChildren;
         private System.Windows.Forms.Button btnSearchByMaxAdult;
         private System.Windows.Forms.DataGridView dgRoomType;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnReset;
     }
 }
