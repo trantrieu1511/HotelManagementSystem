@@ -46,7 +46,8 @@ namespace ContentManagementSystem
 
         private void manageBedTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            BedTypeFrm bedTypeFrm = new BedTypeFrm();
+            bedTypeFrm.Show();
         }
 
         private void manageBookingToolStripMenuItem_Click(object sender, EventArgs e)

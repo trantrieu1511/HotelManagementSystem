@@ -28,8 +28,8 @@ namespace ContentManagementSystem
             {
                 try
                 {
-                    string username = txtUsername.Text;
-                    string password = txtPassword.Text;
+                    string username = txtUsername.Text.Trim();
+                    string password = txtPassword.Text.Trim();
                     if (taiKhoanTonTai(username, password))
                     {
                         MessageBox.Show("Đăng nhập thành công. Chào bạn đến với chương trình.", "Chào mừng đến với chương trình");

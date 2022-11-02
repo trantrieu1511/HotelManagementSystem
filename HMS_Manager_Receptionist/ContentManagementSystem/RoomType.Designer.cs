@@ -381,7 +381,7 @@ namespace ContentManagementSystem
             this.dgRoomType.Size = new System.Drawing.Size(943, 275);
             this.dgRoomType.TabIndex = 19;
             this.dgRoomType.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomType_CellClick);
-            this.dgRoomType.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomType_CellEnter);
+            //this.dgRoomType.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomType_CellEnter);
             // 
             // RoomType
             // 

@@ -344,7 +344,7 @@ namespace ContentManagementSystem
                         Adult = item.Adult,
                         Children = item.Children
                     })
-                    .Where(item => item.Name.Contains(txtRoomTypeName.Text))
+                    .Where(item => item.Name.Contains(txtRoomTypeName.Text.Trim()))
                     .ToList();
                 dgRoomType.DataSource = result;
             }
