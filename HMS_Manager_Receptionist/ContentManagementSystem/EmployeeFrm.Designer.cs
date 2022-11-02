@@ -146,17 +146,15 @@ namespace ContentManagementSystem
             // 
             this.cboSearchBy.FormattingEnabled = true;
             this.cboSearchBy.Items.AddRange(new object[] {
-            "Firstname",
             "Lastname",
-            "Male",
-            "Female",
+            "Firstname",
+            "Gender",
             "Address",
             "DOB",
             "Hiredate",
             "Email",
             "Phonenumber",
-            "Username",
-            "ReportsTo"});
+            "Username"});
             this.cboSearchBy.Location = new System.Drawing.Point(742, 183);
             this.cboSearchBy.Name = "cboSearchBy";
             this.cboSearchBy.Size = new System.Drawing.Size(156, 28);
@@ -248,17 +246,17 @@ namespace ContentManagementSystem
             // 
             // txtLastname
             // 
-            this.txtLastname.Location = new System.Drawing.Point(107, 131);
+            this.txtLastname.Location = new System.Drawing.Point(107, 81);
             this.txtLastname.Name = "txtLastname";
             this.txtLastname.Size = new System.Drawing.Size(162, 27);
-            this.txtLastname.TabIndex = 3;
+            this.txtLastname.TabIndex = 2;
             // 
             // txtFirstname
             // 
-            this.txtFirstname.Location = new System.Drawing.Point(107, 81);
+            this.txtFirstname.Location = new System.Drawing.Point(107, 131);
             this.txtFirstname.Name = "txtFirstname";
             this.txtFirstname.Size = new System.Drawing.Size(162, 27);
-            this.txtFirstname.TabIndex = 2;
+            this.txtFirstname.TabIndex = 3;
             // 
             // txtEmpID
             // 
@@ -360,7 +358,7 @@ namespace ContentManagementSystem
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 134);
+            this.label4.Location = new System.Drawing.Point(20, 84);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 20);
             this.label4.TabIndex = 1;
@@ -369,7 +367,7 @@ namespace ContentManagementSystem
             // lblFirstname
             // 
             this.lblFirstname.AutoSize = true;
-            this.lblFirstname.Location = new System.Drawing.Point(20, 84);
+            this.lblFirstname.Location = new System.Drawing.Point(20, 134);
             this.lblFirstname.Name = "lblFirstname";
             this.lblFirstname.Size = new System.Drawing.Size(76, 20);
             this.lblFirstname.TabIndex = 1;

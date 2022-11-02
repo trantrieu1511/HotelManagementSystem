@@ -49,7 +49,6 @@ E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSyste
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\bin\Debug\net5.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\bin\Debug\net5.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\bin\Debug\net5.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
-E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.csproj.AssemblyReference.cache
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.BedTypeFrm.resources
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.EmployeeFrm.resources
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.Login.resources
@@ -67,3 +66,4 @@ E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSyste
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ref\ContentManagementSystem.dll
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.pdb
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.genruntimeconfig.cache
+E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.csproj.AssemblyReference.cache

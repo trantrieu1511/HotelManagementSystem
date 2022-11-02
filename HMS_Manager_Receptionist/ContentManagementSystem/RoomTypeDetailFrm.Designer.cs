@@ -60,7 +60,7 @@ namespace ContentManagementSystem
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(281, 9);
+            this.label1.Location = new System.Drawing.Point(246, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(424, 38);
             this.label1.TabIndex = 0;
@@ -98,9 +98,9 @@ namespace ContentManagementSystem
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.groupBox1.Location = new System.Drawing.Point(568, 108);
+            this.groupBox1.Location = new System.Drawing.Point(493, 108);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(429, 346);
+            this.groupBox1.Size = new System.Drawing.Size(431, 346);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin chi tiết kiểu phòng";
@@ -299,7 +299,7 @@ namespace ContentManagementSystem
             this.dgRoomTypeDetail.Name = "dgRoomTypeDetail";
             this.dgRoomTypeDetail.RowHeadersWidth = 51;
             this.dgRoomTypeDetail.RowTemplate.Height = 29;
-            this.dgRoomTypeDetail.Size = new System.Drawing.Size(534, 346);
+            this.dgRoomTypeDetail.Size = new System.Drawing.Size(475, 346);
             this.dgRoomTypeDetail.TabIndex = 15;
             this.dgRoomTypeDetail.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRoomTypeDetail_CellClick);
             // 
@@ -307,7 +307,7 @@ namespace ContentManagementSystem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 466);
+            this.ClientSize = new System.Drawing.Size(936, 466);
             this.Controls.Add(this.dgRoomTypeDetail);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);

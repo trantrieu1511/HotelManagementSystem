@@ -52,6 +52,7 @@ namespace ContentManagementSystem
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label1.Location = new System.Drawing.Point(213, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(374, 38);
@@ -63,6 +64,7 @@ namespace ContentManagementSystem
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label2.Location = new System.Drawing.Point(261, 66);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(270, 28);
@@ -187,7 +189,7 @@ namespace ContentManagementSystem
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainFrm";
-            this.Text = "Hệ thống";
+            this.Text = "Chào mừng đến với HMS CMS";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

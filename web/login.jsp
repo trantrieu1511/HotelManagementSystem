@@ -21,7 +21,7 @@
                 var emailOrPhone = document.getElementById('login');
                 if (emailOrPhone.value.toString().includes("@")) { //email
                     emailOrPhone.pattern = "[a-zA-Z0-9]{1,18}[@][a-z]{1,8}[.][a-z]{1,8}";
-                    emailOrPhone.title = "Email must not contain: Unicode characters, special character e.g: !@#$%^&,. etc.. and whitespaces; \n\
+                    emailOrPhone.title = "Email must not contain: Unicode characters, special character e.g: '!#$%^&, etc.. except for '@.' and whitespaces; \n\
         Allow uppercase, lowercase letters and numeric characters (0-9), max length: 25";
                 } else {
                     emailOrPhone.pattern = "[0-9]{10}";

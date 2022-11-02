@@ -123,7 +123,7 @@ namespace ContentManagementSystem
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("Loại phòng hiện tại đã có kiểu giường này. Làm ơn chọn cập nhật hoặc xóa!");
                 }
             }
         }
@@ -144,11 +144,11 @@ namespace ContentManagementSystem
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             //validate
-            if (string.IsNullOrWhiteSpace(txtRTD_ID.Text))
+            /*if (string.IsNullOrWhiteSpace(txtRTD_ID.Text))
             {
                 MessageBox.Show("Mã kiểu phòng chi tiết đang bị trống! Làm ơn chọn một kiểu phòng chi tiết bất kỳ trong danh sách ở cạnh bên để cập nhật!");
                 return;
-            }
+            }*/
             if (string.IsNullOrWhiteSpace(cbRoomType.Text))
             {
                 MessageBox.Show("Kiểu phòng không được trống! Làm ơn chọn lại!");
@@ -189,11 +189,11 @@ namespace ContentManagementSystem
         private void btnDelete_Click(object sender, EventArgs e)
         {
             //validate
-            if (string.IsNullOrWhiteSpace(txtRTD_ID.Text))
+            /*if (string.IsNullOrWhiteSpace(txtRTD_ID.Text))
             {
                 MessageBox.Show("Mã kiểu phòng chi tiết đang bị trống! Làm ơn chọn một kiểu phòng chi tiết bất kỳ trong danh sách ở cạnh bên để xóa!");
                 return;
-            }
+            }*/
             if (string.IsNullOrWhiteSpace(cbRoomType.Text))
             {
                 MessageBox.Show("Kiểu phòng không được trống! Làm ơn chọn lại!");

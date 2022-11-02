@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,7 @@ namespace ContentManagementSystem
         {
             InitializeComponent();
             txtEmpID.Enabled = false;
+            cboReportsTo.Enabled = false;
         }
 
         private void EmployeeFrm_Load(object sender, EventArgs e)
@@ -29,12 +31,13 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 var dataDg = context.Employees
+                    .Where(emp => emp.ReportsTo != null)
                     .Select(item => new
                     {
                         EmpID = item.EmpId,
-                        FirstName = item.FirstName,
                         LastName = item.LastName,
-                        Gender = item.Gender,
+                        FirstName = item.FirstName,
+                        Gender = (item.Gender == true ? "Nam" : "Nữ"),
                         DOB = item.Dob,
                         HireDate = item.HireDate,
                         Address = item.Address,
@@ -42,10 +45,19 @@ namespace ContentManagementSystem
                         PhoneNumber = item.PhoneNumber,
                         Username = item.Username,
                         Password = item.Password,
-                        ReportsTo = item.ReportsTo
                     })
                     .ToList();
                 dgEmployee.DataSource = dataDg;
+                dgEmployee.Columns["EmpID"].HeaderText = "Mã nhân viên";
+                dgEmployee.Columns["FirstName"].HeaderText = "Tên";
+                dgEmployee.Columns["LastName"].HeaderText = "Họ";
+                dgEmployee.Columns["Gender"].HeaderText = "Giới tính";
+                dgEmployee.Columns["DOB"].HeaderText = "Ngày sinh";
+                dgEmployee.Columns["HireDate"].HeaderText = "Ngày được thuê vào làm việc";
+                dgEmployee.Columns["Address"].HeaderText = "Địa chỉ";
+                dgEmployee.Columns["PhoneNumber"].HeaderText = "SĐT";
+                dgEmployee.Columns["Username"].HeaderText = "Tên người dùng";
+                dgEmployee.Columns["Password"].HeaderText = "Mật khẩu";
                 var dataCboReportsTo = context.Employees
                     .Select(item => new
                     {
@@ -63,22 +75,78 @@ namespace ContentManagementSystem
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtFirstname.Text))
+            {
+                MessageBox.Show("Tên không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtLastname.Text))
+            {
+                MessageBox.Show("Họ không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (!rdoMale.Checked && !rdoFemale.Checked)
+            {
+                MessageBox.Show("Giới tính không được trống! Làm ơn chọn lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtAddress.Text))
+            {
+                MessageBox.Show("Địa chỉ không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                MessageBox.Show("Email không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (!Regex.IsMatch(txtEmail.Text.Trim(), "[a-zA-Z0-9]{1,18}[@][a-z]{1,8}[.][a-z]{1,8}"))
+            {
+                MessageBox.Show("Email must not contain: Unicode characters, special characters other than @ and . and whitespaces; \n" +
+                    "Allow uppercase, lowercase letters and numeric characters(0 - 9), max length: 25.");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtPhonenumber.Text))
+            {
+                MessageBox.Show("Số điện thoại không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (!Regex.IsMatch(txtPhonenumber.Text.Trim(), "^[0-9]{10}$"))
+            {
+                MessageBox.Show("Phone number must be 10-digit number.");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtUsername.Text))
+            {
+                MessageBox.Show("Tên người dùng không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                MessageBox.Show("Mật khẩu không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(cboReportsTo.Text))
+            {
+                MessageBox.Show("Báo cáo tới không được trống! Làm ơn chọn lại!");
+                return;
+            }
             //MessageBox.Show("CustomFormat: "+dtpDOB.CustomFormat+"\nText: "+dtpDOB.Text+"\nValue: "+dtpDOB.Value.ToString());
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tạo đối tượng sẽ insert
                 Employee emp = new Employee
                 {
-                    FirstName = txtFirstname.Text,
-                    LastName = txtLastname.Text,
+                    FirstName = txtFirstname.Text.Trim(),
+                    LastName = txtLastname.Text.Trim(),
                     Gender = (rdoMale.Checked ? true : false),
                     Dob = dtpDOB.Text,
                     HireDate = dtpHireDate.Text,
-                    Address = txtAddress.Text,
-                    Email = txtEmail.Text,
-                    PhoneNumber = txtPhonenumber.Text,
-                    Username = txtUsername.Text,
-                    Password = txtPassword.Text,
+                    Address = txtAddress.Text.Trim(),
+                    Email = txtEmail.Text.Trim(),
+                    PhoneNumber = txtPhonenumber.Text.Trim(),
+                    Username = txtUsername.Text.Trim(),
+                    Password = txtPassword.Text.Trim(),
                     ReportsTo = Convert.ToInt32(cboReportsTo.SelectedValue)
                 };
                 context.Employees.Add(emp);
@@ -92,6 +160,23 @@ namespace ContentManagementSystem
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtEmpID.Text))
+            {
+                MessageBox.Show("Mã nhân viên đang bị trống! Làm ơn chọn một nhân viên bất kỳ trong danh sách ở cạnh bên để cập nhật!");
+                return;
+            }
+            if (!Regex.IsMatch(txtEmail.Text.Trim(), "[a-zA-Z0-9]{1,18}[@][a-z]{1,8}[.][a-z]{1,8}"))
+            {
+                MessageBox.Show("Email must not contain: Unicode characters, special characters other than @ and . and whitespaces; \n" +
+                    "Allow uppercase, lowercase letters and numeric characters(0 - 9), max length: 25.");
+                return;
+            }
+            if (!Regex.IsMatch(txtPhonenumber.Text.Trim(), "^[0-9]{10}$"))
+            {
+                MessageBox.Show("Phone number must be 10-digit number.");
+                return;
+            }
+
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm Employee muốn update
@@ -99,16 +184,16 @@ namespace ContentManagementSystem
                     .SingleOrDefault(item => item.EmpId == Convert.ToInt32(txtEmpID.Text));
 
                 //Setting lại những giá trị muốn update
-                emp.FirstName = txtFirstname.Text;
-                emp.LastName = txtLastname.Text;
+                emp.FirstName = txtFirstname.Text.Trim();
+                emp.LastName = txtLastname.Text.Trim();
                 emp.Gender = (rdoMale.Checked ? true : false);
                 emp.Dob = dtpDOB.Text;
                 emp.HireDate = dtpHireDate.Text;
-                emp.Address = txtAddress.Text;
-                emp.Email = txtEmail.Text;
-                emp.PhoneNumber = txtPhonenumber.Text;
-                emp.Username = txtUsername.Text;
-                emp.Password = txtPassword.Text;
+                emp.Address = txtAddress.Text.Trim();
+                emp.Email = txtEmail.Text.Trim();
+                emp.PhoneNumber = txtPhonenumber.Text.Trim();
+                emp.Username = txtUsername.Text.Trim();
+                emp.Password = txtPassword.Text.Trim();
                 emp.ReportsTo = Convert.ToInt32(cboReportsTo.SelectedValue);
 
                 if (context.SaveChanges() > 0)
@@ -121,6 +206,12 @@ namespace ContentManagementSystem
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtEmpID.Text))
+            {
+                MessageBox.Show("Mã nhân viên đang bị trống! Làm ơn chọn một nhân viên bất kỳ trong danh sách ở cạnh bên để xóa!");
+                return;
+            }
+
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm Employee sẽ delete
@@ -160,7 +251,7 @@ namespace ContentManagementSystem
             txtPhonenumber.Text = "";
             txtUsername.Text = "";
             txtPassword.Text = "";
-            cboReportsTo.Text = "";
+            //cboReportsTo.Text = "";
             cboSearchBy.Text = "";
         }
 
@@ -181,26 +272,139 @@ namespace ContentManagementSystem
                 case "firstname":
                     {
                         //MessageBox.Show("this is firstname search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            var result = context.Employees
+                                .Where(emp => emp.ReportsTo != null)
+                                .Select(item => new
+                                {
+                                    EmpID = item.EmpId,
+                                    LastName = item.LastName,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                    DOB = item.Dob,
+                                    HireDate = item.HireDate,
+                                    Address = item.Address,
+                                    Email = item.Email,
+                                    PhoneNumber = item.PhoneNumber,
+                                    Username = item.Username,
+                                    Password = item.Password,
+                                })
+                                .Where(emp => emp.FirstName.ToLower().Contains(txtFirstname.Text.Trim().ToLower()))
+                                .ToList();
+                            dgEmployee.DataSource = result;
+                        }
                         break;
                     }
                 case "lastname":
                     {
                         //MessageBox.Show("this is lastname search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            var result = context.Employees
+                                .Where(emp => emp.ReportsTo != null)
+                                .Select(item => new
+                                {
+                                    EmpID = item.EmpId,
+                                    LastName = item.LastName,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                    DOB = item.Dob,
+                                    HireDate = item.HireDate,
+                                    Address = item.Address,
+                                    Email = item.Email,
+                                    PhoneNumber = item.PhoneNumber,
+                                    Username = item.Username,
+                                    Password = item.Password,
+                                })
+                                .Where(emp => emp.LastName.ToLower().Contains(txtLastname.Text.Trim().ToLower()))
+                                .ToList();
+                            dgEmployee.DataSource = result;
+                        }
                         break;
                     }
-                case "male":
+                case "gender":
                     {
-                        //MessageBox.Show("this is male search!");
-                        break;
-                    }
-                case "female":
-                    {
-                        //MessageBox.Show("this is female search!");
+                        if (!rdoMale.Checked && !rdoFemale.Checked)
+                        {
+                            MessageBox.Show("Làm ơn hãy chọn một giới tính trước để tìm kiếm!");
+                            return;
+                        }
+                        //MessageBox.Show("this is male/female search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            if (rdoMale.Checked)
+                            {
+                                var result = context.Employees
+                                    .Where(emp => emp.ReportsTo != null)
+                                    .Select(item => new
+                                    {
+                                        EmpID = item.EmpId,
+                                        LastName = item.LastName,
+                                        FirstName = item.FirstName,
+                                        Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                        DOB = item.Dob,
+                                        HireDate = item.HireDate,
+                                        Address = item.Address,
+                                        Email = item.Email,
+                                        PhoneNumber = item.PhoneNumber,
+                                        Username = item.Username,
+                                        Password = item.Password,
+                                    })
+                                    .Where(emp => emp.Gender == "Nam")
+                                    .ToList();
+                                dgEmployee.DataSource = result;
+                            }
+                            else
+                            {
+                                var result = context.Employees
+                                    .Where(emp => emp.ReportsTo != null)
+                                    .Select(item => new
+                                    {
+                                        EmpID = item.EmpId,
+                                        LastName = item.LastName,
+                                        FirstName = item.FirstName,
+                                        Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                        DOB = item.Dob,
+                                        HireDate = item.HireDate,
+                                        Address = item.Address,
+                                        Email = item.Email,
+                                        PhoneNumber = item.PhoneNumber,
+                                        Username = item.Username,
+                                        Password = item.Password,
+                                    })
+                                    .Where(emp => emp.Gender == "Nữ")
+                                    .ToList();
+                                dgEmployee.DataSource = result;
+                            }
+                        }
                         break;
                     }
                 case "address":
                     {
                         //MessageBox.Show("this is address search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            var result = context.Employees
+                                .Where(emp => emp.ReportsTo != null)
+                                .Select(item => new
+                                {
+                                    EmpID = item.EmpId,
+                                    LastName = item.LastName,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                    DOB = item.Dob,
+                                    HireDate = item.HireDate,
+                                    Address = item.Address,
+                                    Email = item.Email,
+                                    PhoneNumber = item.PhoneNumber,
+                                    Username = item.Username,
+                                    Password = item.Password,
+                                })
+                                .Where(emp => emp.Address.ToLower().Contains(txtAddress.Text.Trim().ToLower()))
+                                .ToList();
+                            dgEmployee.DataSource = result;
+                        }
                         break;
                     }
                 case "dob":
@@ -210,12 +414,13 @@ namespace ContentManagementSystem
                         {
                             var result = context.Employees
                                 .AsEnumerable()
+                                .Where(emp => emp.ReportsTo != null)
                                 .Select(item => new
                                 {
                                     EmpID = item.EmpId,
-                                    FirstName = item.FirstName,
                                     LastName = item.LastName,
-                                    Gender = item.Gender,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
                                     DOB = item.Dob,
                                     HireDate = item.HireDate,
                                     Address = item.Address,
@@ -223,7 +428,6 @@ namespace ContentManagementSystem
                                     PhoneNumber = item.PhoneNumber,
                                     Username = item.Username,
                                     Password = item.Password,
-                                    ReportsTo = item.ReportsTo
                                 })
                                 .Where(emp => Convert.ToDateTime(emp.DOB) <= dtpDOB.Value)
                                 .ToList();
@@ -237,13 +441,14 @@ namespace ContentManagementSystem
                         using (MyHotelContext context = new MyHotelContext())
                         {
                             var result = context.Employees
+                                .Where(emp => emp.ReportsTo != null)
                                 .AsEnumerable()
                                 .Select(item => new
                                 {
                                     EmpID = item.EmpId,
-                                    FirstName = item.FirstName,
                                     LastName = item.LastName,
-                                    Gender = item.Gender,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
                                     DOB = item.Dob,
                                     HireDate = item.HireDate,
                                     Address = item.Address,
@@ -251,7 +456,6 @@ namespace ContentManagementSystem
                                     PhoneNumber = item.PhoneNumber,
                                     Username = item.Username,
                                     Password = item.Password,
-                                    ReportsTo = item.ReportsTo
                                 })
                                 .Where(emp => Convert.ToDateTime(emp.HireDate) <= dtpHireDate.Value)
                                 .ToList();
@@ -262,23 +466,89 @@ namespace ContentManagementSystem
                 case "email":
                     {
                         //MessageBox.Show("this is email search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            var result = context.Employees
+                                .Where(emp => emp.ReportsTo != null)
+                                .Select(item => new
+                                {
+                                    EmpID = item.EmpId,
+                                    LastName = item.LastName,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                    DOB = item.Dob,
+                                    HireDate = item.HireDate,
+                                    Address = item.Address,
+                                    Email = item.Email,
+                                    PhoneNumber = item.PhoneNumber,
+                                    Username = item.Username,
+                                    Password = item.Password,
+                                })
+                                .Where(emp => emp.Email.ToLower().Contains(txtEmail.Text.Trim().ToLower()))
+                                .ToList();
+                            dgEmployee.DataSource = result;
+                        }
                         break;
                     }
                 case "phonenumber":
                     {
                         //MessageBox.Show("this is phonenumber search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            var result = context.Employees
+                                .Where(emp => emp.ReportsTo != null)
+                                .Select(item => new
+                                {
+                                    EmpID = item.EmpId,
+                                    LastName = item.LastName,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                    DOB = item.Dob,
+                                    HireDate = item.HireDate,
+                                    Address = item.Address,
+                                    Email = item.Email,
+                                    PhoneNumber = item.PhoneNumber,
+                                    Username = item.Username,
+                                    Password = item.Password,
+                                })
+                                .Where(emp => emp.PhoneNumber.ToLower().Contains(txtPhonenumber.Text.Trim().ToLower()))
+                                .ToList();
+                            dgEmployee.DataSource = result;
+                        }
                         break;
                     }
                 case "username":
                     {
                         //MessageBox.Show("this is username search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            var result = context.Employees
+                                .Where(emp => emp.ReportsTo != null)
+                                .Select(item => new
+                                {
+                                    EmpID = item.EmpId,
+                                    LastName = item.LastName,
+                                    FirstName = item.FirstName,
+                                    Gender = (item.Gender == true ? "Nam" : "Nữ"),
+                                    DOB = item.Dob,
+                                    HireDate = item.HireDate,
+                                    Address = item.Address,
+                                    Email = item.Email,
+                                    PhoneNumber = item.PhoneNumber,
+                                    Username = item.Username,
+                                    Password = item.Password,
+                                })
+                                .Where(emp => emp.Username.ToLower().Contains(txtUsername.Text.Trim().ToLower()))
+                                .ToList();
+                            dgEmployee.DataSource = result;
+                        }
                         break;
                     }
-                case "reportsto":
+                /*case "reportsto":
                     {
                         //MessageBox.Show("this is reportsto search!");
                         break;
-                    }
+                    }*/
                 default:
                     MessageBox.Show("Xin hãy nhập hoặc chọn giá trị hợp lệ trong danh sách tìm kiếm!");
                     return;
@@ -292,10 +562,10 @@ namespace ContentManagementSystem
                 return;
             }
             txtEmpID.Text = dgEmployee.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-            txtFirstname.Text = dgEmployee.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
-            txtLastname.Text = dgEmployee.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
+            txtLastname.Text = dgEmployee.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+            txtFirstname.Text = dgEmployee.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
             rdoFemale.Checked = true;
-            if (dgEmployee.Rows[e.RowIndex].Cells[3].FormattedValue.ToString() == "true")
+            if (dgEmployee.Rows[e.RowIndex].Cells[3].FormattedValue.ToString() == "Nam")
             {
                 rdoMale.Checked = true;
             }
@@ -317,7 +587,7 @@ namespace ContentManagementSystem
             txtPhonenumber.Text = dgEmployee.Rows[e.RowIndex].Cells[8].FormattedValue.ToString();
             txtUsername.Text = dgEmployee.Rows[e.RowIndex].Cells[9].FormattedValue.ToString();
             txtPassword.Text = dgEmployee.Rows[e.RowIndex].Cells[10].FormattedValue.ToString();
-            cboReportsTo.SelectedValue = Convert.ToInt32(dgEmployee.Rows[e.RowIndex].Cells[11].Value);
+            /*cboReportsTo.SelectedValue = Convert.ToInt32(dgEmployee.Rows[e.RowIndex].Cells[11].Value);*/
         }
     }
 }
