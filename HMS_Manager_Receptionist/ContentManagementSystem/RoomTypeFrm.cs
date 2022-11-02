@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace ContentManagementSystem
 {
-    public partial class RoomType : Form
+    public partial class RoomTypeFrm : Form
     {
-        public RoomType()
+        public RoomTypeFrm()
         {
             InitializeComponent();
             dgRoomType.AllowUserToAddRows = false;
@@ -153,7 +153,7 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tạo đối tượng sẽ insert
-                Models.RoomType rt = new Models.RoomType
+                RoomType rt = new RoomType
                 {
                     Name = txtRoomTypeName.Text,
                     Price = Convert.ToDecimal(txtPrice.Text),
@@ -230,7 +230,7 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm RoomType muốn update
-                Models.RoomType rt = context.RoomTypes
+                RoomType rt = context.RoomTypes
                     .SingleOrDefault(item => item.RoomTypeId == Convert.ToInt32(txtRoomTypeID.Text));
 
                 //Setting lại những giá trị muốn update
@@ -290,7 +290,7 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm RoomType sẽ delete
-                Models.RoomType rt = context.RoomTypes
+                RoomType rt = context.RoomTypes
                     .SingleOrDefault(item => item.RoomTypeId == Convert.ToInt32(txtRoomTypeID.Text));
 
                 if (MessageBox.Show("Bạn có muốn xóa kiểu phòng này?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)

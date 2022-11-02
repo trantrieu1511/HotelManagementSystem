@@ -8,10 +8,14 @@ insert into Customer(FirstName,LastName,Email,PhoneNumber,[Password]) values(N'V
 
 --insert Employee
 insert into Employee(FirstName,LastName,Username,[Password]) values(N'Triệu',N'Trần','trantrieu123', '12345678')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hà', N'Đặng', 'dangha', 'dangha','TT00001')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Ngọc', N'Nguyễn', 'nguyenngoc', 'nguyenngoc', 'TT00001')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Chinh', N'Nguyễn', 'nguyenchinh', 'nguyenchinh', 'TT00001')
-insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hiếu', N'Trần', 'tranhieu', 'tranhieu', N'HĐ00002')
+--insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hà', N'Đặng', 'dangha', 'dangha','TT00001')
+--insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Ngọc', N'Nguyễn', 'nguyenngoc', 'nguyenngoc', 'TT00001')
+--insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Chinh', N'Nguyễn', 'nguyenchinh', 'nguyenchinh', 'TT00001')
+--insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hiếu', N'Trần', 'tranhieu', 'tranhieu', N'HĐ00002')
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hà', N'Đặng', 'dangha', 'dangha', 1)
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Ngọc', N'Nguyễn', 'nguyenngoc', 'nguyenngoc', 1)
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Chinh', N'Nguyễn', 'nguyenchinh', 'nguyenchinh', 1)
+insert into Employee(FirstName,LastName,Username,[Password],ReportsTo) values(N'Hiếu', N'Trần', 'tranhieu', 'tranhieu', 1)
 
 --insert BedType
 insert into BedType values('Single Bed')

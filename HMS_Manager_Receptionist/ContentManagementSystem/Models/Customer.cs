@@ -12,8 +12,7 @@ namespace ContentManagementSystem.Models
             Bookings = new HashSet<Booking>();
         }
 
-        public int Id { get; set; }
-        public string CusId { get; set; }
+        public int CusId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool? Gender { get; set; }

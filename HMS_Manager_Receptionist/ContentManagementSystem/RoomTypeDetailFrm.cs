@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace ContentManagementSystem
 {
-    public partial class RoomTypeDetail : Form
+    public partial class RoomTypeDetailFrm : Form
     {
-        public RoomTypeDetail()
+        public RoomTypeDetailFrm()
         {
             InitializeComponent();
             numericUpDownBedAmount.Minimum = 1;
@@ -43,14 +43,14 @@ namespace ContentManagementSystem
                 var data = context.RoomTypeDetails
                     .Select(item => new
                     {
-                        RTD_ID = item.RtdId,
+                        //RTD_ID = item.RtdId,
                         RoomType = item.RoomType.Name,
                         BedType = item.BedType.Name,
                         BedAmount = item.BedAmount
                     })
                     .ToList();
                 dgRoomTypeDetail.DataSource = data;
-                dgRoomTypeDetail.Columns["RTD_ID"].HeaderText = "Mã kiểu phòng chi tiết";
+                //dgRoomTypeDetail.Columns["RTD_ID"].HeaderText = "Mã kiểu phòng chi tiết";
                 dgRoomTypeDetail.Columns["RoomType"].HeaderText = "Tên kiểu phòng";
                 dgRoomTypeDetail.Columns["BedType"].HeaderText = "Tên kiểu giường";
                 dgRoomTypeDetail.Columns["BedAmount"].HeaderText = "SL giường";
@@ -101,24 +101,30 @@ namespace ContentManagementSystem
                 MessageBox.Show("Số lượng giường không được trống! Làm ơn nhập/chọn lại!");
                 return;
             }
-
             using (MyHotelContext context = new MyHotelContext())
             {
-                //Tạo đối tượng sẽ insert
-                Models.RoomTypeDetail rtd = new Models.RoomTypeDetail
+                try
                 {
-                    //RtdId = Convert.ToInt32(txtRTD_ID.Text),
-                    RoomTypeId = (int)cbRoomType.SelectedValue,
-                    BedTypeId = (int)cbBedType.SelectedValue,
-                    BedAmount = (int)numericUpDownBedAmount.Value
-                };
-                context.RoomTypeDetails.Add(rtd);
-                if (context.SaveChanges() > 0)
-                {
-                    MessageBox.Show("Insert successfully!");
+                    //Tạo đối tượng sẽ insert
+                    RoomTypeDetail rtd = new RoomTypeDetail
+                    {
+                        //RtdId = Convert.ToInt32(txtRTD_ID.Text),
+                        RoomTypeId = (int)cbRoomType.SelectedValue,
+                        BedTypeId = (int)cbBedType.SelectedValue,
+                        BedAmount = (int)numericUpDownBedAmount.Value
+                    };
+                    context.RoomTypeDetails.Add(rtd);
+                    if (context.SaveChanges() > 0)
+                    {
+                        MessageBox.Show("Insert successfully!");
+                    }
+                    loadData();
+                    resetFields();
                 }
-                loadData();
-                resetFields();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
 
@@ -162,8 +168,8 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm RoomTypeDetail muốn update
-                Models.RoomTypeDetail rtd = context.RoomTypeDetails
-                    .SingleOrDefault(item => item.RtdId == Convert.ToInt32(txtRTD_ID.Text));
+                RoomTypeDetail rtd = context.RoomTypeDetails
+                    .SingleOrDefault(item => item.RoomTypeId == Convert.ToInt32(cbRoomType.SelectedValue) && item.BedTypeId == Convert.ToInt32(cbBedType.SelectedValue));
 
                 //Setting lại những giá trị muốn update
                 //rtd.RtdId = Convert.ToInt32(txtRTD_ID.Text);
@@ -207,8 +213,10 @@ namespace ContentManagementSystem
             using (MyHotelContext context = new MyHotelContext())
             {
                 //Tìm RoomTypeDetail sẽ delete
-                Models.RoomTypeDetail rtd = context.RoomTypeDetails
-                    .SingleOrDefault(item => item.RtdId == Convert.ToInt32(txtRTD_ID.Text));
+                /*RoomTypeDetail rtd = context.RoomTypeDetails
+                    .SingleOrDefault(item => item.RtdId == Convert.ToInt32(txtRTD_ID.Text));*/
+                RoomTypeDetail rtd = context.RoomTypeDetails
+                    .SingleOrDefault(item => item.RoomTypeId == Convert.ToInt32(cbRoomType.SelectedValue) && item.BedTypeId == Convert.ToInt32(cbBedType.SelectedValue));
 
                 if (MessageBox.Show("Bạn có muốn xóa chi tiết của kiểu phòng này?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
@@ -255,7 +263,7 @@ namespace ContentManagementSystem
                 var result = context.RoomTypeDetails
                     .Select(item => new
                     {
-                        RTD_ID = item.RtdId,
+                        /*RTD_ID = item.RtdId,*/
                         RoomType = item.RoomType.Name,
                         BedType = item.BedType.Name,
                         BedAmount = item.BedAmount
@@ -273,7 +281,7 @@ namespace ContentManagementSystem
                 var result = context.RoomTypeDetails
                     .Select(item => new
                     {
-                        RTD_ID = item.RtdId,
+                        /*RTD_ID = item.RtdId,*/
                         RoomType = item.RoomType.Name,
                         BedType = item.BedType.Name,
                         BedAmount = item.BedAmount
@@ -291,7 +299,7 @@ namespace ContentManagementSystem
                 var result = context.RoomTypeDetails
                     .Select(item => new
                     {
-                        RTD_ID = item.RtdId,
+                        /*RTD_ID = item.RtdId,*/
                         RoomType = item.RoomType.Name,
                         BedType = item.BedType.Name,
                         BedAmount = item.BedAmount
@@ -308,16 +316,16 @@ namespace ContentManagementSystem
             {
                 return;
             }
-            txtRTD_ID.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-            cbRoomType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
-            cbBedType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-            if (dgRoomTypeDetail.Rows[e.RowIndex].Cells[3].FormattedValue.ToString().Trim() == "")
+            //txtRTD_ID.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+            cbRoomType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+            cbBedType.Text = dgRoomTypeDetail.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+            if (dgRoomTypeDetail.Rows[e.RowIndex].Cells[2].FormattedValue.ToString().Trim() == "")
             {
                 numericUpDownBedAmount.Value = 0;
             }
             else
             {
-                numericUpDownBedAmount.Value = Convert.ToInt32(dgRoomTypeDetail.Rows[e.RowIndex].Cells[3].FormattedValue.ToString());
+                numericUpDownBedAmount.Value = Convert.ToInt32(dgRoomTypeDetail.Rows[e.RowIndex].Cells[2].FormattedValue.ToString());
             }
         }
 

@@ -12,8 +12,7 @@ namespace ContentManagementSystem.Models
             InverseReportsToNavigation = new HashSet<Employee>();
         }
 
-        public int Id { get; set; }
-        public string EmpId { get; set; }
+        public int EmpId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool? Gender { get; set; }
@@ -24,7 +23,7 @@ namespace ContentManagementSystem.Models
         public string PhoneNumber { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string ReportsTo { get; set; }
+        public int? ReportsTo { get; set; }
 
         public virtual Employee ReportsToNavigation { get; set; }
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }

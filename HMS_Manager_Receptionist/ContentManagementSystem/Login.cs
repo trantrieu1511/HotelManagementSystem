@@ -49,9 +49,9 @@ namespace ContentManagementSystem
                         MessageBox.Show("Bạn nhập sai Tên truy cập hay mật khẩu. Xin vui lòng kiểm tra lại.", "Login");
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Oh no.");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }

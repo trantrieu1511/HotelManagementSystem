@@ -55,7 +55,7 @@ namespace ContentManagementSystem.Models
             modelBuilder.Entity<BookDetail>(entity =>
             {
                 entity.HasKey(e => e.BdId)
-                    .HasName("PK__BookDeta__DACD68A99E78A7A4");
+                    .HasName("PK__BookDeta__DACD68A99454DFC5");
 
                 entity.ToTable("BookDetail");
 
@@ -87,7 +87,7 @@ namespace ContentManagementSystem.Models
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.HasKey(e => e.BookId)
-                    .HasName("PK__Booking__3DE0C227F4911DCD");
+                    .HasName("PK__Booking__3DE0C2276ADAC90A");
 
                 entity.ToTable("Booking");
 
@@ -95,10 +95,7 @@ namespace ContentManagementSystem.Models
 
                 entity.Property(e => e.BookDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CusId)
-                    .IsRequired()
-                    .HasMaxLength(4000)
-                    .HasColumnName("CusID");
+                entity.Property(e => e.CusId).HasColumnName("CusID");
 
                 entity.Property(e => e.IsCancelled).HasColumnName("isCancelled");
 
@@ -112,15 +109,11 @@ namespace ContentManagementSystem.Models
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasKey(e => e.CusId)
-                    .HasName("PK__Customer__2F1871309EED12A7");
+                    .HasName("PK__Customer__2F1871302F6DE461");
 
                 entity.ToTable("Customer");
 
-                entity.Property(e => e.CusId)
-                    .HasMaxLength(4000)
-                    .HasColumnName("CusID")
-                    .HasComputedColumnSql("(('CUS'+replicate('0',(5)-len([Id])))+CONVERT([nvarchar],[Id]))", true)
-                    .ValueGeneratedNever();
+                entity.Property(e => e.CusId).HasColumnName("CusID");
 
                 entity.Property(e => e.Dob)
                     .HasMaxLength(50)
@@ -135,8 +128,6 @@ namespace ContentManagementSystem.Models
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(25);
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
@@ -154,15 +145,11 @@ namespace ContentManagementSystem.Models
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.HasKey(e => e.EmpId)
-                    .HasName("PK__Employee__AF2DBA793AF9BDA7");
+                    .HasName("PK__Employee__AF2DBA7971515CA7");
 
                 entity.ToTable("Employee");
 
-                entity.Property(e => e.EmpId)
-                    .HasMaxLength(4000)
-                    .HasColumnName("EmpID")
-                    .HasComputedColumnSql("((upper(left([FirstName],(1))+left([LastName],(1)))+replicate('0',(5)-len([Id])))+CONVERT([nvarchar],[Id]))", true)
-                    .ValueGeneratedNever();
+                entity.Property(e => e.EmpId).HasColumnName("EmpID");
 
                 entity.Property(e => e.Dob)
                     .HasMaxLength(50)
@@ -181,8 +168,6 @@ namespace ContentManagementSystem.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(25);
@@ -195,8 +180,6 @@ namespace ContentManagementSystem.Models
                 entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(35)
                     .IsUnicode(false);
-
-                entity.Property(e => e.ReportsTo).HasMaxLength(4000);
 
                 entity.Property(e => e.Username)
                     .IsRequired()
@@ -249,16 +232,13 @@ namespace ContentManagementSystem.Models
 
             modelBuilder.Entity<RoomTypeDetail>(entity =>
             {
-                entity.HasKey(e => e.RtdId)
-                    .HasName("PK__RoomType__F67F5A992EB1ABC2");
+                entity.HasKey(e => new { e.RoomTypeId, e.BedTypeId });
 
                 entity.ToTable("RoomTypeDetail");
 
-                entity.Property(e => e.RtdId).HasColumnName("RTD_ID");
+                entity.Property(e => e.RoomTypeId).HasColumnName("RoomTypeID");
 
                 entity.Property(e => e.BedTypeId).HasColumnName("BedTypeID");
-
-                entity.Property(e => e.RoomTypeId).HasColumnName("RoomTypeID");
 
                 entity.HasOne(d => d.BedType)
                     .WithMany(p => p.RoomTypeDetails)

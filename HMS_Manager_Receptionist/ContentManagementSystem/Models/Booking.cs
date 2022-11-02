@@ -13,7 +13,7 @@ namespace ContentManagementSystem.Models
         }
 
         public int BookId { get; set; }
-        public string CusId { get; set; }
+        public int CusId { get; set; }
         public DateTime BookDate { get; set; }
         public int NumOfAdult { get; set; }
         public int NumOfChildren { get; set; }

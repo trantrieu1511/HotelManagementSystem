@@ -4,9 +4,10 @@ USE [MyHotel]
 --USE [master]
 
 CREATE TABLE Customer(
-	Id INT identity,
-    CusID AS ('CUS'
-    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
+	CusID INT identity primary key,
+	--Id INT identity,
+    --CusID AS ('CUS'
+    --+ REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,
@@ -18,9 +19,10 @@ CREATE TABLE Customer(
 )
 
 CREATE TABLE Employee(
-	Id INT identity,
-    EmpID AS (UPPER(LEFT(FirstName,1) + LEFT(LastName,1))
-    + REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
+	EmpID INT identity primary key,
+	--Id INT identity,
+    --EmpID AS (UPPER(LEFT(FirstName,1) + LEFT(LastName,1))
+    --+ REPLICATE('0', 5-LEN(Id)) + CAST(Id AS NVARCHAR)) PERSISTED PRIMARY KEY,
 	FirstName nvarchar(25) not null,
 	LastName nvarchar(25) not null,
 	Gender bit,
@@ -31,7 +33,7 @@ CREATE TABLE Employee(
 	PhoneNumber varchar(35),
 	Username varchar(25) not null,
 	[Password] varchar(25) not null,
-	ReportsTo nvarchar(4000),
+	ReportsTo int,
 	FOREIGN KEY (ReportsTo) REFERENCES Employee (EmpID)
 )
 
@@ -51,12 +53,13 @@ CREATE TABLE BedType(
 )
 
 CREATE TABLE RoomTypeDetail(
-	RTD_ID int identity primary key,
+	--RTD_ID int identity primary key,
 	RoomTypeID int not null,
 	BedTypeID int not null,
 	BedAmount int not null,
 	foreign key (RoomTypeID) references RoomType (RoomTypeID),
-	foreign key (BedTypeID) references BedType (BedTypeID)
+	foreign key (BedTypeID) references BedType (BedTypeID),
+	constraint PK_RoomTypeDetail primary key(RoomTypeID, BedTypeID)
 )
 
 CREATE TABLE Room(
@@ -71,7 +74,8 @@ CREATE TABLE Room(
 
 CREATE TABLE Booking(
 	BookID int identity(1,1) primary key,
-	CusID nvarchar(4000) not null,
+	--CusID nvarchar(4000) not null,
+	CusID int not null,
 	BookDate datetime not null,
 	NumOfAdult int not null,
 	NumOfChildren int not null,

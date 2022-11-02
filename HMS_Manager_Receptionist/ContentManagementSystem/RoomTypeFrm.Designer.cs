@@ -1,7 +1,7 @@
 ﻿
 namespace ContentManagementSystem
 {
-    partial class RoomType
+    partial class RoomTypeFrm
     {
         /// <summary>
         /// Required designer variable.
