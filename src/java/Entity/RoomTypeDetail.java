@@ -11,33 +11,37 @@ package Entity;
  */
 public class RoomTypeDetail extends BedType {
 
-    int RTD_ID, RoomTypeID, BedTypeID, BedAmount;
+//    int RTD_ID;
+    int RoomTypeID, BedTypeID, BedAmount;
 
     public RoomTypeDetail() {
     }
 
-    public RoomTypeDetail(int RTD_ID, int RoomTypeID, int BedTypeID, int BedAmount) {
-        this.RTD_ID = RTD_ID;
+    public RoomTypeDetail(
+            //            int RTD_ID, 
+            int RoomTypeID, int BedTypeID, int BedAmount) {
+//        this.RTD_ID = RTD_ID;
         this.RoomTypeID = RoomTypeID;
         this.BedTypeID = BedTypeID;
         this.BedAmount = BedAmount;
     }
 
-    public RoomTypeDetail(int RTD_ID, int RoomTypeID, String Name, int BedAmount) {
+    public RoomTypeDetail(
+            //            int RTD_ID, 
+            int RoomTypeID, String Name, int BedAmount) {
         super(Name);
-        this.RTD_ID = RTD_ID;
+//        this.RTD_ID = RTD_ID;
         this.RoomTypeID = RoomTypeID;
         this.BedAmount = BedAmount;
     }
 
-    public int getRTD_ID() {
-        return RTD_ID;
-    }
-
-    public void setRTD_ID(int RTD_ID) {
-        this.RTD_ID = RTD_ID;
-    }
-
+//    public int getRTD_ID() {
+//        return RTD_ID;
+//    }
+//
+//    public void setRTD_ID(int RTD_ID) {
+//        this.RTD_ID = RTD_ID;
+//    }
     public int getRoomTypeID() {
         return RoomTypeID;
     }
@@ -76,7 +80,7 @@ public class RoomTypeDetail extends BedType {
 
     @Override
     public String toString() {
-        return super.toString() + " RoomTypeDetail{" + "RTD_ID=" + RTD_ID + ", RoomTypeID=" + RoomTypeID + ", BedTypeID=" + BedTypeID + ", BedAmount=" + BedAmount + '}';
+        return super.toString() + " RoomTypeDetail{RoomTypeID=" + RoomTypeID + ", BedTypeID=" + BedTypeID + ", BedAmount=" + BedAmount + '}';
     }
 
 }

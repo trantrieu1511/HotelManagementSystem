@@ -4,6 +4,7 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,7 +30,7 @@
                                 <div class="half left-arrow d-flex align-items-center">
                                     <div class="text p-4 text-center">
                                         <!--<p class="star mb-0"><span class="ion-ios-star"></span><span class="ion-ios-star"></span><span class="ion-ios-star"></span><span class="ion-ios-star"></span><span class="ion-ios-star"></span></p>-->
-                                        <p class="mb-0"><span class="price mr-1">VND ${listRt.getPrice()}</span> <span class="per">per night</span></p>
+                                        <p class="mb-0"><span class="price mr-1">VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${listRt.getPrice()}"/></span> <span class="per">per night</span></p>
                                         <h3 class="mb-3"><a href="roomtype?do=viewDetail&RoomTypeID=${listRt.getRoomTypeID()}">${listRt.getName()}</a></h3>
                                         <p class="pt-1"><a href="roomtype?do=viewDetail&RoomTypeID=${listRt.getRoomTypeID()}" class="btn-custom px-3 py-2 rounded">View Details <span class="icon-long-arrow-right"></span></a></p>
                                     </div>

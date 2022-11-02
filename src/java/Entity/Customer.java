@@ -11,16 +11,17 @@ package Entity;
  */
 public class Customer {
 
-    int Id;
-    String CusID, FirstName, LastName;
+//    int Id;
+    int CusID;
+//    String CusID;
+    String FirstName, LastName;
     boolean Gender;
     String DOB, Address, Email, PhoneNumber, Password;
 
     public Customer() {
     }
 
-    public Customer(int Id, String CusID, String FirstName, String LastName, boolean Gender, String DOB, String Address, String Email, String PhoneNumber, String Password) {
-        this.Id = Id;
+    public Customer(int CusID, String FirstName, String LastName, boolean Gender, String DOB, String Address, String Email, String PhoneNumber, String Password) {
         this.CusID = CusID;
         this.FirstName = FirstName;
         this.LastName = LastName;
@@ -50,19 +51,11 @@ public class Customer {
         this.PhoneNumber = PhoneNumber;
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int Id) {
-        this.Id = Id;
-    }
-
-    public String getCusID() {
+    public int getCusID() {
         return CusID;
     }
 
-    public void setCusID(String CusID) {
+    public void setCusID(int CusID) {
         this.CusID = CusID;
     }
 
@@ -132,7 +125,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" + "Id=" + Id + ", CusID=" + CusID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Gender=" + Gender + ", DOB=" + DOB + ", Address=" + Address + ", Email=" + Email + ", PhoneNumber=" + PhoneNumber + ", Password=" + Password + '}';
+        return "Customer{CusID=" + CusID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Gender=" + Gender + ", DOB=" + DOB + ", Address=" + Address + ", Email=" + Email + ", PhoneNumber=" + PhoneNumber + ", Password=" + Password + '}';
     }
 
 }

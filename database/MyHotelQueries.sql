@@ -1,7 +1,7 @@
 ﻿use [MyHotel]
 
 select * from Employee
-select * from Customer order by Id desc
+select * from Customer order by CusID desc
 select * from Booking
 select * from BookDetail
 select * from BedType

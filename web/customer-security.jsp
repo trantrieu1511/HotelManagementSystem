@@ -257,7 +257,7 @@
                                     </div>
                                     <form class="col-sm-6 text-secondary" action="customer" method="post" id="deleteAccForm" hidden="">
                                         <input type="hidden" name="do" value="deleteAccount">
-                                        <input type="hidden" name="Id" value="${cusInfo.getId()}">
+                                        <input type="hidden" name="Id" value="${cusInfo.getCusID()}">
                                         <div class="row">
                                             <div class="col-sm-12 col-md-12">
                                                 <div class="form-group">

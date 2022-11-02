@@ -37,8 +37,9 @@ public class DAOCustomer extends DBConnect {
             rs = state.executeQuery();
             if (rs.next()) {
                 return new Customer(
-                        rs.getInt("Id"),
-                        rs.getString("CusID"),
+//                        rs.getInt("Id"),
+//                        rs.getString("CusID"),
+                        rs.getInt("CusID"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getBoolean("Gender"),
@@ -69,8 +70,9 @@ public class DAOCustomer extends DBConnect {
             rs = state.executeQuery();
             if (rs.next()) {
                 return new Customer(
-                        rs.getInt("Id"),
-                        rs.getString("CusID"),
+//                        rs.getInt("Id"),
+//                        rs.getString("CusID"),
+                        rs.getInt("CusID"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getBoolean("Gender"),
@@ -157,7 +159,7 @@ public class DAOCustomer extends DBConnect {
     }
 
     public Customer getCustomerDetails(int Id) {
-        String sql = "select * from Customer where Id = ?";
+        String sql = "select * from Customer where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -165,8 +167,9 @@ public class DAOCustomer extends DBConnect {
             rs = state.executeQuery();
             if (rs.next()) {
                 return new Customer(
-                        rs.getInt("Id"),
-                        rs.getString("CusID"),
+//                        rs.getInt("Id"),
+//                        rs.getString("CusID"),
+                        rs.getInt("CusID"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getBoolean("Gender"),
@@ -206,7 +209,7 @@ public class DAOCustomer extends DBConnect {
         System.out.println(dao.getCustomerDetails(1));
     }
 
-    public boolean editFullName(String firstName, String lastName, String cusId) {
+    public boolean editFullName(String firstName, String lastName, int cusId) {
         String sql = "update Customer set FirstName = ?, LastName = ? where "
                 + "CusID = ?";
         try {
@@ -214,7 +217,8 @@ public class DAOCustomer extends DBConnect {
             state = conn.prepareStatement(sql);
             state.setString(1, firstName);
             state.setString(2, lastName);
-            state.setString(3, cusId);
+//            state.setString(3, cusId);
+            state.setInt(3, cusId);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -227,13 +231,14 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
-    public boolean editEmail(String email, String cusId) {
+    public boolean editEmail(String email, int cusId) {
         String sql = "update Customer set Email = ? where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, email);
-            state.setString(2, cusId);
+//            state.setString(2, cusId);
+            state.setInt(2, cusId);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -246,13 +251,13 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
-    public boolean editPhoneNumber(String phoneNumber, String cusId) {
+    public boolean editPhoneNumber(String phoneNumber, int cusId) {
         String sql = "update Customer set PhoneNumber = ? where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, phoneNumber);
-            state.setString(2, cusId);
+            state.setInt(2, cusId);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -265,13 +270,14 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
-    public boolean editGender(String isMale, String cusId) {
+    public boolean editGender(String isMale, int cusId) {
         String sql = "update Customer set Gender = ? where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, isMale);
-            state.setString(2, cusId);
+//            state.setString(2, cusId);
+            state.setInt(2, cusId);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -284,13 +290,14 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
-    public boolean editDOB(String dob, String cusId) {
+    public boolean editDOB(String dob, int cusId) {
         String sql = "update Customer set DOB = ? where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, sdf2.format(sdf1.parse(dob)));
-            state.setString(2, cusId);
+//            state.setString(2, cusId);
+            state.setInt(2, cusId);
             state.executeUpdate();
         } catch (SQLException | ParseException ex) {
             ex.printStackTrace();
@@ -303,13 +310,14 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
-    public boolean editAddress(String address, String cusId) {
+    public boolean editAddress(String address, int cusId) {
         String sql = "update Customer set Address = ? where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, address);
-            state.setString(2, cusId);
+//            state.setString(2, cusId);
+            state.setInt(2, cusId);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -322,13 +330,14 @@ public class DAOCustomer extends DBConnect {
         return true;
     }
 
-    public boolean editPassword(String password, String cusId) {
+    public boolean editPassword(String password, int cusId) {
         String sql = "update Customer set [Password] = ? where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, password);
-            state.setString(2, cusId);
+//            state.setString(2, cusId);
+            state.setInt(2, cusId);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -342,7 +351,7 @@ public class DAOCustomer extends DBConnect {
     }
 
     public boolean deleteCustomer(String Id) {
-        String sql = "delete from Customer where Id = ?";
+        String sql = "delete from Customer where CusID = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);

@@ -52,7 +52,7 @@ public class DAOBookingDetail extends DBConnect {
         return true;
     }
 
-    public List<BookDetail> getBookingByCusID(String cusID) {
+    public List<BookDetail> getBookingByCusID(int cusID) {
         String sql = "select distinct b.BookID, b.BookDate ,b.PaymentStatus, b.isCancelled, bd.CheckIn, bd.CheckOut, SUM(bd.Amount) as 'TotalPrice' "
                 + "from Booking b full outer join BookDetail bd\n"
                 + "on b.BookID = bd.BookID where b.CusID = ?\n"
@@ -61,7 +61,8 @@ public class DAOBookingDetail extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, cusID);
+//            state.setString(1, cusID);
+            state.setInt(1, cusID);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new BookDetail(

@@ -100,7 +100,7 @@ public class ControllerCustomer extends HttpServlet {
                         alert = "Edit Failed! For dev, please "
                                 + "check the system for specific error!";
                     }
-                    cus = daoCus.getCustomerDetails(cus.getId());
+                    cus = daoCus.getCustomerDetails(cus.getCusID());
                     session.setAttribute("Customer", cus);
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
@@ -129,7 +129,7 @@ public class ControllerCustomer extends HttpServlet {
                                 + "Please try enter again!";
                         hasMessage = true;
                     }
-                    cus = daoCus.getCustomerDetails(cus.getId());
+                    cus = daoCus.getCustomerDetails(cus.getCusID());
                     session.setAttribute("Customer", cus);
                     request.setAttribute("cusInfo", cus);
                     request.setAttribute("settingOption", setting_option);
@@ -204,14 +204,14 @@ public class ControllerCustomer extends HttpServlet {
 //                    out.print(Id);
                     boolean deleteSuccess = daoCus.deleteCustomer(Id);
                     if (deleteSuccess) {
-                        cus = daoCus.getCustomerDetails(cus.getId());
+                        cus = daoCus.getCustomerDetails(cus.getCusID());
                         session.setAttribute("Customer", cus);
                         request.setAttribute("message", "Account has been successfully deleted!");
                         request.setAttribute("deleteSucceed", true);
                         RequestDispatcher dispatch = request.getRequestDispatcher("customer-acc-deleted.jsp");
                         dispatch.forward(request, response);
                     } else {
-                        cus = daoCus.getCustomerDetails(cus.getId());
+                        cus = daoCus.getCustomerDetails(cus.getCusID());
                         session.setAttribute("Customer", cus);
                         request.setAttribute("message", "Edit Failed! For dev, please "
                                 + "check the system for specific error!");

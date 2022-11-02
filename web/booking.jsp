@@ -1479,7 +1479,7 @@
                                 <div class="card-body">
                                     <h4 style="margin-bottom: 15px">Special Requests</h4>
                                     <div style="margin-bottom: 15px">
-                                        Special requests cannot be guaranteed – but the property will do its best to meet your needs. You can always make a special request after your booking is complete!
+                                        Special requests cannot be guaranteed – but we will do our best to meet your needs. You can always make a special request after your booking is complete by contact us directly through phonenumber: (+84)868342491!
                                     </div>
                                     <strong>Please write your requests in English or Vietnamese.</strong><small> (optional)</small>
                                     <div>

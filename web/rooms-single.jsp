@@ -93,7 +93,7 @@
                                         <li><span>Size:</span> 45 m2</li>
                                     </ul>
                                     <ul class="list ml-md-5">
-                                        <li><span>View:</span> 
+                                        <li><span>View(s):</span> 
                                             <c:forEach items="${listOfRoomView}" var="view">
                                                 <c:if test="${listOfRoomView.size()==1}">
                                                     ${view}
@@ -108,7 +108,7 @@
                                                 </c:if>
                                             </c:forEach>
                                         </li>
-                                        <li><span>Bed:</span> 
+                                        <li><span>Bed(s):</span> 
                                             <c:forEach items="${listRtd}" var="listRtd">
                                                 ${listRtd.getBedAmount()} x ${listRtd.getName()} <br>
                                             </c:forEach>

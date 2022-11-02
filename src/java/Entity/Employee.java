@@ -11,16 +11,17 @@ package Entity;
  */
 public class Employee {
 
-    int Id;
-    String EmpID, FirstName, LastName;
+    int EmpID;
+//    int Id;
+//    String EmpID;
+    String FirstName, LastName;
     boolean Gender;
     String DOB, HireDate, Address, Email, PhoneNumber, Username, Password, ReportsTo;
 
     public Employee() {
     }
 
-    public Employee(int Id, String EmpID, String FirstName, String LastName, boolean Gender, String DOB, String HireDate, String Address, String Email, String PhoneNumber, String Username, String Password, String ReportsTo) {
-        this.Id = Id;
+    public Employee(int EmpID, String FirstName, String LastName, boolean Gender, String DOB, String HireDate, String Address, String Email, String PhoneNumber, String Username, String Password, String ReportsTo) {
         this.EmpID = EmpID;
         this.FirstName = FirstName;
         this.LastName = LastName;
@@ -35,19 +36,11 @@ public class Employee {
         this.ReportsTo = ReportsTo;
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int Id) {
-        this.Id = Id;
-    }
-
-    public String getEmpID() {
+    public int getEmpID() {
         return EmpID;
     }
 
-    public void setEmpID(String EmpID) {
+    public void setEmpID(int EmpID) {
         this.EmpID = EmpID;
     }
 
@@ -141,7 +134,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" + "Id=" + Id + ", EmpID=" + EmpID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Gender=" + Gender + ", DOB=" + DOB + ", HireDate=" + HireDate + ", Address=" + Address + ", Email=" + Email + ", PhoneNumber=" + PhoneNumber + ", Username=" + Username + ", Password=" + Password + ", ReportsTo=" + ReportsTo + '}';
+        return "Employee{EmpID=" + EmpID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Gender=" + Gender + ", DOB=" + DOB + ", HireDate=" + HireDate + ", Address=" + Address + ", Email=" + Email + ", PhoneNumber=" + PhoneNumber + ", Username=" + Username + ", Password=" + Password + ", ReportsTo=" + ReportsTo + '}';
     }
 
 }

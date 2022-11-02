@@ -234,6 +234,29 @@ namespace ContentManagementSystem
                 case "hiredate":
                     {
                         //MessageBox.Show("this is hiredate search!");
+                        using (MyHotelContext context = new MyHotelContext())
+                        {
+                            var result = context.Employees
+                                .AsEnumerable()
+                                .Select(item => new
+                                {
+                                    EmpID = item.EmpId,
+                                    FirstName = item.FirstName,
+                                    LastName = item.LastName,
+                                    Gender = item.Gender,
+                                    DOB = item.Dob,
+                                    HireDate = item.HireDate,
+                                    Address = item.Address,
+                                    Email = item.Email,
+                                    PhoneNumber = item.PhoneNumber,
+                                    Username = item.Username,
+                                    Password = item.Password,
+                                    ReportsTo = item.ReportsTo
+                                })
+                                .Where(emp => Convert.ToDateTime(emp.HireDate) <= dtpHireDate.Value)
+                                .ToList();
+                            dgEmployee.DataSource = result;
+                        }
                         break;
                     }
                 case "email":

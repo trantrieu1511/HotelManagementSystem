@@ -261,7 +261,7 @@
                                         <h6>Address</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary">
-                                        abc streets, abc state, abc district, abc country
+                                        X streets, Y state, Z district, V country
                                     </div>
                                 </div>
                                 <div class="row">
@@ -408,7 +408,7 @@
                                             <h4>Cancel booking</h4>
                                         </div>
                                         <hr>
-                                        <p>Are you sure want to cancel this booking?</p>
+                                            <p>Are you sure want to cancel this booking?<br>We just asking in case you want to change your mind!</p>
                                     </div>
                                     <form action="booking" method="post">
                                         <input type="hidden" name="do" value="cancelBooking">
@@ -445,7 +445,7 @@
                                             <h4>Cancel booking</h4>
                                         </div>
                                         <hr>
-                                        <p>Are you sure want to cancel this booking?</p>
+                                        <p>Are you sure want to cancel this booking?<br>We just asking in case you want to change your mind!</p>
                                     </div>
                                     <form action="booking" method="post">
                                         <input type="hidden" name="do" value="cancelBooking">

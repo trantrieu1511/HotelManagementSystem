@@ -68,37 +68,40 @@
                     <thead>
                     </thead>
                     <tbody>
+                    <c:if test="${listBookDetail.size()==0}">
+                    <div style="margin-top: 2rem">You haven't booked any rooms yet. Be our guest and book at anytime!</div>
+                    </c:if>
                     <c:forEach items="${listBookDetail}" var="list">
-                        <tr>
-                            <td class="rate-recommend-table-td data" style="border-right: 0px;">
-                                <div>
-                                    ${list.getCheckIn()} - ${list.getCheckOut()}
-                                </div>
-                                <div style="margin-top: 10px; font-weight: 500">
+                    <tr>
+                        <td class="rate-recommend-table-td data" style="border-right: 0px;">
+                            <div>
+                                ${list.getCheckIn()} - ${list.getCheckOut()}
+                            </div>
+                            <div style="margin-top: 10px; font-weight: 500">
+                                <c:if test="${list.isIsCancelled()}">
+                                    <span style="color: red">Cancelled</span>
+                                </c:if>
+                                <c:if test="${!list.isIsCancelled()}">
+                                    <span style="color: lightgreen">Staying</span>
+                                </c:if>
+                            </div>
+                        </td>
+                        <td class="rate-recommend-table-td data" style="border-right: 0px;">
+                            <strong>VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.getTotalPrice()}"/></strong>
+                        </td>
+                        <td class="rate-recommend-table-td" style="border-right: 0px; width: 3%;">
+                            <div class="dropdown dropdown-action">
+                                <a href="#" style="padding: 15px 15px;" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-vertical"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="customer?do=viewBookingDetail&bookID=${list.getBookID()}">View Details</a>
                                     <c:if test="${list.isIsCancelled()}">
-                                        <span style="color: red">Cancelled</span>
-                                    </c:if>
-                                    <c:if test="${!list.isIsCancelled()}">
-                                        <span style="color: lightgreen">Staying</span>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#remove-booking${list.getBookID()}">Remove booking</a>
                                     </c:if>
                                 </div>
-                            </td>
-                            <td class="rate-recommend-table-td data" style="border-right: 0px;">
-                                <strong>VND <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.getTotalPrice()}"/></strong>
-                            </td>
-                            <td class="rate-recommend-table-td" style="border-right: 0px; width: 3%;">
-                                <div class="dropdown dropdown-action">
-                                    <a href="#" style="padding: 15px 15px;" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-vertical"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="customer?do=viewBookingDetail&bookID=${list.getBookID()}">View Details</a>
-                                        <c:if test="${list.isIsCancelled()}">
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#remove-booking${list.getBookID()}">Remove booking</a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
             <!-- Remove Booking Modal -->

@@ -58,7 +58,7 @@ public class ControllerBooking extends HttpServlet {
     String[] amount = null;
     String totalPrice = "";
     String[] roomID = null;
-    String cusID = "";
+    int cusID = 0;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -207,7 +207,7 @@ public class ControllerBooking extends HttpServlet {
                 request.setAttribute("checkOutDate", checkOutDate);
 
                 if (status != null && status.equals("not-sign-in")) {
-                    cusID = request.getParameter("cusID");
+                    cusID = Integer.parseInt(request.getParameter("cusID"));
                     isCancelled = daoB.cancelBooking(cusID);
                     if (isCancelled) {
                         System.out.println("booking of customer: " + cusID + " is cancelled.");

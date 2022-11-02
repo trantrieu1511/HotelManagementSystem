@@ -86,13 +86,14 @@ public class DAOBooking extends DBConnect {
         return listRecommendRooms;
     }
 
-    public boolean addBooking(String cusID, int adult, int children, int room, String Remarks) {
+    public boolean addBooking(int cusID, int adult, int children, int room, String Remarks) {
         String sql = "insert into Booking(CusID, BookDate, NumOfAdult, NumOfChildren, NumOfRoom, SpecialRequests) "
                 + "values(?, GETDATE(), ?, ?, ?, ?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, cusID);
+//            state.setString(1, cusID);
+            state.setInt(1, cusID);
             state.setInt(2, adult);
             state.setInt(3, children);
             state.setInt(4, room);
@@ -109,7 +110,7 @@ public class DAOBooking extends DBConnect {
         return true;
     }
 
-    public String getLatestCusIDByEmail(String Email) {
+    public int getLatestCusIDByEmail(String Email) {
         String sql = "select top 1 * from Customer\n"
                 + "where Email = ?\n"
                 + "order by CusID desc";
@@ -119,7 +120,7 @@ public class DAOBooking extends DBConnect {
             state.setString(1, Email);
             rs = state.executeQuery();
             if (rs.next()) {
-                return rs.getString("CusID");
+                return rs.getInt("CusID");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -128,16 +129,17 @@ public class DAOBooking extends DBConnect {
             closePrepareStatement(state);
             closeConnection(conn);
         }
-        return null;
+        return 0;
     }
 
-    public int getLatestBookIDByCusID(String cusID) {
+    public int getLatestBookIDByCusID(int cusID) {
         String sql = "select top 1 * from Booking where CusID = ?\n"
                 + "order by BookID desc";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, cusID);
+//            state.setString(1, cusID);
+            state.setInt(1, cusID);
             rs = state.executeQuery();
             if (rs.next()) {
                 return rs.getInt("BookID");
@@ -152,7 +154,7 @@ public class DAOBooking extends DBConnect {
         return 0;
     }
 
-    public boolean cancelBooking(String cusID) { //cancel latest booking
+    public boolean cancelBooking(int cusID) { //cancel latest booking
         String sql = "update Booking\n"
                 + "set \n"
                 + "isCancelled = 1,\n"
@@ -163,7 +165,8 @@ public class DAOBooking extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, cusID);
+//            state.setString(1, cusID);
+            state.setInt(1, cusID);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -227,7 +230,7 @@ public class DAOBooking extends DBConnect {
             System.out.println(room.getRoomTypeID() + ", " + room.getNoOfAvailableRoom());
         }
         System.out.println(daoB.getLatestCusIDByEmail("nguyenvana@gmail.com"));
-        System.out.println(daoB.getLatestBookIDByCusID("CUS00001"));
+        System.out.println(daoB.getLatestBookIDByCusID(1));
 //        for (RoomType roomType : listRcmd) {
 //            System.out.println(roomType);
 //        }

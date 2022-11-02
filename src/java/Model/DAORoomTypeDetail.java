@@ -48,7 +48,7 @@ public class DAORoomTypeDetail extends DBConnect {
     }
 
     public List<RoomTypeDetail> listRoomTypeDetail() {
-        String sql = "select rtd.RTD_ID, rtd.RoomTypeID, bt.[Name], \n"
+        String sql = "select rtd.RoomTypeID, bt.[Name], \n"
                 + "rtd.BedAmount from RoomTypeDetail rtd join BedType bt\n"
                 + "on rtd.BedTypeID = bt.BedTypeID";
         try {
@@ -57,7 +57,7 @@ public class DAORoomTypeDetail extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new RoomTypeDetail(
-                        rs.getInt("RTD_ID"),
+//                        rs.getInt("RTD_ID"),
                         rs.getInt("RoomTypeID"),
                         rs.getString("Name"),
                         rs.getInt("BedAmount")));
@@ -73,7 +73,7 @@ public class DAORoomTypeDetail extends DBConnect {
     }
 
     public List<RoomTypeDetail> getListOfRoomTypeDetailByRT_ID(String RT_ID) {
-        String sql = "select rtd.RTD_ID, rtd.RoomTypeID, bt.[Name], \n"
+        String sql = "select rtd.RoomTypeID, bt.[Name], \n"
                 + "rtd.BedAmount from RoomTypeDetail rtd join BedType bt\n"
                 + "on rtd.BedTypeID = bt.BedTypeID where rtd.RoomTypeID = ?";
         try {
@@ -83,7 +83,7 @@ public class DAORoomTypeDetail extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new RoomTypeDetail(
-                        rs.getInt("RTD_ID"),
+//                        rs.getInt("RTD_ID"),
                         rs.getInt("RoomTypeID"),
                         rs.getString("Name"),
                         rs.getInt("BedAmount")));
@@ -100,8 +100,8 @@ public class DAORoomTypeDetail extends DBConnect {
 
     public static void main(String[] args) {
         DAORoomTypeDetail daoRtd = new DAORoomTypeDetail();
-        List<RoomTypeDetail> list = daoRtd.listRoomTypeDetail();
-//        List<RoomTypeDetail> list = daoRtd.getListOfRoomTypeDetailByRT_ID("2");
+//        List<RoomTypeDetail> list = daoRtd.listRoomTypeDetail();
+        List<RoomTypeDetail> list = daoRtd.getListOfRoomTypeDetailByRT_ID("2");
         for (RoomTypeDetail roomTypeDetail : list) {
             System.out.println(roomTypeDetail);
         }
