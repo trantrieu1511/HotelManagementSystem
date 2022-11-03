@@ -41,7 +41,8 @@ namespace ContentManagementSystem
 
         private void manageRoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            RoomFrm roomFrm = new RoomFrm(isManager);
+            roomFrm.Show();
         }
 
         private void manageBedTypeToolStripMenuItem_Click(object sender, EventArgs e)

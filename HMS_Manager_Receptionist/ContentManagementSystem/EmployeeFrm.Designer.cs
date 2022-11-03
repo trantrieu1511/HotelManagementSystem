@@ -464,7 +464,7 @@ namespace ContentManagementSystem
             this.Controls.Add(this.dgEmployee);
             this.Controls.Add(this.label1);
             this.Name = "EmployeeFrm";
-            this.Text = "EmployeeFrm";
+            this.Text = "Manage EmployeeFrm";
             this.Load += new System.EventHandler(this.EmployeeFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgEmployee)).EndInit();
             this.groupBox1.ResumeLayout(false);

@@ -195,7 +195,7 @@ namespace ContentManagementSystem
             this.Controls.Add(this.dgBedType);
             this.Controls.Add(this.label1);
             this.Name = "BedTypeFrm";
-            this.Text = "BedTypeFrm";
+            this.Text = "Manage BedTypeFrm";
             this.Load += new System.EventHandler(this.BedTypeFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgBedType)).EndInit();
             this.groupBox1.ResumeLayout(false);

@@ -44,6 +44,9 @@ namespace ContentManagementSystem
             this.usernameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -177,6 +180,44 @@ namespace ContentManagementSystem
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label12.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label12.Location = new System.Drawing.Point(86, 165);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(438, 80);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "- Nhân viên lễ tân: \r\n  * Quản lý trạng thái của phòng (phòng trống/ có người đặt" +
+    ").\r\n  * Quản lý thông tin đặt phòng của khách hàng.\r\n  * Xem và tìm kiếm thông t" +
+    "in khách hàng.";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label11.Location = new System.Drawing.Point(86, 129);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(414, 20);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "- Người quản lý: Có thể quản lý và sử dụng mọi chức năng";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label8.Location = new System.Drawing.Point(12, 129);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 20);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "• Quyền:";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -184,6 +225,9 @@ namespace ContentManagementSystem
             this.BackgroundImage = global::ContentManagementSystem.Properties.Resources.bg_2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 494);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
@@ -214,5 +258,8 @@ namespace ContentManagementSystem
         private System.Windows.Forms.ToolStripMenuItem manageBookDetailToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageCustomerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageEmployeeToolStripMenuItem;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label8;
     }
 }

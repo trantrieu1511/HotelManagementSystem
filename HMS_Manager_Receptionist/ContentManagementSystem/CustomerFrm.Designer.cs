@@ -433,7 +433,7 @@ namespace ContentManagementSystem
             this.Controls.Add(this.dgCustomer);
             this.Controls.Add(this.label1);
             this.Name = "CustomerFrm";
-            this.Text = "CustomerFrm";
+            this.Text = "Manage CustomerFrm";
             this.Load += new System.EventHandler(this.CustomerFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgCustomer)).EndInit();
             this.groupBox1.ResumeLayout(false);

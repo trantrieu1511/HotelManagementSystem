@@ -13,6 +13,9 @@ namespace ContentManagementSystem
 {
     public partial class RoomTypeDetailFrm : Form
     {
+        private int cur_cbRoomTypeSelectedValue = 1;
+        private int cur_cbBedTypeSelectedValue = 1;
+
         public RoomTypeDetailFrm()
         {
             InitializeComponent();
@@ -59,9 +62,11 @@ namespace ContentManagementSystem
                 cbRoomType.DataSource = cbRoomTypeData;
                 cbRoomType.DisplayMember = "Name";
                 cbRoomType.ValueMember = "RoomTypeID";
+                cbRoomType.SelectedValue = (int)cur_cbRoomTypeSelectedValue;
                 cbBedType.DataSource = cbBedTypeData;
                 cbBedType.DisplayMember = "Name";
                 cbBedType.ValueMember = "BedTypeID";
+                cbBedType.SelectedValue = (int)cur_cbBedTypeSelectedValue;
             }
         }
 
@@ -119,7 +124,6 @@ namespace ContentManagementSystem
                         MessageBox.Show("Insert successfully!");
                     }
                     loadData();
-                    resetFields();
                 }
                 catch (Exception ex)
                 {
@@ -181,8 +185,9 @@ namespace ContentManagementSystem
                 {
                     MessageBox.Show("Update successfully!");
                 }
+                cur_cbRoomTypeSelectedValue = (int)cbRoomType.SelectedValue;
+                cur_cbBedTypeSelectedValue = (int)cbBedType.SelectedValue;
                 loadData();
-                resetFields();
             }
         }
 
