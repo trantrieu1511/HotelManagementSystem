@@ -162,13 +162,14 @@ namespace ContentManagementSystem
         {
             if (string.IsNullOrWhiteSpace(txtEmpID.Text))
             {
-                MessageBox.Show("Mã nhân viên đang bị trống! Làm ơn chọn một nhân viên bất kỳ trong danh sách ở cạnh bên để cập nhật!");
+                MessageBox.Show("Mã nhân viên đang bị trống! Làm ơn chọn một nhân viên bất kỳ trong danh sách ở dưới để cập nhật!");
                 return;
             }
             if (!Regex.IsMatch(txtEmail.Text.Trim(), "[a-zA-Z0-9]{1,18}[@][a-z]{1,8}[.][a-z]{1,8}"))
             {
-                MessageBox.Show("Email must not contain: Unicode characters, special characters other than @ and . and whitespaces; \n" +
-                    "Allow uppercase, lowercase letters and numeric characters(0 - 9), max length: 25.");
+                MessageBox.Show("Email must not contain: Unicode characters, special characters other than @ and . ; " +
+                    "Allow uppercase, lowercase letters and numeric characters(0 - 9), maximum length of parts of email: " +
+                    "username: 18, mail server: 8, domain: 8; max length: 34");
                 return;
             }
             if (!Regex.IsMatch(txtPhonenumber.Text.Trim(), "^[0-9]{10}$"))
@@ -208,7 +209,7 @@ namespace ContentManagementSystem
         {
             if (string.IsNullOrWhiteSpace(txtEmpID.Text))
             {
-                MessageBox.Show("Mã nhân viên đang bị trống! Làm ơn chọn một nhân viên bất kỳ trong danh sách ở cạnh bên để xóa!");
+                MessageBox.Show("Mã nhân viên đang bị trống! Làm ơn chọn một nhân viên bất kỳ trong danh sách ở dưới để xóa!");
                 return;
             }
 

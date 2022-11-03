@@ -229,6 +229,7 @@ namespace ContentManagementSystem
             this.cboReportsTo.Name = "cboReportsTo";
             this.cboReportsTo.Size = new System.Drawing.Size(156, 28);
             this.cboReportsTo.TabIndex = 13;
+            this.cboReportsTo.Visible = false;
             // 
             // txtPassword
             // 
@@ -309,6 +310,7 @@ namespace ContentManagementSystem
             this.label12.Size = new System.Drawing.Size(77, 20);
             this.label12.TabIndex = 1;
             this.label12.Text = "ReportsTo";
+            this.label12.Visible = false;
             // 
             // label7
             // 

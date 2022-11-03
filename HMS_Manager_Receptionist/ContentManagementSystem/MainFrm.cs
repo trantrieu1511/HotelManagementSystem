@@ -12,7 +12,7 @@ namespace ContentManagementSystem
 {
     public partial class MainFrm : Form
     {
-        bool isManager = false;
+        public bool isManager = false;
         public MainFrm(bool isManager, string username)
         {
             this.isManager = isManager;
@@ -62,7 +62,8 @@ namespace ContentManagementSystem
 
         private void manageCustomerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            CustomerFrm customerFrm = new CustomerFrm(isManager);
+            customerFrm.Show();
         }
 
         private void manageEmployeeToolStripMenuItem_Click(object sender, EventArgs e)

@@ -69,6 +69,10 @@ namespace ContentManagementSystem
                         {
                             isManager = true;
                         }
+                        else
+                        {
+                            isManager = false;
+                        }
                         return true;
                     }
                 }
