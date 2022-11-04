@@ -53,12 +53,8 @@ namespace ContentManagementSystem
 
         private void manageBookingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void manageBookDetailToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            BookingFrm bookingFrm = new BookingFrm();
+            bookingFrm.Show();
         }
 
         private void manageCustomerToolStripMenuItem_Click(object sender, EventArgs e)

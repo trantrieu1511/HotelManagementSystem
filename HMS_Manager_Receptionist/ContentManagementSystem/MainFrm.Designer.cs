@@ -29,6 +29,7 @@ namespace ContentManagementSystem
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -38,7 +39,6 @@ namespace ContentManagementSystem
             this.manageRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageBedTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageBookingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageBookDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageCustomerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageEmployeeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usernameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,7 +94,6 @@ namespace ContentManagementSystem
             this.manageRoomToolStripMenuItem,
             this.manageBedTypeToolStripMenuItem,
             this.manageBookingToolStripMenuItem,
-            this.manageBookDetailToolStripMenuItem,
             this.manageCustomerToolStripMenuItem,
             this.manageEmployeeToolStripMenuItem});
             this.manageContentToolStripMenuItem.Name = "manageContentToolStripMenuItem";
@@ -135,13 +134,6 @@ namespace ContentManagementSystem
             this.manageBookingToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
             this.manageBookingToolStripMenuItem.Text = "Manage Booking";
             this.manageBookingToolStripMenuItem.Click += new System.EventHandler(this.manageBookingToolStripMenuItem_Click);
-            // 
-            // manageBookDetailToolStripMenuItem
-            // 
-            this.manageBookDetailToolStripMenuItem.Name = "manageBookDetailToolStripMenuItem";
-            this.manageBookDetailToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
-            this.manageBookDetailToolStripMenuItem.Text = "Manage BookDetail";
-            this.manageBookDetailToolStripMenuItem.Click += new System.EventHandler(this.manageBookDetailToolStripMenuItem_Click);
             // 
             // manageCustomerToolStripMenuItem
             // 
@@ -188,11 +180,9 @@ namespace ContentManagementSystem
             this.label12.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label12.Location = new System.Drawing.Point(86, 165);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(438, 80);
+            this.label12.Size = new System.Drawing.Size(438, 100);
             this.label12.TabIndex = 9;
-            this.label12.Text = "- Nhân viên lễ tân: \r\n  * Quản lý trạng thái của phòng (phòng trống/ có người đặt" +
-    ").\r\n  * Quản lý thông tin đặt phòng của khách hàng.\r\n  * Xem và tìm kiếm thông t" +
-    "in khách hàng.";
+            this.label12.Text = resources.GetString("label12.Text");
             // 
             // label11
             // 
@@ -255,7 +245,6 @@ namespace ContentManagementSystem
         private System.Windows.Forms.ToolStripMenuItem manageRoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageBedTypeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageBookingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manageBookDetailToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageCustomerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageEmployeeToolStripMenuItem;
         private System.Windows.Forms.Label label12;

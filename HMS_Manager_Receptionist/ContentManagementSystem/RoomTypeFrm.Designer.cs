@@ -435,7 +435,6 @@ namespace ContentManagementSystem
         private System.Windows.Forms.Button btnSearchByMaxChildren;
         private System.Windows.Forms.Button btnSearchByMaxAdult;
         private System.Windows.Forms.DataGridView dgRoomType;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnReset;
     }
 }

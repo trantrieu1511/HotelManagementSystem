@@ -133,7 +133,7 @@ namespace ContentManagementSystem
             // btnAdd
             // 
             this.btnAdd.ForeColor = System.Drawing.Color.Green;
-            this.btnAdd.Location = new System.Drawing.Point(855, 207);
+            this.btnAdd.Location = new System.Drawing.Point(762, 207);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(87, 29);
             this.btnAdd.TabIndex = 18;
@@ -144,7 +144,7 @@ namespace ContentManagementSystem
             // btnExit
             // 
             this.btnExit.ForeColor = System.Drawing.Color.Red;
-            this.btnExit.Location = new System.Drawing.Point(855, 278);
+            this.btnExit.Location = new System.Drawing.Point(855, 242);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(87, 29);
             this.btnExit.TabIndex = 22;
@@ -180,7 +180,7 @@ namespace ContentManagementSystem
             // btnReset
             // 
             this.btnReset.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.btnReset.Location = new System.Drawing.Point(762, 278);
+            this.btnReset.Location = new System.Drawing.Point(855, 207);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(87, 29);
             this.btnReset.TabIndex = 21;
@@ -202,7 +202,7 @@ namespace ContentManagementSystem
             // btnDelete
             // 
             this.btnDelete.ForeColor = System.Drawing.Color.Green;
-            this.btnDelete.Location = new System.Drawing.Point(855, 242);
+            this.btnDelete.Location = new System.Drawing.Point(762, 278);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(87, 29);
             this.btnDelete.TabIndex = 20;

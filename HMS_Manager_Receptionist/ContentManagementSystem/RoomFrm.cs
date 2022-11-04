@@ -22,6 +22,10 @@ namespace ContentManagementSystem
             numericUpDownFloor.Maximum = 7;
             if (!isManager) //Nhân viên lễ tân được quyền chỉnh sửa trạng thái của phòng, Quản lý có thể làm mọi thứ
             {
+                txtName.Enabled = false;
+                cbRoomType.Enabled = false;
+                numericUpDownFloor.Enabled = false;
+                txtView.Enabled = false;
                 btnAdd.Enabled = false;
                 btnDelete.Enabled = false;
             }
@@ -74,7 +78,7 @@ namespace ContentManagementSystem
                     }
                     room.Name = "room" + roomdata[i].RoomId;
                     room.Size = new Size(95, 85);
-                    room.TabIndex = (i + 1);
+                    room.TabIndex = (i + 1) + 11;
                     room.Text = roomdata[i].Name;
                     room.UseVisualStyleBackColor = true;
                     if (roomdata[i].IsAvailable == true)

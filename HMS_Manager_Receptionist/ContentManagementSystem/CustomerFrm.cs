@@ -63,14 +63,14 @@ namespace ContentManagementSystem
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtFirstname.Text))
-            {
-                MessageBox.Show("Tên không được trống! Làm ơn nhập lại!");
-                return;
-            }
             if (string.IsNullOrWhiteSpace(txtLastname.Text))
             {
                 MessageBox.Show("Họ không được trống! Làm ơn nhập lại!");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtFirstname.Text))
+            {
+                MessageBox.Show("Tên không được trống! Làm ơn nhập lại!");
                 return;
             }
             if (!rdoMale.Checked && !rdoFemale.Checked)

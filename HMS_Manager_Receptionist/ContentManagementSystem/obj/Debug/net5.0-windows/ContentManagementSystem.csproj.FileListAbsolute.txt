@@ -69,3 +69,5 @@ E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSyste
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.genruntimeconfig.cache
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.csproj.AssemblyReference.cache
 E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.RoomFrm.resources
+E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.BookingFrm.resources
+E:\GitHub\FPTU\OJT\TrainingExercise\Hotel_Management_System\HotelManagementSystem\HMS_Manager_Receptionist\ContentManagementSystem\obj\Debug\net5.0-windows\ContentManagementSystem.BookDetailFrm.resources

@@ -401,7 +401,7 @@ namespace ContentManagementSystem
             // 
             // btnExit
             // 
-            this.btnExit.ForeColor = System.Drawing.Color.Red;
+            this.btnExit.ForeColor = System.Drawing.Color.Crimson;
             this.btnExit.Location = new System.Drawing.Point(15, 249);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(87, 29);

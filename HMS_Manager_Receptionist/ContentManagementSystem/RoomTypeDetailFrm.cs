@@ -125,7 +125,7 @@ namespace ContentManagementSystem
                     }
                     loadData();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show("Loại phòng hiện tại đã có kiểu giường này. Làm ơn chọn cập nhật hoặc xóa!");
                 }

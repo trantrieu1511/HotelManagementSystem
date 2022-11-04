@@ -328,12 +328,6 @@ namespace ContentManagementSystem
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
@@ -346,12 +340,8 @@ namespace ContentManagementSystem
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox cbRoomType;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.TextBox txtFloor;
         private System.Windows.Forms.TextBox txtView;
         private System.Windows.Forms.TextBox txtRoomID;
         private System.Windows.Forms.CheckBox chkIsAvailable;
