@@ -54,10 +54,14 @@ namespace PrintBookingRpUsingCrystalReport
         private void loadData()
         {
             dtReport = (new DataProvider()).executeQuery(
-                "select b.*, Sum(Amount) as 'Tổng giá' from Booking b full outer join BookDetail bd " +
-                "on b.BookID = bd.BookID " +
-                "group by b.BookID, b.CusID, b.BookDate, b.NumOfAdult, b.NumOfChildren, b.NumOfRoom, " +
-                "b.PaymentStatus, b.SpecialRequests, b.isCancelled");
+                "select c.LastName + ' ' + c.FirstName as 'Fullname', b.BookDate, b.NumOfAdult, b.NumOfChildren, " +
+                "b.NumOfRoom, r.[Name] as 'RoomName', rt.[Name] as 'RoomTypeName', b.PaymentStatus, b.isCancelled, " +
+                "bd.Amount " +
+                "from Booking b join BookDetail bd " +
+                "on b.BookID = bd.BookID join Customer c " +
+                "on c.CusID = b.CusID join Room r " +
+                "on r.RoomID = bd.RoomID join RoomType rt " +
+                "on r.RoomTypeID = rt.RoomTypeID");
             customizeAndDisplay();
             /*using (MyHotelContext context = new MyHotelContext())
             {
@@ -110,39 +114,30 @@ namespace PrintBookingRpUsingCrystalReport
             {
                 dt.Columns.Clear();
                 dt.Rows.Clear();
-                dgBooking.Columns.Clear();
-                DataGridViewButtonColumn btnDetail = new DataGridViewButtonColumn
-                {
-                    HeaderText = "Chi tiết đặt phòng",
-                    Name = "Detail",
-                    Text = "Details",
-                    UseColumnTextForButtonValue = true
-                };
-                dgBooking.Columns.Add(btnDetail);
                 //dt.Columns.Add("Hành động", typeof(string));
-                dt.Columns.Add("Mã đặt phòng", typeof(string));
-                dt.Columns.Add("Mã khách hàng", typeof(string));
+                //dt.Columns.Add("Mã đặt phòng", typeof(string));
+                dt.Columns.Add("Tên đầy đủ", typeof(string));
                 dt.Columns.Add("Ngày đặt phòng", typeof(string));
                 dt.Columns.Add("SL người lớn", typeof(string));
                 dt.Columns.Add("SL trẻ nhỏ", typeof(string));
                 dt.Columns.Add("SL phòng", typeof(string));
+                dt.Columns.Add("Tên phòng", typeof(string));
+                dt.Columns.Add("Tên kiểu phòng", typeof(string));
                 dt.Columns.Add("Trạng thái trả tiền phòng", typeof(string));
-                dt.Columns.Add("Yêu cầu đặc biệt", typeof(string));
                 dt.Columns.Add("Trạng thái hủy đặt phòng", typeof(string));
                 dt.Columns.Add("Tổng thành tiền", typeof(string));
 
-                foreach (var item in dtReport.AsEnumerable())
+                foreach (DataRow item in dtReport.Rows)
                 {
                     dt.Rows.Add(new object[] {
-                        //new DataGridViewButtonCell().Value = "Detail",
                         item.ItemArray[0].ToString(),
                         item.ItemArray[1].ToString(),
                         item.ItemArray[2].ToString(),
                         item.ItemArray[3].ToString(),
                         item.ItemArray[4].ToString(),
                         item.ItemArray[5].ToString(),
-                        ((bool)item.ItemArray[6] ? "Đã trả" : "Chưa trả"),
-                        item.ItemArray[7].ToString(),
+                        item.ItemArray[6].ToString(),
+                        ((bool)item.ItemArray[7] ? "Đã trả" : "Chưa trả"),
                         ((bool)item.ItemArray[8] ? "Đã hủy" : "Chưa hủy"),
                         item.ItemArray[9].ToString()
                     });
@@ -402,6 +397,17 @@ namespace PrintBookingRpUsingCrystalReport
                     }
                 case "iscancelled":
                     {
+                        dtReport = (new DataProvider()).executeQuery(
+                            "select c.LastName + ' ' + c.FirstName as 'Fullname', b.BookDate, b.NumOfAdult, b.NumOfChildren, " +
+                "b.NumOfRoom, r.[Name] as 'RoomName', rt.[Name] as 'RoomTypeName', b.PaymentStatus, b.isCancelled, " +
+                "bd.Amount " +
+                "from Booking b join BookDetail bd " +
+                "on b.BookID = bd.BookID join Customer c " +
+                "on c.CusID = b.CusID join Room r " +
+                "on r.RoomID = bd.RoomID join RoomType rt " +
+                "on r.RoomTypeID = rt.RoomTypeID where b.isCancelled = '" + chkIsCancelled.Checked + "'");
+                        customizeAndDisplay();
+
                         /*using (MyHotelContext context = new MyHotelContext())
                         {
                             var dataDgBooking = context.Bookings.Select(b => new a
@@ -508,17 +514,17 @@ namespace PrintBookingRpUsingCrystalReport
                 chkPaymentStatus.Checked = true;
             }
             chkIsCancelled.Checked = false;
-            if (dgBooking.Rows[e.RowIndex].Cells[9].FormattedValue.ToString() == "Đã hủy")
+            if (dgBooking.Rows[e.RowIndex].Cells[8].FormattedValue.ToString() == "Đã hủy")
             {
                 chkIsCancelled.Checked = true;
             }
-            txtSpecialRequests.Text = dgBooking.Rows[e.RowIndex].Cells[8].FormattedValue.ToString();
+            //txtSpecialRequests.Text = dgBooking.Rows[e.RowIndex].Cells[9].FormattedValue.ToString();
             /*}*/
         }
 
         private void btnReport_Click(object sender, EventArgs e)
         {
-            CrystalReport crystalReport = new CrystalReport(dtReport);
+            CrystalReport crystalReport = new CrystalReport();
             crystalReport.Show();
         }
 

@@ -52,15 +52,13 @@ namespace PrintBookingRpUsingCrystalReport
             this.Controls.Add(this.crystalReportViewer1);
             this.Name = "CrystalReport";
             this.Text = "Booking Report CrystalReport";
-            //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CrystalReport_FormClosed);
             this.Load += new System.EventHandler(this.CrystalReport_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        public CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
     }
 }
 

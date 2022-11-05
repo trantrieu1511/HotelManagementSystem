@@ -12,12 +12,12 @@ namespace PrintBookingRpUsingCrystalReport
 {
     public partial class CrystalReport : Form
     {
-        private DataTable dtReport;
+        private DataTable dtReport = null;
 
-        public CrystalReport(DataTable dtReport)
+        public CrystalReport()
         {
             InitializeComponent();
-            this.dtReport = dtReport;
+            //this.dtReport = dtReport;
         }
 
         private void CrystalReport_Load(object sender, EventArgs e)
@@ -25,6 +25,7 @@ namespace PrintBookingRpUsingCrystalReport
             CrystalReport2 crystalReport2 = new CrystalReport2();
             crystalReport2.SetDataSource(dtReport);
             crystalReportViewer1.ReportSource = crystalReport2;
+            crystalReportViewer1.Refresh();
         }
 
         /*private void CrystalReport_FormClosed(object sender, FormClosedEventArgs e)
