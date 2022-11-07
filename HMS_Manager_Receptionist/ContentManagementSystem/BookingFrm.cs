@@ -47,7 +47,6 @@ namespace ContentManagementSystem
             return (T)value;
         }*/
 
-        DataTable dt = new DataTable();
         private int cur_cbCustomerSelectedValue = 1;
 
         private void loadData()
@@ -57,7 +56,7 @@ namespace ContentManagementSystem
                 var dataDgBooking = context.Bookings.Select(b => new a
                 {
                     BookId = b.BookId,
-                    FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                    CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                     BookDate = b.BookDate,
                     NumOfAdult = b.NumOfAdult,
                     NumOfChildren = b.NumOfChildren,
@@ -71,10 +70,10 @@ namespace ContentManagementSystem
                     .Select(c => new
                     {
                         CusID = c.CusId,
-                        FullCusInfo = c.LastName + " " + c.FirstName + " - " + c.Email + " - " + c.PhoneNumber
+                        CusInfo = c.LastName + " " + c.FirstName + " - " + c.Email + " - " + c.PhoneNumber
                     })
                     .ToList();
-                cbCustomer.DisplayMember = "FullCusInfo";
+                cbCustomer.DisplayMember = "CusInfo";
                 cbCustomer.ValueMember = "CusID";
                 cbCustomer.SelectedValue = (int)cur_cbCustomerSelectedValue;
             }
@@ -86,7 +85,7 @@ namespace ContentManagementSystem
             {
             }
             public int BookId { get; set; }
-            public string FullCusInfo { get; set; }
+            public string CusInfo { get; set; }
             public DateTime BookDate { get; set; }
             public int NumOfAdult { get; set; }
             public int NumOfChildren { get; set; }
@@ -100,8 +99,7 @@ namespace ContentManagementSystem
         {
             try
             {
-                dt.Columns.Clear();
-                dt.Rows.Clear();
+                DataTable dt = new DataTable();
                 dgBooking.Columns.Clear();
                 DataGridViewButtonColumn btnDetail = new DataGridViewButtonColumn
                 {
@@ -127,7 +125,7 @@ namespace ContentManagementSystem
                     dt.Rows.Add(new object[] {
                         //new DataGridViewButtonCell().Value = "Detail",
                         item.BookId,
-                        item.FullCusInfo,
+                        item.CusInfo,
                         item.BookDate,
                         item.NumOfAdult,
                         item.NumOfChildren,
@@ -213,14 +211,112 @@ namespace ContentManagementSystem
                 book.NumOfAdult = (int)numNoOfAdult.Value;
                 book.NumOfChildren = (int)numNoOfChildren.Value;
                 book.NumOfRoom = (int)numNoOfRoom.Value;
-                /*book.PaymentStatus = chkPaymentStatus.Checked;
-                book.IsCancelled = chkIsCancelled.Checked;*/
+                //book.PaymentStatus = chkPaymentStatus.Checked;
+                /*book.IsCancelled = chkIsCancelled.Checked;*/
                 book.SpecialRequests = txtSpecialRequests.Text.Trim();
+
+                var bookDetail = context.BookDetails.Where(b => b.BookId == Convert.ToInt32(txtBookID.Text)).ToList();
+                if (chkIsCancelled.Checked || chkIsCancelled.Checked && chkPaymentStatus.Checked)
+                {
+                    if (bookDetail.Count == 0)
+                    {
+                        MessageBox.Show("Không thể hủy đặt phòng cho đơn này nếu như chưa có thông tin hóa đơn chi tiết đặt phòng. " +
+                            "Bạn phải tạo hóa đơn chi tiết đặt phòng trước!");
+                        return;
+                    }
+                    else
+                    {
+                        if (book.IsCancelled)
+                        {
+                            MessageBox.Show("Bạn đã hủy đơn đặt phòng này! Làm ơn tạo đơn mới để chỉnh sửa.");
+                            return;
+                        }
+                        if (book.PaymentStatus)
+                        {
+                            MessageBox.Show("Đơn đặt phòng này đã được trả! Đơn cần phải ở trạng thái chưa trả mới có thể hủy.");
+                            return;
+                        }
+                        if (MessageBox.Show("Bạn có muốn hủy thông tin đặt phòng này? Bạn sẽ phải tạo một hóa đơn mới nếu như muốn đặt lại cùng một thông tin.", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            book.IsCancelled = true;
+                            book.PaymentStatus = true;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                /*else if (!chkIsCancelled.Checked && chkPaymentStatus.Checked)
+                {
+                    if (book.IsCancelled)
+                    {
+                        MessageBox.Show("Bạn đã hủy đơn đặt phòng này! Làm ơn tạo đơn mới để chỉnh sửa");
+                        return;
+                    }
+                }*/
+                else
+                {
+                    if (bookDetail.Count == 0)
+                    {
+                        MessageBox.Show("Không thể đổi trạng thái cho đơn này thành đã trả/ chưa trả nếu như chưa có thông tin hóa đơn chi tiết đặt phòng. " +
+                            "Bạn phải tạo hóa đơn chi tiết đặt phòng trước!");
+                        return;
+                    }
+                    else
+                    {
+                        if (book.IsCancelled)
+                        {
+                            MessageBox.Show("Bạn đã hủy đơn đặt phòng này! Làm ơn tạo đơn mới để chỉnh sửa.");
+                            return;
+                        }
+                        if (book.PaymentStatus)
+                        {
+                            MessageBox.Show("Đơn đặt phòng này đã được trả! Làm ơn tạo đơn mới để chỉnh sửa.");
+                            return;
+                        }
+
+                        if (MessageBox.Show("Bạn có muốn đổi trạng thái đơn đặt phòng này thành đã trả? Bạn sẽ phải tạo một hóa đơn mới nếu như muốn đổi ý.", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            book.IsCancelled = false;
+                            book.PaymentStatus = chkPaymentStatus.Checked;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
 
                 if (context.SaveChanges() > 0)
                 {
                     MessageBox.Show("Update successfully!");
+                    string update_room_status_msg = "";
+                    for (int i = 0; i < bookDetail.Count; i++)
+                    {
+                        //Tìm Room muốn update trạng thái thành trống
+                        Room room = context.Rooms
+                            .SingleOrDefault(item => item.RoomId == bookDetail[i].RoomId);
+
+                        //Setting lại những giá trị muốn update
+                        if (chkIsCancelled.Checked || chkPaymentStatus.Checked)
+                        {
+                            room.IsAvailable = true;
+                            update_room_status_msg = "Update room " + bookDetail[i].RoomId + " to available successfully!";
+                        }
+                        else
+                        {
+                            room.IsAvailable = false;
+                            update_room_status_msg = "Update room " + bookDetail[i].RoomId + " to unavailable successfully!";
+                        }
+
+                        if (context.SaveChanges() > 0)
+                        {
+                            MessageBox.Show(update_room_status_msg);
+                        }
+                    }
                 }
+                cur_cbCustomerSelectedValue = (int)cbCustomer.SelectedValue;
                 loadData();
             }
         }
@@ -239,15 +335,35 @@ namespace ContentManagementSystem
                 Booking book = context.Bookings
                     .SingleOrDefault(item => item.BookId == Convert.ToInt32(txtBookID.Text));
 
-                if (MessageBox.Show("Bạn có muốn xóa thông tin đặt phòng này?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                if (book.IsCancelled)
                 {
-                    context.Bookings.Remove(book);
-                    if (context.SaveChanges() > 0)
+                    MessageBox.Show("Bạn không thể xóa đơn có trạng thái đã bị hủy!");
+                    return;
+                }
+                if (book.PaymentStatus)
+                {
+                    MessageBox.Show("Bạn không thể xóa đơn có trạng thái đã được trả tiền!");
+                    return;
+                }
+                var bookDetail = context.BookDetails.Where(b => b.BookId == Convert.ToInt32(txtBookID.Text)).ToList();
+                if (bookDetail.Count > 0)
+                {
+                    MessageBox.Show("Xóa thất bại! Thông tin hóa đơn đặt phòng chi tiết của hóa đơn đặt phòng này vẫn còn, làm ơn hãy xóa chúng trước.");
+                    return;
+                }
+                else
+                {
+                    if (MessageBox.Show("Bạn có muốn xóa thông tin đặt phòng này?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                     {
-                        MessageBox.Show("Delete successfully!");
+
+                        context.Bookings.Remove(book);
+                        if (context.SaveChanges() > 0)
+                        {
+                            MessageBox.Show("Delete successfully!");
+                        }
+                        loadData();
+                        resetFields();
                     }
-                    loadData();
-                    resetFields();
                 }
             }
         }
@@ -265,7 +381,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -274,7 +390,7 @@ namespace ContentManagementSystem
                                 IsCancelled = b.IsCancelled,
                                 SpecialRequests = b.SpecialRequests
                             })
-                                .Where(b => b.FullCusInfo.ToLower().Contains(cbCustomer.Text.ToLower()))
+                                .Where(b => b.CusInfo.ToLower().Contains(cbCustomer.Text.ToLower()))
                                 .ToList();
                             customizeAndDisplay(dataDgBooking);
                         }
@@ -287,7 +403,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -309,7 +425,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -331,7 +447,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -353,7 +469,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -375,7 +491,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -397,7 +513,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -419,7 +535,7 @@ namespace ContentManagementSystem
                             var dataDgBooking = context.Bookings.Select(b => new a
                             {
                                 BookId = b.BookId,
-                                FullCusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
+                                CusInfo = b.Cus.LastName + " " + b.Cus.FirstName + " - " + b.Cus.Email + " - " + b.Cus.PhoneNumber,
                                 BookDate = b.BookDate,
                                 NumOfAdult = b.NumOfAdult,
                                 NumOfChildren = b.NumOfChildren,
@@ -480,7 +596,8 @@ namespace ContentManagementSystem
                 {
                     int BookID = Convert.ToInt32(dgBooking.Rows[e.RowIndex].Cells["Mã đặt phòng"].FormattedValue.ToString());
                     //MessageBox.Show(BookID.ToString());
-                    BookDetailFrm bookDetailFrm = new BookDetailFrm(BookID, context.Bookings.SingleOrDefault(b => b.BookId == BookID).IsCancelled);
+                    BookDetailFrm bookDetailFrm = new BookDetailFrm(BookID, context.Bookings.SingleOrDefault(b => b.BookId == BookID).IsCancelled,
+                        context.Bookings.SingleOrDefault(b => b.BookId == BookID).PaymentStatus);
                     bookDetailFrm.Show();
                     /*Show show = context.Shows.Find(showId);
                     BookingGUI book = new BookingGUI(show, context);

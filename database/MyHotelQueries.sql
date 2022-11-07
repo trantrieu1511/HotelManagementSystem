@@ -258,3 +258,18 @@ select * from RoomType where 8 / Adult = 2 and Children >= 0 and RoomTypeID = 0
 select * from RoomType where 
 (select sum(Adult) from RoomType) <= 6 
 and (select sum(Children) from RoomType) <= 6
+
+
+select b.*, Sum(Amount) as 'Tổng giá' from Booking b full outer join BookDetail bd
+  on b.BookID = bd.BookID where b.isCancelled = 'true'
+  group by b.BookID, b.CusID, b.BookDate, b.NumOfAdult, b.NumOfChildren, b.NumOfRoom,
+  b.PaymentStatus, b.SpecialRequests, b.isCancelled
+
+  select c.LastName + ' ' + c.FirstName as 'Fullname', b.BookDate, b.NumOfAdult, b.NumOfChildren,
+  b.NumOfRoom, r.[Name] as 'RoomName', rt.[Name] as 'RoomTypeName', b.PaymentStatus, b.isCancelled,
+  bd.Amount
+  from Booking b join BookDetail bd
+  on b.BookID = bd.BookID join Customer c
+  on c.CusID = b.CusID join Room r
+  on r.RoomID = bd.RoomID join RoomType rt
+  on r.RoomTypeID = rt.RoomTypeID

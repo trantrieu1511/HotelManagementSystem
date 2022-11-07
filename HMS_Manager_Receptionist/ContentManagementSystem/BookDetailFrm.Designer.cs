@@ -31,6 +31,7 @@ namespace ContentManagementSystem
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblIsCancelled = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtRoomPrice = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -62,7 +63,6 @@ namespace ContentManagementSystem
             this.label9 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.lblIsCancelled = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgBookingDetail)).BeginInit();
@@ -109,7 +109,17 @@ namespace ContentManagementSystem
             this.groupBox1.Size = new System.Drawing.Size(483, 668);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Thông tin chi tiết đặt phòng";
+            this.groupBox1.Text = "Thông tin HĐ đặt phòng chi tiết";
+            // 
+            // lblIsCancelled
+            // 
+            this.lblIsCancelled.AutoSize = true;
+            this.lblIsCancelled.ForeColor = System.Drawing.Color.Crimson;
+            this.lblIsCancelled.Location = new System.Drawing.Point(237, 382);
+            this.lblIsCancelled.Name = "lblIsCancelled";
+            this.lblIsCancelled.Size = new System.Drawing.Size(233, 40);
+            this.lblIsCancelled.TabIndex = 16;
+            this.lblIsCancelled.Text = "Đơn đã bị hủy đặt, hãy nhấn Exit\r\nđể tạo đơn mới";
             // 
             // groupBox2
             // 
@@ -119,16 +129,16 @@ namespace ContentManagementSystem
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.txtRoomName);
             this.groupBox2.Controls.Add(this.cbRoomType);
-            this.groupBox2.Location = new System.Drawing.Point(220, 0);
+            this.groupBox2.Location = new System.Drawing.Point(237, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(257, 157);
+            this.groupBox2.Size = new System.Drawing.Size(240, 167);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Thông tin chi tiết phòng";
+            this.groupBox2.Text = "Thông tin chi tiết của phòng";
             // 
             // txtRoomPrice
             // 
-            this.txtRoomPrice.Location = new System.Drawing.Point(99, 123);
+            this.txtRoomPrice.Location = new System.Drawing.Point(99, 127);
             this.txtRoomPrice.Name = "txtRoomPrice";
             this.txtRoomPrice.Size = new System.Drawing.Size(116, 27);
             this.txtRoomPrice.TabIndex = 17;
@@ -136,7 +146,7 @@ namespace ContentManagementSystem
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 126);
+            this.label12.Location = new System.Drawing.Point(6, 130);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(83, 20);
             this.label12.TabIndex = 16;
@@ -169,10 +179,11 @@ namespace ContentManagementSystem
             // 
             // cbRoomType
             // 
+            this.cbRoomType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.cbRoomType.FormattingEnabled = true;
             this.cbRoomType.Location = new System.Drawing.Point(99, 79);
             this.cbRoomType.Name = "cbRoomType";
-            this.cbRoomType.Size = new System.Drawing.Size(151, 28);
+            this.cbRoomType.Size = new System.Drawing.Size(134, 28);
             this.cbRoomType.TabIndex = 5;
             // 
             // txtBookID
@@ -223,7 +234,7 @@ namespace ContentManagementSystem
             // 
             this.dtpCheckOut.CustomFormat = "yyyy-MM-dd";
             this.dtpCheckOut.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCheckOut.Location = new System.Drawing.Point(107, 242);
+            this.dtpCheckOut.Location = new System.Drawing.Point(131, 242);
             this.dtpCheckOut.Name = "dtpCheckOut";
             this.dtpCheckOut.Size = new System.Drawing.Size(151, 27);
             this.dtpCheckOut.TabIndex = 7;
@@ -243,7 +254,7 @@ namespace ContentManagementSystem
             // 
             this.dtpCheckIn.CustomFormat = "yyyy-MM-dd";
             this.dtpCheckIn.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCheckIn.Location = new System.Drawing.Point(108, 193);
+            this.dtpCheckIn.Location = new System.Drawing.Point(132, 193);
             this.dtpCheckIn.Name = "dtpCheckIn";
             this.dtpCheckIn.Size = new System.Drawing.Size(150, 27);
             this.dtpCheckIn.TabIndex = 6;
@@ -283,7 +294,7 @@ namespace ContentManagementSystem
             // 
             // txtRoomID
             // 
-            this.txtRoomID.Location = new System.Drawing.Point(108, 124);
+            this.txtRoomID.Location = new System.Drawing.Point(107, 127);
             this.txtRoomID.Name = "txtRoomID";
             this.txtRoomID.Size = new System.Drawing.Size(70, 27);
             this.txtRoomID.TabIndex = 4;
@@ -319,23 +330,23 @@ namespace ContentManagementSystem
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(14, 247);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(75, 20);
+            this.label7.Size = new System.Drawing.Size(107, 20);
             this.label7.TabIndex = 0;
-            this.label7.Text = "CheckOut";
+            this.label7.Text = "CheckOutDate";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(15, 198);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 20);
+            this.label6.Size = new System.Drawing.Size(95, 20);
             this.label6.TabIndex = 0;
-            this.label6.Text = "CheckIn";
+            this.label6.Text = "CheckInDate";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 127);
+            this.label3.Location = new System.Drawing.Point(15, 130);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 20);
             this.label3.TabIndex = 0;
@@ -402,16 +413,6 @@ namespace ContentManagementSystem
             this.button8.Size = new System.Drawing.Size(35, 30);
             this.button8.TabIndex = 0;
             this.button8.UseVisualStyleBackColor = false;
-            // 
-            // lblIsCancelled
-            // 
-            this.lblIsCancelled.AutoSize = true;
-            this.lblIsCancelled.ForeColor = System.Drawing.Color.Crimson;
-            this.lblIsCancelled.Location = new System.Drawing.Point(237, 382);
-            this.lblIsCancelled.Name = "lblIsCancelled";
-            this.lblIsCancelled.Size = new System.Drawing.Size(233, 40);
-            this.lblIsCancelled.TabIndex = 16;
-            this.lblIsCancelled.Text = "Đơn đã bị hủy đặt, hãy nhấn Exit\r\nđể tạo đơn mới";
             // 
             // BookDetailFrm
             // 

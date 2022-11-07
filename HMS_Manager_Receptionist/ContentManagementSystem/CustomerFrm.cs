@@ -18,12 +18,12 @@ namespace ContentManagementSystem
         {
             InitializeComponent();
             txtCusID.Enabled = false;
-            if (!isManager)
+            /*if (!isManager)
             {
                 btnAdd.Enabled = false;
                 btnUpdate.Enabled = false;
                 btnDelete.Enabled = false;
-            }
+            }*/
         }
 
         private void CustomerFrm_Load(object sender, EventArgs e)

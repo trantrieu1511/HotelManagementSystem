@@ -15,13 +15,15 @@ namespace ContentManagementSystem
     {
         int BookID = 0;
         bool isCancelled = false;
-        public BookDetailFrm(int BookID, bool isCancelled)
+        bool paymentStatus = false;
+        public BookDetailFrm(int BookID, bool isCancelled, bool paymentStatus)
         {
             InitializeComponent();
             /*MessageBox.Show(BookID.ToString());*/
             dgBookingDetail.AllowUserToAddRows = false;
             this.BookID = BookID;
             this.isCancelled = isCancelled;
+            this.paymentStatus = paymentStatus;
             txtBookID.Text = BookID.ToString();
             txtBookID.Enabled = false;
             txtBD_ID.Enabled = false;
@@ -52,13 +54,15 @@ namespace ContentManagementSystem
         {
             using (MyHotelContext context = new MyHotelContext())
             {
-                if (isCancelled)
+                if (isCancelled || paymentStatus)
                 {
                     btnAdd.Enabled = false;
                     btnUpdate.Enabled = false;
                     btnDelete.Enabled = false;
                     btnCancelBook.Enabled = false;
                     btnReset.Enabled = false;
+                    lblIsCancelled.Text = (isCancelled ? "Đơn đã bị hủy đặt, hãy nhấn Exit\nđể tạo đơn mới" :
+                        "Đơn đã được trả tiền, hãy nhấn Exit\nđể tạo đơn mới");
                     lblIsCancelled.Visible = true;
                 }
 
@@ -114,6 +118,7 @@ namespace ContentManagementSystem
 
                 //dgBookingDetail data
                 dgBookingDetail.Columns.Clear();
+                dgBookingDetail.DataSource = null;
                 if (context.BookDetails.Where(b => b.BookId == BookID).ToList().Count == 0)
                 {
                     dgBookingDetail.Columns.Add("header", "Trạng thái chi tiết đặt phòng");
@@ -366,6 +371,17 @@ namespace ContentManagementSystem
                     if (context.SaveChanges() > 0)
                     {
                         MessageBox.Show("Xóa thành công!");
+                        //Tìm Room muốn update trạng thái thành trống
+                        Room room = context.Rooms
+                            .SingleOrDefault(item => item.RoomId == Convert.ToInt32(txtRoomID.Text));
+
+                        //Setting lại những giá trị muốn update
+                        room.IsAvailable = true;
+
+                        if (context.SaveChanges() > 0)
+                        {
+                            //MessageBox.Show("Update room " + dgBookingDetail.Rows[i].Cells[2].FormattedValue.ToString() + " to available successfully!");
+                        }
                     }
                     loadData();
                     resetFields();
